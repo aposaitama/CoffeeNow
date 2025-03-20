@@ -24,18 +24,20 @@ class ProfileScreen extends ConsumerWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 55.0,
-              ),
-              const CircleAvatar(
-                radius: 40.0,
-                backgroundColor: AppColors.nudeColor,
+              const SafeArea(
+                bottom: false,
                 child: CircleAvatar(
-                  radius: 35.0,
-                  backgroundImage:
-                      AssetImage('lib/assets/icons/profile_image.png'),
+                  radius: 40.0,
+                  backgroundColor: AppColors.nudeColor,
+                  child: CircleAvatar(
+                    radius: 35.0,
+                    backgroundImage: AssetImage(
+                      'lib/assets/icons/profile_image.png',
+                    ),
+                  ),
                 ),
               ),
+
               const SizedBox(
                 height: 10.0,
               ),

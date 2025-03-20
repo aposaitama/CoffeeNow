@@ -75,7 +75,7 @@ class SearchScreen extends HookConsumerWidget {
     final filteredProducts = searchText.isNotEmpty
         ? ref.watch(fetchFilteredProductsProvider(searchText)).value ?? []
         : [];
-    final List categoryList = ['Coffee', 'kkkkasdas', 'aflalsfl'];
+
     bool hasSearchText = searchText.isNotEmpty;
     useEffect(() {
       searchController.value = TextEditingValue(
@@ -89,27 +89,29 @@ class SearchScreen extends HookConsumerWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
-          top: 52.0,
           left: 20.0,
           right: 20.0,
         ),
         child: Column(
           children: [
-            SearchTextField(
-              searchFieldController: searchController,
-              onEditingComplete: () => _addCategory(
-                ref,
-                searchText,
-                currentUserID,
+            SafeArea(
+              bottom: false,
+              child: SearchTextField(
+                searchFieldController: searchController,
+                onEditingComplete: () => _addCategory(
+                  ref,
+                  searchText,
+                  currentUserID,
+                ),
+                onPrefixPressed: () => _addCategory(
+                  ref,
+                  searchText,
+                  currentUserID,
+                ),
+                onChanged: (text) {
+                  ref.read(searchTextProvider.notifier).state = text;
+                },
               ),
-              onPrefixPressed: () => _addCategory(
-                ref,
-                searchText,
-                currentUserID,
-              ),
-              onChanged: (text) {
-                ref.read(searchTextProvider.notifier).state = text;
-              },
             ),
             const SizedBox(
               height: 22.0,

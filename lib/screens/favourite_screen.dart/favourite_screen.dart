@@ -2,6 +2,7 @@ import 'package:coffee_now/screens/detail_page/widgets/favourite_product_item_ti
 import 'package:coffee_now/screens/detail_page/widgets/product_item_tile.dart';
 import 'package:coffee_now/screens/favourite_screen.dart/provider/favourite_items_provider.dart';
 import 'package:coffee_now/screens/home_screen/providers/recomended_items_provider/recomended_items_provider.dart';
+import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,9 +18,15 @@ class FavouriteScreen extends ConsumerWidget {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Favourite Items'),
+        title: Text(
+          'Favourite Items',
+          style: AppFonts.poppinsMedium.copyWith(
+            fontSize: 16.0,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
         leading: IconButton(
-          onPressed: () => context.go('/home'),
+          onPressed: () => context.pop(),
           icon: Container(
             width: 32.0,
             height: 32.0,

@@ -32,7 +32,7 @@ class AppBarActions extends StatelessWidget {
             width: 10.0,
           ),
           IconButton(
-            onPressed: () => context.go('/favourite_page'),
+            onPressed: () => context.push('/favourite_page'),
             icon: Container(
               width: 28.0,
               height: 28.0,

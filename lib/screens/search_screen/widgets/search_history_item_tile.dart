@@ -42,9 +42,9 @@ class SearchHistoryItemTile extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
-            onPressed: onDelete,
-            icon: SvgPicture.asset(
+          GestureDetector(
+            onTap: onDelete,
+            child: SvgPicture.asset(
               'lib/assets/icons/Close (1).svg',
             ),
           )
