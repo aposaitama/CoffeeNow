@@ -6,12 +6,15 @@ class CustomTextField extends StatefulWidget {
   final String title;
   final String hint;
   final bool? isPassword;
-  const CustomTextField({
-    super.key,
-    required this.title,
-    required this.hint,
-    this.isPassword = false,
-  });
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  const CustomTextField(
+      {super.key,
+      required this.title,
+      required this.hint,
+      this.isPassword = false,
+      this.controller,
+      this.validator});
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -22,6 +25,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     bool obscureText = true;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -42,9 +46,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
               10,
             ),
           ),
-          child: TextField(
+          child: TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             obscureText: widget.isPassword == true ? obscureText : false,
-            // controller: controller,
+            controller: widget.controller,
+            validator: widget.validator,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.only(
                 left: 14.0,
@@ -72,7 +78,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                         },
                       ),
                     )
-                  : null, // Якщо не пароль, не показувати суфікс
+                  : null,
             ),
             onChanged: (value) {},
           ),

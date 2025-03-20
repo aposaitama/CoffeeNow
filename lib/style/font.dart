@@ -14,6 +14,13 @@ class AppFonts {
     height: 1.0,
     fontFamily: 'Poppins',
   );
+  static const TextStyle bebasMedium = TextStyle(
+    color: Color.fromRGBO(125, 125, 125, 1),
+    fontSize: 18.0,
+    fontWeight: FontWeight.w500,
+    height: 1.0,
+    fontFamily: 'Bebas Neue',
+  );
   static const TextStyle poppinsRegular = TextStyle(
     color: Color.fromRGBO(170, 170, 170, 1),
     fontSize: 15.0,

@@ -186,8 +186,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               left: 26.0,
               right: 26.0,
             ),
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(50, 29, 11, 1),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary,
               borderRadius: BorderRadius.all(Radius.circular(18.0)),
             ),
             child: Row(
