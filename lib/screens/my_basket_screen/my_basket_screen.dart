@@ -2,6 +2,7 @@ import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box
 
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/screens/my_basket_screen/widgets/basket_item_tile.dart';
+import 'package:coffee_now/screens/my_basket_screen/widgets/checkout_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -62,6 +63,20 @@ class MyBasketScreen extends ConsumerWidget {
                     basketItem: basketListItems[index].toBasketItem(),
                   );
                 },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                bottom: 30,
+              ),
+              child: CheckoutButton(
+                onCheckout: () {
+                  context.push(
+                    '/checkout',
+                  );
+                },
+                checkoutItemCount: '1',
+                basketSumm: '10.00',
               ),
             )
           ],

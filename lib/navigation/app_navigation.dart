@@ -4,6 +4,7 @@ import 'package:coffee_now/screens/auth/auth_gate_screen/auth_gate_screen.dart';
 import 'package:coffee_now/screens/auth/forgot_password_screen/forgot_password_screen.dart';
 import 'package:coffee_now/screens/auth/login_screen/login_screen.dart';
 import 'package:coffee_now/screens/auth/register_screen/register_screen.dart';
+import 'package:coffee_now/screens/checkout_page/checkout_page.dart';
 import 'package:coffee_now/screens/detail_page/detail_coffee_page.dart';
 import 'package:coffee_now/screens/favourite_screen.dart/favourite_screen.dart';
 import 'package:coffee_now/screens/home_screen/home_screen.dart';
@@ -19,7 +20,7 @@ class AppRouter {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GoRouter createRouter(BuildContext context) {
     return GoRouter(
-      initialLocation: '/auth_gate',
+      initialLocation: '/checkout',
       // redirect: (context, state) {
       //   if (hasToken) {
       //     return null;
@@ -98,6 +99,10 @@ class AppRouter {
               coffeeShopID: coffeeShopID,
             );
           },
+        ),
+        GoRoute(
+          path: '/checkout',
+          builder: (context, state) => const CheckoutPage(),
         ),
         GoRoute(
           path: '/login',
