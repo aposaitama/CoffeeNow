@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_button.dart';
+import 'package:coffee_now/screens/checkout_page/widgets/backdrop_popup.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/change_delivery_method.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/choose_delivery_address.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/payment_option.dart';
@@ -172,7 +173,10 @@ class CheckoutPage extends ConsumerWidget {
           )),
           PlaceorderWidget(
             totalPrice: '10.00',
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                  context: context, builder: (context) => BackdropPopup());
+            },
           )
         ],
       ),
