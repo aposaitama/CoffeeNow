@@ -1,4 +1,5 @@
 import 'package:coffee_now/models/google_maps_models/latlong_model/lat_long_model.dart';
+import 'package:coffee_now/models/google_maps_models/location_model/location_model.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -25,10 +26,44 @@ class GoogleMapsService {
         'address': address,
         'key': 'AIzaSyBGHhRFdiPJxDxpX81Up_LhS71FQr4nJLY',
       });
-      print(response.data);
+
       return GeocodeResponse.fromJson(response.data);
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<LocationResponse?> getLocation(String lat, String lng) async {
+    try {
+      final response = await _dio.get('/geocode/json', queryParameters: {
+        'latlng': '$lat,$lng',
+        'key': 'AIzaSyBGHhRFdiPJxDxpX81Up_LhS71FQr4nJLY',
+        'location_type': 'ROOFTOP'
+      });
+
+      return LocationResponse.fromJson(response.data);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<String?> getDistance(
+    String latOrigin,
+    String lngOrigin,
+    String latShop,
+    String lngShop,
+  ) async {
+    try {
+      final response = await _dio.get('/distancematrix/json', queryParameters: {
+        'origins': '$latOrigin,$lngOrigin',
+        'destinations': '$latShop,$lngShop',
+        'key': 'AIzaSyBGHhRFdiPJxDxpX81Up_LhS71FQr4nJLY',
+      });
+
+      return response.data['rows'][0]['elements'][0]['distance']['value']
+          .toString();
+    } catch (e) {
+      return '';
     }
   }
 }

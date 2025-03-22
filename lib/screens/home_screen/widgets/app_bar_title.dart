@@ -6,8 +6,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AppBarTitle extends StatelessWidget {
+  final String city;
+  final String country;
   final String userName;
-  const AppBarTitle({super.key, required this.userName});
+  const AppBarTitle(
+      {super.key,
+      required this.userName,
+      required this.city,
+      required this.country});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +61,7 @@ class AppBarTitle extends StatelessWidget {
               ),
               const SizedBox(width: 6.0),
               Text(
-                'Jakarta, Indonesia',
+                '$city, $country',
                 style: AppFonts.bebasMedium.copyWith(
                   color: AppColors.orangeColor,
                   fontSize: 14.0,

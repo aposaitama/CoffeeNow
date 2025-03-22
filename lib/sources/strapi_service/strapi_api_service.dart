@@ -357,9 +357,14 @@ class ApiService {
     if (token == null) return null;
 
     try {
-      final response = await _dio.get('/users/me',
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
-
+      final response = await _dio.get(
+        '/users/me',
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        queryParameters: {
+          'populate': '*',
+        },
+      );
+      print(response.data);
       return UserModel.fromJson(response.data);
     } catch (e) {
       return null;

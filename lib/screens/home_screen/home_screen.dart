@@ -1,21 +1,18 @@
-import 'package:coffee_now/navigation/app_navigation.dart';
-import 'package:coffee_now/screens/detail_page/provider/detail_page_provider/detail_page_provider.dart';
 import 'package:coffee_now/screens/detail_page/widgets/favourite_product_item_tile.dart';
-import 'package:coffee_now/screens/detail_page/widgets/product_item_tile.dart';
 import 'package:coffee_now/screens/home_screen/providers/advert_banner_provider/advert_banner_provider.dart';
 import 'package:coffee_now/screens/home_screen/providers/coffee_shop_provider/coffee_shop_provider.dart';
+import 'package:coffee_now/screens/home_screen/providers/location_provider/location_provider.dart';
 import 'package:coffee_now/screens/home_screen/providers/recomended_items_provider/recomended_items_provider.dart';
 import 'package:coffee_now/screens/home_screen/widgets/app_bar_actions.dart';
 import 'package:coffee_now/screens/home_screen/widgets/app_bar_title.dart';
 import 'package:coffee_now/screens/home_screen/widgets/coffee_shop_item_tile.dart';
-import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
+import 'package:coffee_now/utils/address_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:coffee_now/screens/home_screen/providers/brand_image_provider/brand_image_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/screens/home_screen/widgets/popular_brand_carousel_item.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -27,13 +24,26 @@ class HomeScreen extends ConsumerWidget {
     final coffeeShop = ref.watch(fetchCoffeeShopProvider).value ?? [];
     final brands = ref.watch(fetchBrandsProvider).value ?? [];
     final user = ref.watch(userProvider).value;
+    final location = ref.watch(
+      fetchLocationProvider(
+        user?.addresses.isNotEmpty == true ? user!.addresses[0].lat : '',
+        user?.addresses.isNotEmpty == true ? user!.addresses[0].lng : '',
+      ),
+    );
+
     final recomendedItems = ref.watch(fetchRecomendedItemsProvider).value ?? [];
+
+    final addressComponents =
+        location.value?.results[0].address_components ?? [];
+    final address = Address(addressComponents);
 
     Future.value();
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
         title: AppBarTitle(
+          city: address.city,
+          country: address.country,
           userName: user?.username ?? '',
         ),
         actions: const [AppBarActions()],
@@ -81,7 +91,6 @@ class HomeScreen extends ConsumerWidget {
                   fontSize: 18.0,
                 ),
               ),
-
               SizedBox(
                 height: 245.0,
                 child: recomendedItems.isEmpty
@@ -115,9 +124,6 @@ class HomeScreen extends ConsumerWidget {
                         },
                       ),
               ),
-              // const Text('User Information:'),
-              // Text('Name: ${user.email}'),
-              // Text('Email: ${user.email}'),
               const SizedBox(height: 10),
               Text(
                 'POPULAR BRAND',
@@ -126,7 +132,6 @@ class HomeScreen extends ConsumerWidget {
                   fontSize: 18.0,
                 ),
               ),
-
               SizedBox(
                 height: 100.0,
                 child: brands.isEmpty
@@ -168,6 +173,14 @@ class HomeScreen extends ConsumerWidget {
                       itemCount: coffeeShop.length,
                       itemBuilder: (context, index) {
                         final shop = coffeeShop[index];
+                        final distance = ref.watch(
+                          FetchDistanceProvider(
+                            user?.addresses[0].lat ?? '0',
+                            user?.addresses[0].lng ?? '0',
+                            shop.latitude,
+                            shop.longitude,
+                          ),
+                        );
 
                         return GestureDetector(
                           onTap: () {
@@ -176,6 +189,7 @@ class HomeScreen extends ConsumerWidget {
                             context.push('/detail_page/$coffeeShopID');
                           },
                           child: CoffeeShopItemTile(
+                            distance: distance.value ?? '',
                             coffeeShop: shop,
                           ),
                         );

@@ -109,9 +109,7 @@ class AddressSetupScreen extends ConsumerWidget {
                     if (response!.results.isEmpty) {
                       BotToast.showText(text: 'Enter correct address');
                     }
-                    print(response.results[0].geometry.location.lat);
-                    // ignore: use_build_context_synchronously
-                    // context.go('/home');
+
                     final idResponse = await ref.read(PutAddressDocProvider(
                             response.results[0].geometry.location.lat
                                 .toString(),
@@ -119,8 +117,13 @@ class AddressSetupScreen extends ConsumerWidget {
                                 .toString())
                         .future);
                     if (idResponse != null) {
-                      await ref.read(ConnectAddressDocProvider(
-                          idResponse, user!.id.toString()));
+                      ref.read(
+                        ConnectAddressDocProvider(
+                          idResponse,
+                          user!.id.toString(),
+                        ),
+                      );
+                      context.go('/home');
                     }
                   } catch (e) {
                     BotToast.showText(text: 'Enter correct address');

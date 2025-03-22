@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CoffeeShopItemTile extends StatelessWidget {
+  final String distance;
   final CoffeeShopModel coffeeShop;
-  const CoffeeShopItemTile({super.key, required this.coffeeShop});
+  const CoffeeShopItemTile(
+      {super.key, required this.coffeeShop, required this.distance});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,9 @@ class CoffeeShopItemTile extends StatelessWidget {
                               width: 2.0,
                             ),
                             Text(
-                              '1.2 km',
+                              distance.isNotEmpty
+                                  ? '${(int.parse(distance) / 1000).toStringAsFixed(1)} km'
+                                  : '',
                               style: AppFonts.poppinsMedium.copyWith(
                                 color: AppColors.greyRegularTextColor,
                                 fontSize: 13.0,

@@ -11,6 +11,9 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num).toInt(),
       username: json['username'] as String,
       email: json['email'] as String,
+      addresses: (json['addresses'] as List<dynamic>)
+          .map((e) => UserLocation.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -18,4 +21,17 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'id': instance.id,
       'username': instance.username,
       'email': instance.email,
+      'addresses': instance.addresses,
+    };
+
+_$UserLocationImpl _$$UserLocationImplFromJson(Map<String, dynamic> json) =>
+    _$UserLocationImpl(
+      lat: json['lat'] as String,
+      lng: json['lng'] as String,
+    );
+
+Map<String, dynamic> _$$UserLocationImplToJson(_$UserLocationImpl instance) =>
+    <String, dynamic>{
+      'lat': instance.lat,
+      'lng': instance.lng,
     };
