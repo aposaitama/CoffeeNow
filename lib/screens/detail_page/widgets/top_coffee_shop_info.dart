@@ -6,8 +6,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class TopCoffeeShopInfo extends StatelessWidget {
+  final String distance;
   final CoffeeShopModel coffeeShop;
-  const TopCoffeeShopInfo({super.key, required this.coffeeShop});
+  const TopCoffeeShopInfo(
+      {super.key, required this.coffeeShop, required this.distance});
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +110,9 @@ class TopCoffeeShopInfo extends StatelessWidget {
                     width: 2.0,
                   ),
                   Text(
-                    '1.2 km',
+                    distance.isNotEmpty
+                        ? '${(int.parse(distance) / 1000).toStringAsFixed(1)} km'
+                        : '',
                     style: AppFonts.poppinsMedium.copyWith(
                       color: Colors.white,
                       fontSize: 13.0,

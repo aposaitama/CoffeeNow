@@ -23,7 +23,6 @@ class RootScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isOrderSuccess = ref.watch(orderSuccessProvider);
     final user = ref.watch(userProvider).value;
     final basketModel = ref.watch(
       BasketHiveProvider(
@@ -98,43 +97,6 @@ class RootScreen extends ConsumerWidget {
             borderRadius: BorderRadius.circular(20),
             child: const CustomBottomNavBar(),
           ),
-          if (isOrderSuccess)
-            Positioned.fill(
-              child: Stack(
-                children: [
-                  BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                    child: Container(
-                      color: Colors.black.withOpacity(0.4),
-                    ),
-                  ),
-                  SafeArea(
-                    child: Center(
-                      child: Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(Icons.check_circle,
-                                color: Colors.green, size: 50),
-                            const SizedBox(height: 10),
-                            Text(
-                              'Успішна покупка!',
-                              style: AppFonts.poppinsSemiBold
-                                  .copyWith(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
         ],
       ),
       // bottomNavigationBar: ClipRRect(

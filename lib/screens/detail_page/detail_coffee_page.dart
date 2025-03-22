@@ -1,6 +1,8 @@
 import 'package:coffee_now/screens/detail_page/provider/full_info_detailed_page_provider.dart';
 import 'package:coffee_now/screens/detail_page/widgets/favourite_product_item_tile.dart';
 import 'package:coffee_now/screens/detail_page/widgets/top_coffee_shop_info.dart';
+import 'package:coffee_now/screens/home_screen/providers/location_provider/location_provider.dart';
+import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,21 @@ class DetailCoffeePage extends ConsumerWidget {
     final width = MediaQuery.of(context).size.width;
     final coffeeShopData = ref.watch(fetchCoffeeShopDataProvider(coffeeShopID));
     final selectedCategoryIndex = ref.watch(selectedCategoryProvider);
+    final user = ref.watch(userProvider).value;
+    final location = ref.watch(
+      fetchLocationProvider(
+        user?.addresses.isNotEmpty == true ? user!.addresses[0].lat : '',
+        user?.addresses.isNotEmpty == true ? user!.addresses[0].lng : '',
+      ),
+    );
+
+    final distance = ref.watch(
+      FetchDistanceProvider(
+          user?.addresses[0].lat ?? '0',
+          user?.addresses[0].lng ?? '0',
+          coffeeShopData.value?.$1[0].latitude ?? '0',
+          coffeeShopData.value?.$1[0].longitude ?? '0'),
+    );
 
     return Scaffold(
       body: coffeeShopData.when(
@@ -28,7 +45,10 @@ class DetailCoffeePage extends ConsumerWidget {
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                TopCoffeeShopInfo(coffeeShop: basicInfo[0]),
+                TopCoffeeShopInfo(
+                  coffeeShop: basicInfo[0],
+                  distance: distance.value ?? '',
+                ),
                 const SizedBox(
                   height: 14.0,
                 ),

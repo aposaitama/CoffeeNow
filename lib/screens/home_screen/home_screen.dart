@@ -37,7 +37,6 @@ class HomeScreen extends ConsumerWidget {
         location.value?.results[0].address_components ?? [];
     final address = Address(addressComponents);
 
-    Future.value();
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,

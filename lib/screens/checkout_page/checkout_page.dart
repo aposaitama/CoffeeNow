@@ -70,7 +70,7 @@ class CheckoutPage extends ConsumerWidget {
                 const SectionSeparetedText(
                   title: 'Deliver to',
                 ),
-                ChooseDeliveryAddress(),
+                const ChooseDeliveryAddress(),
                 Container(
                   height: 3.0,
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -137,7 +137,6 @@ class CheckoutPage extends ConsumerWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              print('success');
                               ref.read(orderSuccessProvider.notifier).state =
                                   true;
                             },
@@ -167,7 +166,7 @@ class CheckoutPage extends ConsumerWidget {
                 const SectionSeparetedText(
                   title: 'Payment Details',
                 ),
-                PaymentOption(),
+                const PaymentOption(),
               ],
             ),
           )),
@@ -175,7 +174,8 @@ class CheckoutPage extends ConsumerWidget {
             totalPrice: '10.00',
             onTap: () {
               showDialog(
-                  context: context, builder: (context) => BackdropPopup());
+                  context: context,
+                  builder: (context) => const BackdropPopup());
             },
           )
         ],
