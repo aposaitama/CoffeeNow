@@ -8,9 +8,7 @@ part of 'user_provider.dart';
 
 String _$userHash() => r'b1f43ccd7f8c796821d50adec18fe908a94113a5';
 
-/// **Провайдер для отримання користувача по JWT**
-///
-/// Copied from [user].
+/// See also [user].
 @ProviderFor(user)
 final userProvider = AutoDisposeFutureProvider<UserModel?>.internal(
   user,

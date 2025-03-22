@@ -51,7 +51,7 @@ class RegisterScreen extends ConsumerWidget {
                       const Gap(32.0),
                       CustomTextField(
                         controller: fullName,
-                        title: 'Fullname',
+                        title: 'Username',
                         hint: 'Jason Ranti',
                         validator: (value) {
                           if (value == null || value.isEmpty) {

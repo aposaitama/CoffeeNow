@@ -5,6 +5,7 @@ import 'package:coffee_now/models/coffee_shop/coffee_shop_model.dart';
 import 'package:coffee_now/models/detailed_coffee_shop/detailed_coffee_shop_model.dart';
 import 'package:coffee_now/models/detailed_product/detailed_product_model.dart';
 import 'package:coffee_now/models/categories/categories_model.dart';
+import 'package:coffee_now/models/google_maps_models/latlong_model/lat_long_model.dart';
 import 'package:coffee_now/models/user/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -245,6 +246,43 @@ class ApiService {
     }
   }
 
+  Future<String?> createAddressDocument(String lat, String lng) async {
+    try {
+      final response = await _dio.post(
+        '/addresses',
+        data: {
+          "data": {
+            "lat": lat,
+            "lng": lng,
+          }
+        },
+      );
+
+      final String? id = response.data['data']['id']?.toString();
+
+      return id;
+    } catch (e) {
+      print('Error creating address: $e');
+      return null;
+    }
+  }
+
+  Future<void> connectAddressWithDoc(
+    String addressDocID,
+    String id,
+  ) async {
+    try {
+      await _dio.put(
+        '/users/$id',
+        data: {
+          "addresses": {
+            "connect": [addressDocID]
+          }
+        },
+      );
+    } catch (e) {}
+  }
+
   Future<DetailedCoffeeShopModel?> getDetailedCoffeeShop(
     String coffeeShopID,
   ) async {
@@ -295,9 +333,7 @@ class ApiService {
   Future<DetailedProductModel?> getConcreteProduct(
     String documentID,
   ) async {
-    print(documentID);
     try {
-      print(documentID);
       final response = await _dio.get(
         '/coffee-shop-products/$documentID',
         queryParameters: {
@@ -307,12 +343,11 @@ class ApiService {
       );
 
       final Map<String, dynamic>? data = response.data['data'] ?? [];
-      print(data);
+
       if (data == null) return null;
 
       return DetailedProductModel.fromJson(data);
     } catch (e) {
-      print('Error fetching coffee shop: $e');
       throw Exception('Failed to load coffee shop');
     }
   }
