@@ -1,6 +1,8 @@
 import 'package:coffee_now/models/detailed_coffee_shop/detailed_coffee_shop_model.dart';
 import 'package:coffee_now/models/hive_models/coffee_shop_image_hive_model/coffee_shop_image_hive_model.dart';
 import 'package:coffee_now/models/hive_models/products_instruction_hive_model/products_instruction_hive_model.dart';
+import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:coffee_now/models/basket_item/basket_item_model.dart';
@@ -9,7 +11,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'basket_hive_item_model.g.dart';
 
 @HiveType(typeId: 2)
-class BasketItemHiveModel {
+class BasketItemHiveModel extends Equatable {
   @HiveField(0)
   final String shopID;
 
@@ -26,8 +28,7 @@ class BasketItemHiveModel {
   final String productDescription;
 
   @HiveField(5)
-  final CoffeeShopImageHiveModel
-      productImage; // Використовуємо адаптовану модель CoffeeShopImageHiveModel
+  final CoffeeShopImageHiveModel productImage;
 
   @HiveField(6)
   final List<ProductInstructionHiveModel> instructions;
@@ -36,7 +37,7 @@ class BasketItemHiveModel {
   final Map<String, String> selectedOptions;
 
   @HiveField(8)
-  final int productCount;
+  int productCount;
 
   BasketItemHiveModel({
     required this.shopID,
@@ -81,6 +82,19 @@ class BasketItemHiveModel {
       productCount: productCount,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        shopID,
+        documentId,
+        price,
+        productName,
+        productDescription,
+        productImage,
+        instructions,
+        selectedOptions,
+        productCount,
+      ];
 }
 
 class CoffeeShopImageConverter
