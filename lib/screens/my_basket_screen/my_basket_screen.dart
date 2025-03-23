@@ -3,6 +3,7 @@ import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/screens/my_basket_screen/widgets/basket_item_tile.dart';
 import 'package:coffee_now/screens/my_basket_screen/widgets/checkout_button.dart';
+import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,7 +20,13 @@ class MyBasketScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Basket Items'),
+        title: Text(
+          'My Basket',
+          style: AppFonts.poppinsMedium.copyWith(
+            fontSize: 16.0,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
         leading: IconButton(
           onPressed: () => context.pop(),
           icon: Container(

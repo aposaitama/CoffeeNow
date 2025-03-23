@@ -267,6 +267,40 @@ class ApiService {
     }
   }
 
+  Future<String?> fetchCoffeeShopIDByProduct(String productID) async {
+    try {
+      final response =
+          await _dio.get('/coffee-shop-detaileds', queryParameters: {
+        'filters[coffee_shop_categories][coffee_shop_products][documentId][\$eq]':
+            productID,
+        'populate': 'coffee_shop_categories.coffee_shop_products'
+      });
+
+      final String? id = response.data['data'][0]['coffeeShopID']?.toString();
+
+      return id;
+    } catch (e) {
+      print('Error creating address: $e');
+      return null;
+    }
+  }
+
+  Future<List?> fetchLocationConcreteShop(String coffeeShopID) async {
+    try {
+      final response = await _dio.get('/coffee-shops', queryParameters: {
+        'filters[coffeeShopID][\$eq]': coffeeShopID,
+        'populate': '*',
+      });
+
+      final String? lat = response.data['data'][0]['latitude']?.toString();
+      final String? lng = response.data['data'][0]['longitude']?.toString();
+      return [lat, lng];
+    } catch (e) {
+      print('Error creating address: $e');
+      return null;
+    }
+  }
+
   Future<void> connectAddressWithDoc(
     String addressDocID,
     String id,

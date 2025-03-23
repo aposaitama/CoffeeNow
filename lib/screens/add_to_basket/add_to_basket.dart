@@ -125,7 +125,7 @@ class AddToBasket extends ConsumerWidget {
                                 );
                               } else {
                                 final basketItem = BasketItemModel(
-                                  shopID: 'shopID',
+                                  shopID: coffeeShopID,
                                   documentId: concreteProduct.documentId,
                                   price: concreteProduct.price,
                                   productName: concreteProduct.productName,

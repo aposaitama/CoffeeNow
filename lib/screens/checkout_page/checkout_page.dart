@@ -1,17 +1,18 @@
 import 'dart:ui';
-
 import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
-import 'package:coffee_now/screens/auth/login_screen/widget/custom_button.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/backdrop_popup.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/change_delivery_method.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/choose_delivery_address.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/payment_option.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/placeorder_widget.dart';
+import 'package:coffee_now/screens/checkout_page/widgets/provider/get_shop_info_provider.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/section_separeted_text.dart';
+import 'package:coffee_now/screens/home_screen/providers/location_provider/location_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/screens/my_basket_screen/widgets/basket_item_tile.dart';
 import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,11 +32,34 @@ class CheckoutPage extends ConsumerWidget {
       ),
     );
     final basketListItems = basketModel?.basketItem ?? [];
-    final isOrderSuccess = ref.watch(orderSuccessProvider);
+
+    final coffeeShopID =
+        ref.watch(FetchShopIDProvider(basketListItems[0].shopID));
+    final location = ref.watch(
+      fetchLocationConcreteShopProvider(
+        coffeeShopID.value ?? '',
+      ),
+    );
+
+    final distance = location.value != null
+        ? ref.watch(
+            fetchDistanceProvider(
+              location.value?[0] ?? '',
+              location.value?[1] ?? '',
+              user?.addresses[0].lat ?? '',
+              user?.addresses[0].lng ?? '',
+            ),
+          )
+        : null;
+    final distanceValue = distance?.value ?? ''; // якщо null, буде ''
+
+    // final isOrderSuccess = ref.watch(orderSuccessProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Checkout',
+        title: Text(
+          distanceValue.isNotEmpty
+              ? '${((int.tryParse(distanceValue) ?? 1) / 1000).toStringAsFixed(2)} km'
+              : '',
         ),
         leading: IconButton(
           onPressed: () => context.pop(),

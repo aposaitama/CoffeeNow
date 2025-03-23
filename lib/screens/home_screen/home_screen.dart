@@ -184,7 +184,7 @@ class HomeScreen extends ConsumerWidget {
                         return GestureDetector(
                           onTap: () {
                             final coffeeShopID = shop.coffeeShopID;
-
+                            print(coffeeShopID);
                             context.push('/detail_page/$coffeeShopID');
                           },
                           child: CoffeeShopItemTile(
