@@ -1,4 +1,4 @@
-import 'package:coffee_now/screens/checkout_page/widgets/provider/get_shop_info_provider.dart';
+import 'package:coffee_now/screens/checkout_page/provider/get_shop_info_provider.dart';
 import 'package:coffee_now/screens/detail_page/widgets/favourite_product_item_tile.dart';
 import 'package:coffee_now/screens/home_screen/providers/advert_banner_provider/advert_banner_provider.dart';
 import 'package:coffee_now/screens/home_screen/providers/coffee_shop_provider/coffee_shop_provider.dart';

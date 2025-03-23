@@ -1,10 +1,11 @@
 import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
+import 'package:coffee_now/screens/checkout_page/provider/delivery_method_provider/delivery_method_provider.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/backdrop_popup.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/change_delivery_method.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/choose_delivery_address.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/payment_option.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/placeorder_widget.dart';
-import 'package:coffee_now/screens/checkout_page/widgets/provider/get_shop_info_provider.dart';
+import 'package:coffee_now/screens/checkout_page/provider/get_shop_info_provider.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/section_separeted_text.dart';
 import 'package:coffee_now/screens/detail_page/provider/shop_basic_info_provider/shop_basic_info.dart';
 import 'package:coffee_now/screens/home_screen/providers/location_provider/location_provider.dart';
@@ -67,7 +68,7 @@ class CheckoutPage extends ConsumerWidget {
     final distanceValue = distance?.value ?? '';
     final shop =
         ref.watch(fetchConcreteCoffeeShopProvider(coffeeShopData.value ?? ''));
-
+    final selectedDeliveryMethod = ref.watch(deliveryMethodProvider);
     // final isOrderSuccess = ref.watch(orderSuccessProvider);
     return Scaffold(
       appBar: AppBar(
@@ -189,33 +190,37 @@ class CheckoutPage extends ConsumerWidget {
                         const SizedBox(
                           height: 6.0,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                ref.read(orderSuccessProvider.notifier).state =
-                                    true;
-                              },
-                              child: Text(
-                                'Delivery Fee',
-                                style: AppFonts.poppinsRegular.copyWith(
-                                  fontSize: 14.0,
-                                  color: AppColors.orangeColor,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              distanceValue != ''
-                                  ? '\$${((int.parse(distanceValue) / 1000) * (deliveryPricePerKm.value ?? 0)).toStringAsFixed(2)}'
-                                  : '0.0',
-                              style: AppFonts.poppinsRegular.copyWith(
-                                fontSize: 14.0,
-                                color: AppColors.orangeColor,
-                              ),
-                            ),
-                          ],
-                        ),
+                        selectedDeliveryMethod == DeliveryMethod.delivery
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      ref
+                                          .read(orderSuccessProvider.notifier)
+                                          .state = true;
+                                    },
+                                    child: Text(
+                                      'Delivery Fee',
+                                      style: AppFonts.poppinsRegular.copyWith(
+                                        fontSize: 14.0,
+                                        color: AppColors.orangeColor,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    distanceValue != ''
+                                        ? '\$${((int.parse(distanceValue) / 1000) * (deliveryPricePerKm.value ?? 0)).toStringAsFixed(2)}'
+                                        : '0.0',
+                                    style: AppFonts.poppinsRegular.copyWith(
+                                      fontSize: 14.0,
+                                      color: AppColors.orangeColor,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
                         const SizedBox(
                           height: 24.0,
                         ),
@@ -231,11 +236,13 @@ class CheckoutPage extends ConsumerWidget {
             ),
           ),
           PlaceorderWidget(
-            totalPrice: distanceValue.isNotEmpty
-                ? (totalBasketSumm +
-                        ((int.parse(distanceValue) / 1000) *
-                            (deliveryPricePerKm.value ?? 0)))
-                    .toStringAsFixed(2)
+            totalPrice: selectedDeliveryMethod == DeliveryMethod.delivery
+                ? distanceValue.isNotEmpty
+                    ? (totalBasketSumm +
+                            ((int.parse(distanceValue) / 1000) *
+                                (deliveryPricePerKm.value ?? 0)))
+                        .toStringAsFixed(2)
+                    : totalBasketSumm.toStringAsFixed(2)
                 : totalBasketSumm.toStringAsFixed(2),
             onTap: () {
               showDialog(
