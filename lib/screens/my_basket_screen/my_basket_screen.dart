@@ -14,9 +14,24 @@ class MyBasketScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider).value;
-    final basketModel = ref.watch(BasketHiveProvider(user!.id.toString()));
+    final user = ref
+        .watch(
+          userProvider,
+        )
+        .value;
+    final basketModel = ref.watch(
+      BasketHiveProvider(
+        user!.id.toString(),
+      ),
+    );
     final basketListItems = basketModel?.basketItem ?? [];
+    final totalBasketSumm = ref
+        .watch(
+          BasketHiveProvider(
+            user.id.toString(),
+          ).notifier,
+        )
+        .productCartTotalSumm();
 
     return Scaffold(
       appBar: AppBar(
@@ -83,7 +98,7 @@ class MyBasketScreen extends ConsumerWidget {
                   );
                 },
                 checkoutItemCount: '1',
-                basketSumm: '10.00',
+                basketSumm: totalBasketSumm.toString(),
               ),
             )
           ],

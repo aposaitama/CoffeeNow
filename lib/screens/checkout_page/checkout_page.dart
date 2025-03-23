@@ -40,6 +40,13 @@ class CheckoutPage extends ConsumerWidget {
         coffeeShopID.value ?? '',
       ),
     );
+    final totalBasketSumm = ref
+        .watch(
+          BasketHiveProvider(
+            user?.id.toString() ?? '',
+          ).notifier,
+        )
+        .productCartTotalSumm();
 
     final distance = location.value != null
         ? ref.watch(
@@ -145,7 +152,7 @@ class CheckoutPage extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            '\$5.00',
+                            '\$${totalBasketSumm.toString()}',
                             style: AppFonts.poppinsRegular.copyWith(
                               fontSize: 14.0,
                               color: Theme.of(context).colorScheme.onSurface,

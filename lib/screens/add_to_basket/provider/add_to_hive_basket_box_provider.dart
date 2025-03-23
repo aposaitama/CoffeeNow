@@ -79,6 +79,19 @@ class BasketHive extends _$BasketHive {
   //   }
   // }
 
+  double productCartTotalSumm() {
+    final box = ref.watch(basketBoxProvider);
+    final currentBasket = box.get(userID);
+    if (currentBasket != null) {
+      double totalSumm = 0.0;
+      for (BasketItemHiveModel item in currentBasket.basketItem) {
+        totalSumm += item.productCount * item.price;
+      }
+      return totalSumm;
+    }
+    return 0.0;
+  }
+
   void removeProductFromCart(BasketItemHiveModel product) {
     final box = ref.watch(basketBoxProvider);
     final currentBasket = box.get(userID);
