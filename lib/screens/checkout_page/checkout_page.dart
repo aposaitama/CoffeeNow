@@ -119,7 +119,7 @@ class CheckoutPage extends ConsumerWidget {
                             user!.id.toString(),
                           ).notifier)
                           .removeProductFromCart(
-                            basketListItems[index].documentId,
+                            basketListItems[index],
                           ),
                       basketItem: basketListItems[index].toBasketItem(),
                     );

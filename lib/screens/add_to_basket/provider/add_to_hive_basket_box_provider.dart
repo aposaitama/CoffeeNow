@@ -33,7 +33,6 @@ class BasketHive extends _$BasketHive {
             item.documentId == product.documentId &&
             _compareMaps(item.selectedOptions, product.selectedOptions),
       );
-      print(existingItemIndex);
 
       if (existingItemIndex != -1) {
         currentBasket.basketItem[existingItemIndex].productCount += 1;
@@ -80,13 +79,18 @@ class BasketHive extends _$BasketHive {
   //   }
   // }
 
-  void removeProductFromCart(String documentId) {
+  void removeProductFromCart(BasketItemHiveModel product) {
     final box = ref.watch(basketBoxProvider);
     final currentBasket = box.get(userID);
 
     if (currentBasket != null) {
       currentBasket.basketItem.removeWhere(
-        (item) => item.documentId == documentId,
+        (item) =>
+            item.documentId == product.documentId &&
+            _compareMaps(
+              item.selectedOptions,
+              product.selectedOptions,
+            ),
       );
 
       box.put(userID, currentBasket);

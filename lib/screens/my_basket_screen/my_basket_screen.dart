@@ -65,7 +65,7 @@ class MyBasketScreen extends ConsumerWidget {
                     onPressed: () => ref
                         .read(BasketHiveProvider(user.id.toString()).notifier)
                         .removeProductFromCart(
-                          basketListItems[index].documentId,
+                          basketListItems[index],
                         ),
                     basketItem: basketListItems[index].toBasketItem(),
                   );
