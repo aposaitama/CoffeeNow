@@ -291,5 +291,24 @@ class _FetchLocationConcreteShopProviderElement
   String get coffeeShopID =>
       (origin as FetchLocationConcreteShopProvider).coffeeShopID;
 }
+
+String _$fetchDeliveryPriceHash() =>
+    r'9012b25c5162916819b3655220b5b1e945fd9efc';
+
+/// See also [fetchDeliveryPrice].
+@ProviderFor(fetchDeliveryPrice)
+final fetchDeliveryPriceProvider = AutoDisposeFutureProvider<double?>.internal(
+  fetchDeliveryPrice,
+  name: r'fetchDeliveryPriceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$fetchDeliveryPriceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef FetchDeliveryPriceRef = AutoDisposeFutureProviderRef<double?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

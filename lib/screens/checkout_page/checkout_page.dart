@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/backdrop_popup.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/change_delivery_method.dart';
@@ -7,6 +6,7 @@ import 'package:coffee_now/screens/checkout_page/widgets/payment_option.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/placeorder_widget.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/provider/get_shop_info_provider.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/section_separeted_text.dart';
+import 'package:coffee_now/screens/detail_page/provider/shop_basic_info_provider/shop_basic_info.dart';
 import 'package:coffee_now/screens/home_screen/providers/location_provider/location_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/screens/my_basket_screen/widgets/basket_item_tile.dart';
@@ -33,11 +33,17 @@ class CheckoutPage extends ConsumerWidget {
     );
     final basketListItems = basketModel?.basketItem ?? [];
 
-    final coffeeShopID =
-        ref.watch(FetchShopIDProvider(basketListItems[0].shopID));
+    final deliveryPricePerKm = ref.watch(fetchDeliveryPriceProvider);
+
+    final coffeeShopData = ref.watch(
+      FetchShopIDProvider(
+        basketListItems[0].shopID,
+      ),
+    );
+
     final location = ref.watch(
       fetchLocationConcreteShopProvider(
-        coffeeShopID.value ?? '',
+        coffeeShopData.value ?? '',
       ),
     );
     final totalBasketSumm = ref
@@ -51,22 +57,42 @@ class CheckoutPage extends ConsumerWidget {
     final distance = location.value != null
         ? ref.watch(
             fetchDistanceProvider(
-              location.value?[0] ?? '',
-              location.value?[1] ?? '',
               user?.addresses[0].lat ?? '',
               user?.addresses[0].lng ?? '',
+              location.value?[0] ?? '',
+              location.value?[1] ?? '',
             ),
           )
         : null;
-    final distanceValue = distance?.value ?? ''; // якщо null, буде ''
+    final distanceValue = distance?.value ?? '';
+    final shop =
+        ref.watch(fetchConcreteCoffeeShopProvider(coffeeShopData.value ?? ''));
 
     // final isOrderSuccess = ref.watch(orderSuccessProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          distanceValue.isNotEmpty
-              ? '${((int.tryParse(distanceValue) ?? 1) / 1000).toStringAsFixed(2)} km'
-              : '',
+        toolbarHeight: 70,
+        title: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            text: shop.value?[0].shopName ?? '',
+            style: AppFonts.poppinsMedium.copyWith(
+              fontSize: 16.0,
+              height: 2.0,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            children: [
+              TextSpan(
+                text: distanceValue.isNotEmpty
+                    ? '\nDistance from you: ${((int.tryParse(distanceValue) ?? 1) / 1000).toStringAsFixed(1)} km'
+                    : '\nDistance from you:',
+                style: AppFonts.poppinsRegular.copyWith(
+                  fontSize: 12.0,
+                  color: AppColors.greyRegularTextColor,
+                ),
+              ),
+            ],
+          ),
         ),
         leading: IconButton(
           onPressed: () => context.pop(),
@@ -95,118 +121,127 @@ class CheckoutPage extends ConsumerWidget {
       body: Column(
         children: [
           Expanded(
-              child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SectionSeparetedText(
-                  title: 'Deliver to',
-                ),
-                const ChooseDeliveryAddress(),
-                Container(
-                  height: 3.0,
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
-                ),
-                const ChangeDeliveryMethod(),
-                SectionSeparetedText(
-                  title: 'Order Summary',
-                  onOptionTap: () {},
-                  optionTitle: 'Add items',
-                ),
-                ListView.builder(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SectionSeparetedText(
+                    title: 'Deliver to',
                   ),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: basketListItems.length,
-                  itemBuilder: (context, index) {
-                    return BasketItemTile(
-                      onPressed: () => ref
-                          .read(BasketHiveProvider(
-                            user!.id.toString(),
-                          ).notifier)
-                          .removeProductFromCart(
-                            basketListItems[index],
-                          ),
-                      basketItem: basketListItems[index].toBasketItem(),
-                    );
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0,
+                  const ChooseDeliveryAddress(),
+                  Container(
+                    height: 3.0,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                   ),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 15.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Subtotal',
-                            style: AppFonts.poppinsRegular.copyWith(
-                              fontSize: 14.0,
-                              color: Theme.of(context).colorScheme.onSurface,
+                  const ChangeDeliveryMethod(),
+                  SectionSeparetedText(
+                    title: 'Order Summary',
+                    onOptionTap: () {},
+                    optionTitle: 'Add items',
+                  ),
+                  ListView.builder(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                    ),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: basketListItems.length,
+                    itemBuilder: (context, index) {
+                      return BasketItemTile(
+                        onPressed: () => ref
+                            .read(BasketHiveProvider(
+                              user!.id.toString(),
+                            ).notifier)
+                            .removeProductFromCart(
+                              basketListItems[index],
                             ),
-                          ),
-                          Text(
-                            '\$${totalBasketSumm.toString()}',
-                            style: AppFonts.poppinsRegular.copyWith(
-                              fontSize: 14.0,
-                              color: Theme.of(context).colorScheme.onSurface,
+                        basketItem: basketListItems[index].toBasketItem(),
+                      );
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                    ),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 15.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Subtotal',
+                              style: AppFonts.poppinsRegular.copyWith(
+                                fontSize: 14.0,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                             ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 6.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              ref.read(orderSuccessProvider.notifier).state =
-                                  true;
-                            },
-                            child: Text(
-                              'Delivery Fee',
+                            Text(
+                              '\$${totalBasketSumm.toString()}',
+                              style: AppFonts.poppinsRegular.copyWith(
+                                fontSize: 14.0,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 6.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                ref.read(orderSuccessProvider.notifier).state =
+                                    true;
+                              },
+                              child: Text(
+                                'Delivery Fee',
+                                style: AppFonts.poppinsRegular.copyWith(
+                                  fontSize: 14.0,
+                                  color: AppColors.orangeColor,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              distanceValue != ''
+                                  ? '\$${((int.parse(distanceValue) / 1000) * (deliveryPricePerKm.value ?? 0)).toStringAsFixed(2)}'
+                                  : '0.0',
                               style: AppFonts.poppinsRegular.copyWith(
                                 fontSize: 14.0,
                                 color: AppColors.orangeColor,
                               ),
                             ),
-                          ),
-                          Text(
-                            '\$5.00',
-                            style: AppFonts.poppinsRegular.copyWith(
-                              fontSize: 14.0,
-                              color: AppColors.orangeColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 24.0,
-                      ),
-                    ],
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 24.0,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SectionSeparetedText(
-                  title: 'Payment Details',
-                ),
-                const PaymentOption(),
-              ],
+                  const SectionSeparetedText(
+                    title: 'Payment Details',
+                  ),
+                  const PaymentOption(),
+                ],
+              ),
             ),
-          )),
+          ),
           PlaceorderWidget(
-            totalPrice: '10.00',
+            totalPrice: distanceValue.isNotEmpty
+                ? (totalBasketSumm +
+                        ((int.parse(distanceValue) / 1000) *
+                            (deliveryPricePerKm.value ?? 0)))
+                    .toStringAsFixed(2)
+                : totalBasketSumm.toStringAsFixed(2),
             onTap: () {
               showDialog(
-                  context: context,
-                  builder: (context) => const BackdropPopup());
+                context: context,
+                builder: (context) => const BackdropPopup(),
+              );
             },
           )
         ],

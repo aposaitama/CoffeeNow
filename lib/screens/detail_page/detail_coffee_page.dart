@@ -1,3 +1,4 @@
+import 'package:coffee_now/screens/checkout_page/widgets/provider/get_shop_info_provider.dart';
 import 'package:coffee_now/screens/detail_page/provider/full_info_detailed_page_provider.dart';
 import 'package:coffee_now/screens/detail_page/widgets/favourite_product_item_tile.dart';
 import 'package:coffee_now/screens/detail_page/widgets/top_coffee_shop_info.dart';
@@ -27,7 +28,7 @@ class DetailCoffeePage extends ConsumerWidget {
         user?.addresses.isNotEmpty == true ? user!.addresses[0].lng : '',
       ),
     );
-
+    final deliveryPricePerKm = ref.watch(fetchDeliveryPriceProvider);
     final distance = ref.watch(
       FetchDistanceProvider(
           user?.addresses[0].lat ?? '0',
@@ -35,6 +36,9 @@ class DetailCoffeePage extends ConsumerWidget {
           coffeeShopData.value?.$1[0].latitude ?? '0',
           coffeeShopData.value?.$1[0].longitude ?? '0'),
     );
+    final deliveryTotalPrice = ((int.parse(distance.value ?? '0') / 1000) *
+            (deliveryPricePerKm.value ?? 0.0))
+        .toStringAsFixed(2);
 
     return Scaffold(
       body: coffeeShopData.when(
@@ -46,6 +50,7 @@ class DetailCoffeePage extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TopCoffeeShopInfo(
+                  deliveryPrice: deliveryTotalPrice,
                   coffeeShop: basicInfo[0],
                   distance: distance.value ?? '',
                 ),

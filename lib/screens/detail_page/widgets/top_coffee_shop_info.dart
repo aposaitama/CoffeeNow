@@ -6,10 +6,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class TopCoffeeShopInfo extends StatelessWidget {
+  final String deliveryPrice;
   final String distance;
   final CoffeeShopModel coffeeShop;
   const TopCoffeeShopInfo(
-      {super.key, required this.coffeeShop, required this.distance});
+      {super.key,
+      required this.coffeeShop,
+      required this.distance,
+      required this.deliveryPrice});
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +149,7 @@ class TopCoffeeShopInfo extends StatelessWidget {
                     width: 2.0,
                   ),
                   Text(
-                    '\$5.00',
+                    '\$$deliveryPrice',
                     style: AppFonts.poppinsMedium.copyWith(
                       color: Colors.white,
                       fontSize: 13.0,

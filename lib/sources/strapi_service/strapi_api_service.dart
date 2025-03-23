@@ -285,6 +285,46 @@ class ApiService {
     }
   }
 
+  Future<double?> fetchDeliveryPrice() async {
+    try {
+      final response = await _dio.get('/delivery-prices', queryParameters: {});
+
+      final double? deliveryPrice = response.data['data'][0]['pricePerKm'];
+
+      return deliveryPrice;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Future<Map<String, String>?> fetchCoffeeShopDetailsByProduct(
+  //     String productID) async {
+  //   try {
+  //     final response =
+  //         await _dio.get('/coffee-shop-detaileds', queryParameters: {
+  //       'filters[coffee_shop_categories][coffee_shop_products][documentId][\$eq]':
+  //           productID,
+  //       'populate': 'coffee_shop_categories.coffee_shop_products'
+  //     });
+
+  //     final String? shopID =
+  //         response.data['data'][0]['coffeeShopID']?.toString();
+
+  //     final shopResponse = awa
+
+  //     if (shopID != null && shopName != null) {
+  //       return {
+  //         'shopID': shopID,
+  //         'shopName': shopName,
+  //       };
+  //     } else {
+  //       return null;
+  //     }
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
+
   Future<List?> fetchLocationConcreteShop(String coffeeShopID) async {
     try {
       final response = await _dio.get('/coffee-shops', queryParameters: {

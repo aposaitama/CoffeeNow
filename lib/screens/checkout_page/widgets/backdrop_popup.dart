@@ -20,6 +20,7 @@ class BackdropPopup extends StatelessWidget {
             horizontal: 20.0,
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SafeArea(
                 child: SvgPicture.asset(

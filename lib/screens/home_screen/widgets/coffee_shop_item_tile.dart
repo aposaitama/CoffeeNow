@@ -6,10 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CoffeeShopItemTile extends StatelessWidget {
+  final String deliveryPrice;
   final String distance;
   final CoffeeShopModel coffeeShop;
   const CoffeeShopItemTile(
-      {super.key, required this.coffeeShop, required this.distance});
+      {super.key,
+      required this.coffeeShop,
+      required this.distance,
+      required this.deliveryPrice});
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +104,7 @@ class CoffeeShopItemTile extends StatelessWidget {
                               width: 2.0,
                             ),
                             Text(
-                              '\$5.00',
+                              '\$$deliveryPrice',
                               style: AppFonts.poppinsMedium.copyWith(
                                 color: AppColors.greyRegularTextColor,
                                 fontSize: 13.0,

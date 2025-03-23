@@ -1,3 +1,4 @@
+import 'package:coffee_now/screens/checkout_page/widgets/provider/get_shop_info_provider.dart';
 import 'package:coffee_now/screens/detail_page/widgets/favourite_product_item_tile.dart';
 import 'package:coffee_now/screens/home_screen/providers/advert_banner_provider/advert_banner_provider.dart';
 import 'package:coffee_now/screens/home_screen/providers/coffee_shop_provider/coffee_shop_provider.dart';
@@ -30,9 +31,8 @@ class HomeScreen extends ConsumerWidget {
         user?.addresses.isNotEmpty == true ? user!.addresses[0].lng : '',
       ),
     );
-
+    final deliveryPricePerKm = ref.watch(fetchDeliveryPriceProvider);
     final recomendedItems = ref.watch(fetchRecomendedItemsProvider).value ?? [];
-
     final addressComponents =
         location.value?.results[0].address_components ?? [];
     final address = Address(addressComponents);
@@ -180,14 +180,18 @@ class HomeScreen extends ConsumerWidget {
                             shop.longitude,
                           ),
                         );
-
+                        final deliveryTotalPrice =
+                            ((int.parse(distance.value ?? '0') / 1000) *
+                                    (deliveryPricePerKm.value ?? 0.0))
+                                .toStringAsFixed(2);
                         return GestureDetector(
                           onTap: () {
                             final coffeeShopID = shop.coffeeShopID;
-                            print(coffeeShopID);
+
                             context.push('/detail_page/$coffeeShopID');
                           },
                           child: CoffeeShopItemTile(
+                            deliveryPrice: deliveryTotalPrice,
                             distance: distance.value ?? '',
                             coffeeShop: shop,
                           ),

@@ -32,3 +32,15 @@ Future<List?> fetchLocationConcreteShop(
     throw Exception('Failed to load brands: $e');
   }
 }
+
+@riverpod
+Future<double?> fetchDeliveryPrice(
+  Ref ref,
+) async {
+  final apiService = ref.read(apiServiceProvider);
+  try {
+    return await apiService.fetchDeliveryPrice();
+  } catch (e) {
+    throw Exception('Failed to load deliveryPrice: $e');
+  }
+}

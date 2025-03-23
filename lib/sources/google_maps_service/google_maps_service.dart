@@ -59,7 +59,7 @@ class GoogleMapsService {
         'destinations': '$latShop,$lngShop',
         'key': 'AIzaSyBGHhRFdiPJxDxpX81Up_LhS71FQr4nJLY',
       });
-
+      print(response.data);
       return response.data['rows'][0]['elements'][0]['distance']['value']
           .toString();
     } catch (e) {
