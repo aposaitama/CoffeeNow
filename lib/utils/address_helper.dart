@@ -31,6 +31,17 @@ class Address {
     );
     final streetName = streetComponent.long_name;
 
-    return '$streetName, ${city}, ${country}';
+    return '$streetName, $city, $country';
+  }
+
+  String get address {
+    final streetComponent = _addressComponents.firstWhere(
+      (component) => component.types.contains('route'),
+      orElse: () => const AddressComponent(
+          long_name: 'Street', short_name: 'Street', types: []),
+    );
+    final streetName = streetComponent.long_name;
+
+    return streetName;
   }
 }

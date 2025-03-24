@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ChooseDeliveryAddress extends StatelessWidget {
-  const ChooseDeliveryAddress({super.key});
+  final String address;
+  final String cityAndCountry;
+  const ChooseDeliveryAddress(
+      {super.key, required this.address, required this.cityAndCountry});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class ChooseDeliveryAddress extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Rifqi Arkaanul',
+                    address,
                     style: AppFonts.poppinsMedium.copyWith(
                       fontSize: 14.0,
                       color: Theme.of(context).colorScheme.onSurface,
@@ -38,7 +41,7 @@ class ChooseDeliveryAddress extends StatelessWidget {
                     height: 6.0,
                   ),
                   Text(
-                    'Cirebon, West Java, Indonesia',
+                    cityAndCountry,
                     style: AppFonts.poppinsRegular.copyWith(
                       fontSize: 12.0,
                       color: AppColors.greyRegularTextColor,

@@ -97,7 +97,7 @@ class MyBasketScreen extends ConsumerWidget {
                     '/checkout',
                   );
                 },
-                checkoutItemCount: '1',
+                checkoutItemCount: basketListItems.length.toString(),
                 basketSumm: totalBasketSumm.toString(),
               ),
             )
