@@ -12,12 +12,18 @@ import 'package:coffee_now/screens/checkout_page/widgets/placeorder_widget.dart'
 import 'package:coffee_now/screens/checkout_page/provider/get_shop_info_provider.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/section_separeted_text.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/separator_widget.dart';
+import 'package:coffee_now/screens/checkout_page/widgets/shop_detailed_builder.dart';
+import 'package:coffee_now/screens/checkout_page/widgets/shop_title_builder.dart';
 import 'package:coffee_now/screens/detail_page/provider/shop_basic_info_provider/shop_basic_info.dart';
 import 'package:coffee_now/screens/home_screen/providers/location_provider/location_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
+import 'package:coffee_now/style/colors.dart';
+import 'package:coffee_now/style/font.dart';
 import 'package:coffee_now/utils/address_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 // final orderSuccessProvider = StateProvider<bool>((ref) => false);
 
@@ -35,7 +41,7 @@ class CheckoutPage extends ConsumerWidget {
     final basketListItems = basketModel?.basketItem ?? [];
     final groupedItems =
         ref.watch(groupProductsByShopProvider(basketListItems));
-    print(groupedItems.value?.keys ?? '');
+
     final userAddress = ref.watch(FetchLocationProvider(
         user?.addresses.firstOrNull?.lat ?? '',
         user?.addresses.firstOrNull?.lng ?? ''));
@@ -43,7 +49,7 @@ class CheckoutPage extends ConsumerWidget {
         Address(userAddress.value?.results[0].address_components ?? []);
 
     final deliveryPricePerKm = ref.watch(fetchDeliveryPriceProvider);
-
+    final deliveryPrice = 0.0;
     final coffeeShopData = ref.watch(
       FetchShopIDProvider(
         basketListItems[0].shopID,
@@ -74,15 +80,12 @@ class CheckoutPage extends ConsumerWidget {
           )
         : null;
     final distanceValue = distance?.value ?? '';
-    final shop =
-        ref.watch(fetchConcreteCoffeeShopProvider(coffeeShopData.value ?? ''));
+    // final shop =
+    //     ref.watch(fetchConcreteCoffeeShopProvider(coffeeShopData.value ?? ''));
     final selectedDeliveryMethod = ref.watch(deliveryMethodProvider);
     // final isOrderSuccess = ref.watch(orderSuccessProvider);
     return Scaffold(
-      appBar: CheckoutAppBar(
-        distanceValue: distanceValue,
-        shopName: shop.value?[0].shopName ?? '',
-      ),
+      appBar: const CheckoutAppBar(),
       body: Column(
         children: [
           Expanded(
@@ -104,16 +107,68 @@ class CheckoutPage extends ConsumerWidget {
                     onOptionTap: () {},
                     optionTitle: 'Add items',
                   ),
-                  BasketItemBuilder(
-                    basketListItems: basketListItems,
-                    onDeletePressed: (index) => ref
-                        .read(BasketHiveProvider(
-                          user!.id.toString(),
-                        ).notifier)
-                        .removeProductFromCart(
-                          basketListItems[index],
-                        ),
-                  ),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: (groupedItems.value?.entries.length ?? 1),
+                      itemBuilder: (context, index) {
+                        final entryList =
+                            groupedItems.value?.entries.toList() ?? [];
+                        if (entryList.isEmpty) {
+                          return SizedBox.shrink();
+                        }
+                        final location = ref.watch(
+                          fetchLocationConcreteShopProvider(
+                            groupedItems.value?.keys.toList()[index] ?? '',
+                          ),
+                        );
+                        final distance = location.value != null
+                            ? ref.watch(
+                                fetchDistanceProvider(
+                                  user?.addresses[0].lat ?? '',
+                                  user?.addresses[0].lng ?? '',
+                                  location.value?[0] ?? '',
+                                  location.value?[1] ?? '',
+                                ),
+                              )
+                            : null;
+                        final entry = entryList[index];
+
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 20.0,
+                                bottom: 5.0,
+                              ),
+                              child: ShopTitleBuilder(
+                                shopName: ref
+                                        .watch(fetchConcreteCoffeeShopProvider(
+                                            entry.key))
+                                        .value
+                                        ?.first
+                                        .shopName ??
+                                    '',
+                                distanceValue: distance?.value ?? '',
+                              ),
+                            ),
+                            BasketItemBuilder(
+                                basketListItems: entry.value,
+                                onDeletePressed: (index) {
+                                  ref
+                                      .read(BasketHiveProvider(
+                                        user!.id.toString(),
+                                      ).notifier)
+                                      .removeProductFromCart(
+                                        basketListItems[index],
+                                      );
+                                  ref.invalidate(
+                                    groupProductsByShopProvider,
+                                  );
+                                }),
+                          ],
+                        );
+                      }),
                   OrderSummary(
                     userId: user?.id.toString() ?? '',
                     distanceValue: distanceValue,
