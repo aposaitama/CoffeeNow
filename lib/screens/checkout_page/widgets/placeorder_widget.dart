@@ -53,7 +53,7 @@ class PlaceorderWidget extends StatelessWidget {
                   )
                 ],
               ),
-              CustomButton(
+              const CustomButton(
                 buttonText: 'Place Order',
               ),
             ],

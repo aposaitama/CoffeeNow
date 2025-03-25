@@ -1,4 +1,5 @@
 import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
+import 'package:coffee_now/screens/checkout_page/grouped_basket_provider/grouped_basket_provider.dart';
 import 'package:coffee_now/screens/checkout_page/provider/delivery_method_provider/delivery_method_provider.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/backdrop_popup.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/baket_item_builder.dart';
@@ -18,7 +19,7 @@ import 'package:coffee_now/utils/address_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final orderSuccessProvider = StateProvider<bool>((ref) => false);
+// final orderSuccessProvider = StateProvider<bool>((ref) => false);
 
 class CheckoutPage extends ConsumerWidget {
   const CheckoutPage({super.key});
@@ -31,13 +32,15 @@ class CheckoutPage extends ConsumerWidget {
         user?.id.toString() ?? '',
       ),
     );
+    final basketListItems = basketModel?.basketItem ?? [];
+    final groupedItems =
+        ref.watch(groupProductsByShopProvider(basketListItems));
+    print(groupedItems.value?.keys ?? '');
     final userAddress = ref.watch(FetchLocationProvider(
         user?.addresses.firstOrNull?.lat ?? '',
         user?.addresses.firstOrNull?.lng ?? ''));
     final fullUserDecodedAddress =
         Address(userAddress.value?.results[0].address_components ?? []);
-
-    final basketListItems = basketModel?.basketItem ?? [];
 
     final deliveryPricePerKm = ref.watch(fetchDeliveryPriceProvider);
 
@@ -111,15 +114,10 @@ class CheckoutPage extends ConsumerWidget {
                           basketListItems[index],
                         ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0,
-                    ),
-                    child: OrderSummary(
-                      userId: user?.id.toString() ?? '',
-                      distanceValue: distanceValue,
-                      deliveryPricePerKm: deliveryPricePerKm.value,
-                    ),
+                  OrderSummary(
+                    userId: user?.id.toString() ?? '',
+                    distanceValue: distanceValue,
+                    deliveryPricePerKm: deliveryPricePerKm.value,
                   ),
                   const SectionSeparetedText(
                     title: 'Payment Details',

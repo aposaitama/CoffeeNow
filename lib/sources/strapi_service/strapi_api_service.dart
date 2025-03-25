@@ -138,17 +138,17 @@ class ApiService {
     }
   }
 
-  Future<void> setUserSearchHistoryQuery() async {
-    try {
-      final user = await getUser();
+  // Future<void> setUserSearchHistoryQuery() async {
+  //   try {
+  //     final user = await getUser();
 
-      final response = await _dio.post('/search-models', queryParameters: {
-        'populate': '*',
-      });
+  //     final response = await _dio.post('/search-models', queryParameters: {
+  //       'populate': '*',
+  //     });
 
-      final List<dynamic> data = response.data['data'] ?? [];
-    } catch (e) {}
-  }
+  //     final List<dynamic> data = response.data['data'] ?? [];
+  //   } catch (e) {}
+  // }
 
   Future<List<AdvertBannerModel>> getAdvertBanned() async {
     try {
@@ -239,11 +239,7 @@ class ApiService {
           },
         },
       );
-
-      print('Response: ${response.data}');
-    } catch (e) {
-      print('Error: $e');
-    }
+    } catch (e) {}
   }
 
   Future<String?> createAddressDocument(String lat, String lng) async {
@@ -262,7 +258,6 @@ class ApiService {
 
       return id;
     } catch (e) {
-      print('Error creating address: $e');
       return null;
     }
   }
@@ -280,7 +275,6 @@ class ApiService {
 
       return id;
     } catch (e) {
-      print('Error creating address: $e');
       return null;
     }
   }
@@ -438,7 +432,7 @@ class ApiService {
           'populate': '*',
         },
       );
-      print(response.data);
+
       return UserModel.fromJson(response.data);
     } catch (e) {
       return null;
