@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Цей додаток використовує вашу локацію для покращення користувацького досвіду.</string>
+
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Цей додаток потребує доступу до вашої локації у фоновому режимі.</string>
+
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Цей додаток використовує вашу локацію навіть коли він закритий.</string>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

@@ -13,7 +13,7 @@ class OrderTotalCalculator {
 
   static double calculateDeliveryFee(String distanceValue, double? pricePerKm) {
     if (distanceValue.isNotEmpty) {
-      return (int.parse(distanceValue) / 1000) * (pricePerKm ?? 0);
+      return (double.parse(distanceValue)) * (pricePerKm ?? 0);
     }
     return 0.0;
   }

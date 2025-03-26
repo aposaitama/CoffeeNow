@@ -292,6 +292,144 @@ class _FetchLocationConcreteShopProviderElement
       (origin as FetchLocationConcreteShopProvider).coffeeShopID;
 }
 
+String _$fetchLocationCoffeeShopsHash() =>
+    r'53705dd786d4d6de7b525aa90f6c9e5a287840a4';
+
+/// See also [fetchLocationCoffeeShops].
+@ProviderFor(fetchLocationCoffeeShops)
+const fetchLocationCoffeeShopsProvider = FetchLocationCoffeeShopsFamily();
+
+/// See also [fetchLocationCoffeeShops].
+class FetchLocationCoffeeShopsFamily
+    extends Family<AsyncValue<List<List<String>?>>> {
+  /// See also [fetchLocationCoffeeShops].
+  const FetchLocationCoffeeShopsFamily();
+
+  /// See also [fetchLocationCoffeeShops].
+  FetchLocationCoffeeShopsProvider call(
+    List<String> shopIDsList,
+  ) {
+    return FetchLocationCoffeeShopsProvider(
+      shopIDsList,
+    );
+  }
+
+  @override
+  FetchLocationCoffeeShopsProvider getProviderOverride(
+    covariant FetchLocationCoffeeShopsProvider provider,
+  ) {
+    return call(
+      provider.shopIDsList,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'fetchLocationCoffeeShopsProvider';
+}
+
+/// See also [fetchLocationCoffeeShops].
+class FetchLocationCoffeeShopsProvider
+    extends AutoDisposeFutureProvider<List<List<String>?>> {
+  /// See also [fetchLocationCoffeeShops].
+  FetchLocationCoffeeShopsProvider(
+    List<String> shopIDsList,
+  ) : this._internal(
+          (ref) => fetchLocationCoffeeShops(
+            ref as FetchLocationCoffeeShopsRef,
+            shopIDsList,
+          ),
+          from: fetchLocationCoffeeShopsProvider,
+          name: r'fetchLocationCoffeeShopsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$fetchLocationCoffeeShopsHash,
+          dependencies: FetchLocationCoffeeShopsFamily._dependencies,
+          allTransitiveDependencies:
+              FetchLocationCoffeeShopsFamily._allTransitiveDependencies,
+          shopIDsList: shopIDsList,
+        );
+
+  FetchLocationCoffeeShopsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.shopIDsList,
+  }) : super.internal();
+
+  final List<String> shopIDsList;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<List<String>?>> Function(FetchLocationCoffeeShopsRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: FetchLocationCoffeeShopsProvider._internal(
+        (ref) => create(ref as FetchLocationCoffeeShopsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        shopIDsList: shopIDsList,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<List<String>?>> createElement() {
+    return _FetchLocationCoffeeShopsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FetchLocationCoffeeShopsProvider &&
+        other.shopIDsList == shopIDsList;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, shopIDsList.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin FetchLocationCoffeeShopsRef
+    on AutoDisposeFutureProviderRef<List<List<String>?>> {
+  /// The parameter `shopIDsList` of this provider.
+  List<String> get shopIDsList;
+}
+
+class _FetchLocationCoffeeShopsProviderElement
+    extends AutoDisposeFutureProviderElement<List<List<String>?>>
+    with FetchLocationCoffeeShopsRef {
+  _FetchLocationCoffeeShopsProviderElement(super.provider);
+
+  @override
+  List<String> get shopIDsList =>
+      (origin as FetchLocationCoffeeShopsProvider).shopIDsList;
+}
+
 String _$fetchDeliveryPriceHash() =>
     r'9012b25c5162916819b3655220b5b1e945fd9efc';
 

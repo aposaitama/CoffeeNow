@@ -2,11 +2,11 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:coffee_now/screens/auth/address_setup_screen/provider/address_lat_long_provider/address_lat_long_provider.dart';
 import 'package:coffee_now/screens/auth/address_setup_screen/provider/put_address_document_provider/put_address_document_provider.dart';
 import 'package:coffee_now/screens/auth/address_setup_screen/widget/custom_list_text_field.dart';
+import 'package:coffee_now/screens/auth/address_setup_screen/widget/show_location_bottom_sheet.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_button.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_text_field.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/style/font.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -29,6 +29,7 @@ class AddressSetupScreen extends ConsumerWidget {
         TextEditingController();
     final TextEditingController zipCodeController = TextEditingController();
     final TextEditingController cityController = TextEditingController();
+    final TextEditingController addressController = TextEditingController();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -75,7 +76,7 @@ class AddressSetupScreen extends ConsumerWidget {
                       hint: '0231',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15.0,
                   ),
                   Flexible(
@@ -131,6 +132,16 @@ class AddressSetupScreen extends ConsumerWidget {
                 },
                 child: const Text(
                   'Skip for now',
+                  style: AppFonts.poppinsMedium,
+                ),
+              ),
+              const Gap(19.0),
+              GestureDetector(
+                onTap: () {
+                  showLocationBottomSheet(context, ref, addressController);
+                },
+                child: const Text(
+                  'Use current location',
                   style: AppFonts.poppinsMedium,
                 ),
               ),

@@ -12,21 +12,214 @@ import 'package:coffee_now/screens/checkout_page/widgets/placeorder_widget.dart'
 import 'package:coffee_now/screens/checkout_page/provider/get_shop_info_provider.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/section_separeted_text.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/separator_widget.dart';
-import 'package:coffee_now/screens/checkout_page/widgets/shop_detailed_builder.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/shop_title_builder.dart';
 import 'package:coffee_now/screens/detail_page/provider/shop_basic_info_provider/shop_basic_info.dart';
 import 'package:coffee_now/screens/home_screen/providers/location_provider/location_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
-import 'package:coffee_now/style/colors.dart';
-import 'package:coffee_now/style/font.dart';
 import 'package:coffee_now/utils/address_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 
 // final orderSuccessProvider = StateProvider<bool>((ref) => false);
 
+// class CheckoutPage extends ConsumerWidget {
+//   const CheckoutPage({super.key});
+
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     final user = ref.watch(userProvider).value;
+//     final basketModel = ref.watch(
+//       BasketHiveProvider(
+//         user?.id.toString() ?? '',
+//       ),
+//     );
+//     final basketListItems = basketModel?.basketItem ?? [];
+//     final groupedItems =
+//         ref.watch(groupProductsByShopProvider(basketListItems));
+
+//     final userAddress = ref.watch(FetchLocationProvider(
+//         user?.addresses.firstOrNull?.lat ?? '',
+//         user?.addresses.firstOrNull?.lng ?? ''));
+//     final fullUserDecodedAddress =
+//         Address(userAddress.value?.results[0].address_components ?? []);
+
+//     final deliveryPricePerKm = ref.watch(fetchDeliveryPriceProvider);
+
+//     final coffeeShopData = ref.watch(
+//       FetchShopIDProvider(
+//         basketListItems[0].shopID,
+//       ),
+//     );
+
+//     final location = ref.watch(
+//       fetchLocationConcreteShopProvider(
+//         coffeeShopData.value ?? '',
+//       ),
+//     );
+//     final totalBasketSumm = ref
+//         .watch(
+//           BasketHiveProvider(
+//             user?.id.toString() ?? '',
+//           ).notifier,
+//         )
+//         .productCartTotalSumm();
+
+//     final distance = location.value != null
+//         ? ref.watch(
+//             fetchDistanceProvider(
+//               user?.addresses[0].lat ?? '',
+//               user?.addresses[0].lng ?? '',
+//               location.value?[0] ?? '',
+//               location.value?[1] ?? '',
+//             ),
+//           )
+//         : null;
+
+//     final entryList = groupedItems.value?.keys.toList() ?? [];
+//     final locationShops = entryList.isNotEmpty ? entryList : [];
+//     final coffeeShopsLocation = ref
+//         .watch(fetchLocationCoffeeShopsProvider(locationShops as List<String>));
+//     print(coffeeShopsLocation.value);
+//     // final shopLocationList = {
+//     //   for (String shopID in shopIDsList)
+//     //     if (ref.watch(fetchLocationConcreteShopProvider(shopID)).value != null)
+//     //       shopID: ref.watch(fetchLocationConcreteShopProvider(shopID)).value!,
+//     // };
+
+//     // final totalDispatcccccDistance = ref.watch(
+//     //   fetchDeliveryDistanceProvider(
+//     //     user?.addresses[0].lat ?? '',
+//     //     user?.addresses[0].lng ?? '',
+//     //     location.value?[0] ?? '',
+//     //     location.value?[1] ?? '',
+//     //   ),
+//     // );
+//     // print(totalDispatcccccDistance.value);
+
+//     final distanceValue = distance?.value ?? '';
+//     // final shop =
+//     //     ref.watch(fetchConcreteCoffeeShopProvider(coffeeShopData.value ?? ''));
+//     final selectedDeliveryMethod = ref.watch(deliveryMethodProvider);
+//     // final isOrderSuccess = ref.watch(orderSuccessProvider);
+//     return Scaffold(
+//       appBar: const CheckoutAppBar(),
+//       body: Column(
+//         children: [
+//           Expanded(
+//             child: SingleChildScrollView(
+//               child: Column(
+//                 children: [
+//                   const SectionSeparetedText(
+//                     title: 'Deliver to',
+//                   ),
+//                   ChooseDeliveryAddress(
+//                     address: fullUserDecodedAddress.address,
+//                     cityAndCountry:
+//                         '${fullUserDecodedAddress.city}, ${fullUserDecodedAddress.country}',
+//                   ),
+//                   const SeparatorWidget(),
+//                   const ChangeDeliveryMethod(),
+//                   SectionSeparetedText(
+//                     title: 'Order Summary',
+//                     onOptionTap: () {},
+//                     optionTitle: 'Add items',
+//                   ),
+//                   ListView.builder(
+//                       shrinkWrap: true,
+//                       physics: const NeverScrollableScrollPhysics(),
+//                       itemCount: (groupedItems.value?.entries.length ?? 1),
+//                       itemBuilder: (context, index) {
+//                         final entryList =
+//                             groupedItems.value?.entries.toList() ?? [];
+//                         if (entryList.isEmpty) {
+//                           return SizedBox.shrink();
+//                         }
+//                         final location = ref.watch(
+//                           fetchLocationConcreteShopProvider(
+//                             groupedItems.value?.keys.toList()[index] ?? '',
+//                           ),
+//                         );
+//                         final distance = location.value != null
+//                             ? ref.watch(
+//                                 fetchDistanceProvider(
+//                                   user?.addresses[0].lat ?? '',
+//                                   user?.addresses[0].lng ?? '',
+//                                   location.value?[0] ?? '',
+//                                   location.value?[1] ?? '',
+//                                 ),
+//                               )
+//                             : null;
+//                         final entry = entryList[index];
+
+//                         return Column(
+//                           children: [
+//                             Padding(
+//                               padding: const EdgeInsets.only(
+//                                 top: 20.0,
+//                                 bottom: 5.0,
+//                               ),
+//                               child: ShopTitleBuilder(
+//                                 shopName: ref
+//                                         .watch(fetchConcreteCoffeeShopProvider(
+//                                             entry.key))
+//                                         .value
+//                                         ?.first
+//                                         .shopName ??
+//                                     '',
+//                                 distanceValue: distance?.value ?? '',
+//                               ),
+//                             ),
+//                             BasketItemBuilder(
+//                                 basketListItems: entry.value,
+//                                 onDeletePressed: (index) {
+//                                   ref
+//                                       .read(BasketHiveProvider(
+//                                         user!.id.toString(),
+//                                       ).notifier)
+//                                       .removeProductFromCart(
+//                                         basketListItems[index],
+//                                       );
+//                                   ref.invalidate(
+//                                     groupProductsByShopProvider,
+//                                   );
+//                                 }),
+//                           ],
+//                         );
+//                       }),
+//                   OrderSummary(
+//                     userId: user?.id.toString() ?? '',
+//                     distanceValue: distanceValue,
+//                     deliveryPricePerKm: deliveryPricePerKm.value,
+//                   ),
+//                   const SectionSeparetedText(
+//                     title: 'Payment Details',
+//                   ),
+//                   const PaymentOption(),
+//                 ],
+//               ),
+//             ),
+//           ),
+//           PlaceorderWidget(
+//             totalPrice: selectedDeliveryMethod == DeliveryMethod.delivery
+//                 ? distanceValue.isNotEmpty
+//                     ? (totalBasketSumm +
+//                             ((int.parse(distanceValue) / 1000) *
+//                                 (deliveryPricePerKm.value ?? 0)))
+//                         .toStringAsFixed(2)
+//                     : totalBasketSumm.toStringAsFixed(2)
+//                 : totalBasketSumm.toStringAsFixed(2),
+//             onTap: () {
+//               showDialog(
+//                 context: context,
+//                 builder: (context) => const BackdropPopup(),
+//               );
+//             },
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }
 class CheckoutPage extends ConsumerWidget {
   const CheckoutPage({super.key});
 
@@ -49,7 +242,7 @@ class CheckoutPage extends ConsumerWidget {
         Address(userAddress.value?.results[0].address_components ?? []);
 
     final deliveryPricePerKm = ref.watch(fetchDeliveryPriceProvider);
-    final deliveryPrice = 0.0;
+
     final coffeeShopData = ref.watch(
       FetchShopIDProvider(
         basketListItems[0].shopID,
@@ -79,11 +272,89 @@ class CheckoutPage extends ConsumerWidget {
             ),
           )
         : null;
+
+    // Використовуємо один раз
+    final entryList = groupedItems.value?.entries.toList() ?? [];
+    final shopIDsList =
+        entryList.isNotEmpty ? entryList.map((e) => e.key).toList() : [];
+
+    final shopLocationMap = {
+      for (String shopID in shopIDsList)
+        if (ref.watch(fetchLocationConcreteShopProvider(shopID)).value != null)
+          shopID: ref.watch(fetchLocationConcreteShopProvider(shopID)).value!,
+    };
+    // final shopLocationMap = {
+    //   '69619726-5c86-4c1c-9f95-814fb0885d28': [
+    //     49.44694895603774,
+    //     32.055307926186245
+    //   ],
+    //   'aa342c5c-edcc-4aad-90c2-f6064f72eff0': [
+    //     49.40425758412039,
+    //     32.05083182423034
+    //   ],
+    //   'aa3412c5c-edcc-4aad-90c2-f6064f72eff0': [
+    //     49.404235758412039,
+    //     32.05083182423034
+    //   ],
+    // };
+
+    String createLocationString(Map<String, List<dynamic>> locationMap) {
+      final locationStrings = locationMap.entries.skip(1).map((entry) {
+        final latLngString = entry.value.map((e) => e.toString()).join(',');
+        return latLngString;
+      }).toList();
+
+      return locationStrings.join('|');
+    }
+
+    final locationString = createLocationString(shopLocationMap);
+    print('$locationString LOCATIONSTRING');
+    final firstLocation = shopLocationMap.isNotEmpty
+        ? shopLocationMap.entries.first.value
+        : ['0.0', '0.0'];
+    final firstLat = firstLocation[0].toString();
+
+    final firstLng = firstLocation[1].toString();
+
+    final totalDistanceDelivery = ref.watch(fetchDeliveryDistanceProvider(
+      firstLat,
+      firstLng,
+      user?.addresses[0].lat ?? '',
+      user?.addresses[0].lng ?? '',
+      locationString,
+    ));
+    print(totalDistanceDelivery.value);
     final distanceValue = distance?.value ?? '';
-    // final shop =
-    //     ref.watch(fetchConcreteCoffeeShopProvider(coffeeShopData.value ?? ''));
+    final totalDistanceDeliveryValue = totalDistanceDelivery.value ?? '';
     final selectedDeliveryMethod = ref.watch(deliveryMethodProvider);
-    // final isOrderSuccess = ref.watch(orderSuccessProvider);
+    final totalDistanceDeliveryValueParsed =
+        totalDistanceDeliveryValue.isNotEmpty &&
+                double.tryParse(totalDistanceDeliveryValue) != null
+            ? double.parse(totalDistanceDeliveryValue)
+            : 0.0;
+    final distanceValueParsed =
+        distanceValue.isNotEmpty && double.tryParse(distanceValue) != null
+            ? double.parse(distanceValue)
+            : 0.0;
+
+    final totalPrice = selectedDeliveryMethod == DeliveryMethod.delivery
+        ? distanceValue.isNotEmpty
+            ? (totalBasketSumm +
+                    (distanceValueParsed /
+                        1000 *
+                        (deliveryPricePerKm.value ?? 0)))
+                .toStringAsFixed(2)
+            : totalBasketSumm.toStringAsFixed(2)
+        : totalBasketSumm.toStringAsFixed(2);
+    final totalOrderPrice = selectedDeliveryMethod == DeliveryMethod.delivery
+        ? totalDistanceDeliveryValue.isNotEmpty
+            ? (totalBasketSumm +
+                    (totalDistanceDeliveryValueParsed *
+                        (deliveryPricePerKm.value ?? 0)))
+                .toStringAsFixed(2)
+            : totalBasketSumm.toStringAsFixed(2)
+        : totalBasketSumm.toStringAsFixed(2);
+
     return Scaffold(
       appBar: const CheckoutAppBar(),
       body: Column(
@@ -110,17 +381,11 @@ class CheckoutPage extends ConsumerWidget {
                   ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: (groupedItems.value?.entries.length ?? 1),
+                      itemCount: entryList.length,
                       itemBuilder: (context, index) {
-                        final entryList =
-                            groupedItems.value?.entries.toList() ?? [];
-                        if (entryList.isEmpty) {
-                          return SizedBox.shrink();
-                        }
                         final location = ref.watch(
                           fetchLocationConcreteShopProvider(
-                            groupedItems.value?.keys.toList()[index] ?? '',
-                          ),
+                              entryList[index].key),
                         );
                         final distance = location.value != null
                             ? ref.watch(
@@ -171,7 +436,7 @@ class CheckoutPage extends ConsumerWidget {
                       }),
                   OrderSummary(
                     userId: user?.id.toString() ?? '',
-                    distanceValue: distanceValue,
+                    distanceValue: totalDistanceDeliveryValue,
                     deliveryPricePerKm: deliveryPricePerKm.value,
                   ),
                   const SectionSeparetedText(
@@ -183,14 +448,15 @@ class CheckoutPage extends ConsumerWidget {
             ),
           ),
           PlaceorderWidget(
-            totalPrice: selectedDeliveryMethod == DeliveryMethod.delivery
-                ? distanceValue.isNotEmpty
-                    ? (totalBasketSumm +
-                            ((int.parse(distanceValue) / 1000) *
-                                (deliveryPricePerKm.value ?? 0)))
-                        .toStringAsFixed(2)
-                    : totalBasketSumm.toStringAsFixed(2)
-                : totalBasketSumm.toStringAsFixed(2),
+            totalPrice: totalOrderPrice,
+            // selectedDeliveryMethod == DeliveryMethod.delivery
+            //     ? distanceValue.isNotEmpty
+            //         ? (totalBasketSumm +
+            //                 (int.parse(totalDistanceDeliveryValue) *
+            //                     (deliveryPricePerKm.value ?? 0)))
+            //             .toStringAsFixed(2)
+            //         : totalBasketSumm.toStringAsFixed(2)
+            //     : totalBasketSumm.toStringAsFixed(2),
             onTap: () {
               showDialog(
                 context: context,

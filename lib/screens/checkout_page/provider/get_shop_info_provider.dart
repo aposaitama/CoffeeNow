@@ -34,6 +34,33 @@ Future<List?> fetchLocationConcreteShop(
 }
 
 @riverpod
+Future<List<List<String>?>> fetchLocationCoffeeShops(
+  Ref ref,
+  List<String> shopIDsList,
+) async {
+  final apiService = ref.read(apiServiceProvider);
+  List<List<String>> locations = []; // Список для зберігання локацій
+
+  try {
+    if (shopIDsList.isNotEmpty) {
+      // Перебираємо кожен shopID з списку
+      for (String shopID in shopIDsList) {
+        // Отримуємо локацію для поточного shopID
+        final location = await apiService.fetchLocationConcreteShop(shopID);
+
+        // Якщо локація не порожня (не null), додаємо її в список
+        if (location != null && location[0] != '0' && location[1] != '0') {
+          locations.add(location as List<String>);
+        }
+      }
+    }
+    return locations;
+  } catch (e) {
+    throw Exception('Failed to load locations: $e');
+  }
+}
+
+@riverpod
 Future<double?> fetchDeliveryPrice(
   Ref ref,
 ) async {

@@ -354,5 +354,204 @@ class _FetchDistanceProviderElement
   @override
   String get lngShop => (origin as FetchDistanceProvider).lngShop;
 }
+
+String _$fetchDeliveryDistanceHash() =>
+    r'802b63eecbe97222b723beb6714305c8d699ff77';
+
+/// See also [fetchDeliveryDistance].
+@ProviderFor(fetchDeliveryDistance)
+const fetchDeliveryDistanceProvider = FetchDeliveryDistanceFamily();
+
+/// See also [fetchDeliveryDistance].
+class FetchDeliveryDistanceFamily extends Family<AsyncValue<String?>> {
+  /// See also [fetchDeliveryDistance].
+  const FetchDeliveryDistanceFamily();
+
+  /// See also [fetchDeliveryDistance].
+  FetchDeliveryDistanceProvider call(
+    String latOrigin,
+    String lngOrigin,
+    String latDestination,
+    String lngDestination,
+    String waypoints,
+  ) {
+    return FetchDeliveryDistanceProvider(
+      latOrigin,
+      lngOrigin,
+      latDestination,
+      lngDestination,
+      waypoints,
+    );
+  }
+
+  @override
+  FetchDeliveryDistanceProvider getProviderOverride(
+    covariant FetchDeliveryDistanceProvider provider,
+  ) {
+    return call(
+      provider.latOrigin,
+      provider.lngOrigin,
+      provider.latDestination,
+      provider.lngDestination,
+      provider.waypoints,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'fetchDeliveryDistanceProvider';
+}
+
+/// See also [fetchDeliveryDistance].
+class FetchDeliveryDistanceProvider extends AutoDisposeFutureProvider<String?> {
+  /// See also [fetchDeliveryDistance].
+  FetchDeliveryDistanceProvider(
+    String latOrigin,
+    String lngOrigin,
+    String latDestination,
+    String lngDestination,
+    String waypoints,
+  ) : this._internal(
+          (ref) => fetchDeliveryDistance(
+            ref as FetchDeliveryDistanceRef,
+            latOrigin,
+            lngOrigin,
+            latDestination,
+            lngDestination,
+            waypoints,
+          ),
+          from: fetchDeliveryDistanceProvider,
+          name: r'fetchDeliveryDistanceProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$fetchDeliveryDistanceHash,
+          dependencies: FetchDeliveryDistanceFamily._dependencies,
+          allTransitiveDependencies:
+              FetchDeliveryDistanceFamily._allTransitiveDependencies,
+          latOrigin: latOrigin,
+          lngOrigin: lngOrigin,
+          latDestination: latDestination,
+          lngDestination: lngDestination,
+          waypoints: waypoints,
+        );
+
+  FetchDeliveryDistanceProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.latOrigin,
+    required this.lngOrigin,
+    required this.latDestination,
+    required this.lngDestination,
+    required this.waypoints,
+  }) : super.internal();
+
+  final String latOrigin;
+  final String lngOrigin;
+  final String latDestination;
+  final String lngDestination;
+  final String waypoints;
+
+  @override
+  Override overrideWith(
+    FutureOr<String?> Function(FetchDeliveryDistanceRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: FetchDeliveryDistanceProvider._internal(
+        (ref) => create(ref as FetchDeliveryDistanceRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        latOrigin: latOrigin,
+        lngOrigin: lngOrigin,
+        latDestination: latDestination,
+        lngDestination: lngDestination,
+        waypoints: waypoints,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<String?> createElement() {
+    return _FetchDeliveryDistanceProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FetchDeliveryDistanceProvider &&
+        other.latOrigin == latOrigin &&
+        other.lngOrigin == lngOrigin &&
+        other.latDestination == latDestination &&
+        other.lngDestination == lngDestination &&
+        other.waypoints == waypoints;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, latOrigin.hashCode);
+    hash = _SystemHash.combine(hash, lngOrigin.hashCode);
+    hash = _SystemHash.combine(hash, latDestination.hashCode);
+    hash = _SystemHash.combine(hash, lngDestination.hashCode);
+    hash = _SystemHash.combine(hash, waypoints.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin FetchDeliveryDistanceRef on AutoDisposeFutureProviderRef<String?> {
+  /// The parameter `latOrigin` of this provider.
+  String get latOrigin;
+
+  /// The parameter `lngOrigin` of this provider.
+  String get lngOrigin;
+
+  /// The parameter `latDestination` of this provider.
+  String get latDestination;
+
+  /// The parameter `lngDestination` of this provider.
+  String get lngDestination;
+
+  /// The parameter `waypoints` of this provider.
+  String get waypoints;
+}
+
+class _FetchDeliveryDistanceProviderElement
+    extends AutoDisposeFutureProviderElement<String?>
+    with FetchDeliveryDistanceRef {
+  _FetchDeliveryDistanceProviderElement(super.provider);
+
+  @override
+  String get latOrigin => (origin as FetchDeliveryDistanceProvider).latOrigin;
+  @override
+  String get lngOrigin => (origin as FetchDeliveryDistanceProvider).lngOrigin;
+  @override
+  String get latDestination =>
+      (origin as FetchDeliveryDistanceProvider).latDestination;
+  @override
+  String get lngDestination =>
+      (origin as FetchDeliveryDistanceProvider).lngDestination;
+  @override
+  String get waypoints => (origin as FetchDeliveryDistanceProvider).waypoints;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

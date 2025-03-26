@@ -54,6 +54,7 @@ class GoogleMapsService {
     String lngShop,
   ) async {
     try {
+      print('$latOrigin $lngOrigin, $latShop, $lngShop');
       final response = await _dio.get('/distancematrix/json', queryParameters: {
         'origins': '$latOrigin,$lngOrigin',
         'destinations': '$latShop,$lngShop',
@@ -62,6 +63,37 @@ class GoogleMapsService {
 
       return response.data['rows'][0]['elements'][0]['distance']['value']
           .toString();
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<String?> getDistanceWithWaypoints(
+    String latOrigin,
+    String lngOrigin,
+    String latDestination,
+    String lngDestination,
+    String waypoints,
+    // Map<String, List<dynamic>> waypoints,
+  ) async {
+    try {
+      print('$latOrigin,$lngOrigin ORIGIN');
+      print('$latDestination,$lngDestination DESTINATION');
+
+      print('$waypoints WAYPOINT IS');
+      final response = await _dio.get('/directions/json', queryParameters: {
+        'origin': '$latOrigin,$lngOrigin',
+        'destination': '$latDestination,$lngDestination',
+        'waypoints': '$waypoints',
+        'optimize': true,
+        'key': 'AIzaSyBGHhRFdiPJxDxpX81Up_LhS71FQr4nJLY',
+      });
+
+      final List<dynamic> legs = response.data['routes'][0]['legs'];
+      print(legs);
+      double totalDistance =
+          legs.fold(0, (sum, leg) => sum + leg['distance']['value'] as double);
+      return (totalDistance / 1000).toString();
     } catch (e) {
       return '';
     }
