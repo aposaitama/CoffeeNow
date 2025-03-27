@@ -17,6 +17,8 @@ class CoffeeShopItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(deliveryPrice);
+    print(distance);
     return Padding(
       padding: const EdgeInsets.only(bottom: 14.0),
       child: Container(
@@ -69,20 +71,27 @@ class CoffeeShopItemTile extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SvgPicture.asset('lib/assets/icons/Location.svg'),
-                            const SizedBox(
-                              width: 2.0,
-                            ),
-                            Text(
-                              distance.isNotEmpty
-                                  ? '${(int.parse(distance) / 1000).toStringAsFixed(1)} km'
-                                  : '',
-                              style: AppFonts.poppinsMedium.copyWith(
-                                color: AppColors.greyRegularTextColor,
-                                fontSize: 13.0,
-                              ),
-                            ),
-                            const SeparatedDot(),
+                            distance.isNotEmpty
+                                ? Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          'lib/assets/icons/Location.svg'),
+                                      const SizedBox(
+                                        width: 2.0,
+                                      ),
+                                      Text(
+                                        distance.isNotEmpty
+                                            ? '${(int.parse(distance) / 1000).toStringAsFixed(1)} km'
+                                            : '',
+                                        style: AppFonts.poppinsMedium.copyWith(
+                                          color: AppColors.greyRegularTextColor,
+                                          fontSize: 13.0,
+                                        ),
+                                      ),
+                                      const SeparatedDot(),
+                                    ],
+                                  )
+                                : SizedBox.shrink(),
                             SvgPicture.asset('lib/assets/icons/Star 1.svg'),
                             const SizedBox(
                               width: 2.0,
@@ -99,18 +108,25 @@ class CoffeeShopItemTile extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SvgPicture.asset('lib/assets/icons/Delivery.svg'),
-                            const SizedBox(
-                              width: 2.0,
-                            ),
-                            Text(
-                              '\$$deliveryPrice',
-                              style: AppFonts.poppinsMedium.copyWith(
-                                color: AppColors.greyRegularTextColor,
-                                fontSize: 13.0,
-                              ),
-                            ),
-                            const SeparatedDot(),
+                            deliveryPrice != '0.00'
+                                ? Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          'lib/assets/icons/Delivery.svg'),
+                                      const SizedBox(
+                                        width: 2.0,
+                                      ),
+                                      Text(
+                                        '\$$deliveryPrice',
+                                        style: AppFonts.poppinsMedium.copyWith(
+                                          color: AppColors.greyRegularTextColor,
+                                          fontSize: 13.0,
+                                        ),
+                                      ),
+                                      const SeparatedDot(),
+                                    ],
+                                  )
+                                : SizedBox.shrink(),
                             SvgPicture.asset(
                                 'lib/assets/icons/Time Circle.svg'),
                             const SizedBox(

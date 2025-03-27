@@ -22,23 +22,25 @@ class DetailCoffeePage extends ConsumerWidget {
     final coffeeShopData = ref.watch(fetchCoffeeShopDataProvider(coffeeShopID));
     final selectedCategoryIndex = ref.watch(selectedCategoryProvider);
     final user = ref.watch(userProvider).value;
-    final location = ref.watch(
-      fetchLocationProvider(
-        user?.addresses.isNotEmpty == true ? user!.addresses[0].lat : '',
-        user?.addresses.isNotEmpty == true ? user!.addresses[0].lng : '',
-      ),
-    );
+    // final location = ref.watch(
+    //   fetchLocationProvider(
+    //     user?.addresses.isNotEmpty == true ? user!.addresses[0].lat : '',
+    //     user?.addresses.isNotEmpty == true ? user!.addresses[0].lng : '',
+    //   ),
+    // );
     final deliveryPricePerKm = ref.watch(fetchDeliveryPriceProvider);
+
     final distance = ref.watch(
       FetchDistanceProvider(
-          user?.addresses[0].lat ?? '0',
-          user?.addresses[0].lng ?? '0',
+          user?.addresses.isNotEmpty == true ? user!.addresses[0].lat : '0',
+          user?.addresses.isNotEmpty == true ? user!.addresses[0].lng : '0',
           coffeeShopData.value?.$1[0].latitude ?? '0',
           coffeeShopData.value?.$1[0].longitude ?? '0'),
     );
-    final deliveryTotalPrice = ((int.parse(distance.value ?? '0') / 1000) *
-            (deliveryPricePerKm.value ?? 0.0))
-        .toStringAsFixed(2);
+    final distanceValue = int.tryParse(distance.value ?? '0') ?? 0;
+    final deliveryTotalPrice =
+        ((distanceValue / 1000) * (deliveryPricePerKm.value ?? 0.0))
+            .toStringAsFixed(2);
 
     return Scaffold(
       body: coffeeShopData.when(

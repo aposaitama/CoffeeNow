@@ -25,24 +25,27 @@ class HomeScreen extends ConsumerWidget {
     final coffeeShop = ref.watch(fetchCoffeeShopProvider).value ?? [];
     final brands = ref.watch(fetchBrandsProvider).value ?? [];
     final user = ref.watch(userProvider).value;
-    final location = ref.watch(
-      fetchLocationProvider(
-        user?.addresses.isNotEmpty == true ? user!.addresses[0].lat : '',
-        user?.addresses.isNotEmpty == true ? user!.addresses[0].lng : '',
-      ),
-    );
+    final hasAddress = user?.addresses.isNotEmpty == true;
+
+    final location = hasAddress
+        ? ref.watch(
+            fetchLocationProvider(
+                user!.addresses[0].lat, user.addresses[0].lng),
+          )
+        : null;
     final deliveryPricePerKm = ref.watch(fetchDeliveryPriceProvider);
     final recomendedItems = ref.watch(fetchRecomendedItemsProvider).value ?? [];
     final addressComponents =
-        location.value?.results[0].address_components ?? [];
+        location?.value?.results[0].address_components ?? [];
     final address = Address(addressComponents);
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
         title: AppBarTitle(
-          city: address.city,
-          country: address.country,
+          city: address.city.isNotEmpty ? address.city : 'Unknown City',
+          country:
+              address.country.isNotEmpty ? address.country : 'Unknown Country',
           userName: user?.username ?? '',
         ),
         actions: const [AppBarActions()],
@@ -174,16 +177,23 @@ class HomeScreen extends ConsumerWidget {
                         final shop = coffeeShop[index];
                         final distance = ref.watch(
                           FetchDistanceProvider(
-                            user?.addresses[0].lat ?? '0',
-                            user?.addresses[0].lng ?? '0',
+                            user?.addresses.isNotEmpty == true
+                                ? user!.addresses[0].lat
+                                : '0',
+                            user?.addresses.isNotEmpty == true
+                                ? user!.addresses[0].lng
+                                : '0',
                             shop.latitude,
                             shop.longitude,
                           ),
                         );
-                        final deliveryTotalPrice =
-                            ((int.parse(distance.value ?? '0') / 1000) *
-                                    (deliveryPricePerKm.value ?? 0.0))
-                                .toStringAsFixed(2);
+
+                        final distanceValue =
+                            int.tryParse(distance.value ?? '0') ?? 0;
+                        final deliveryTotalPrice = ((distanceValue / 1000) *
+                                (deliveryPricePerKm.value ?? 0.0))
+                            .toStringAsFixed(2);
+
                         return GestureDetector(
                           onTap: () {
                             final coffeeShopID = shop.coffeeShopID;

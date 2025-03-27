@@ -20,7 +20,7 @@ class AppRouter {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GoRouter createRouter(BuildContext context) {
     return GoRouter(
-      initialLocation: '/address_setup',
+      initialLocation: '/auth_gate',
       // initialLocation: '/auth_gate',
       // redirect: (context, state) {
       //   if (hasToken) {

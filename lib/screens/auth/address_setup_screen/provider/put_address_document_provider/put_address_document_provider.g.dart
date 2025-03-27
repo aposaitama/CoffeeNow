@@ -174,14 +174,14 @@ class _PutAddressDocProviderElement
   String get lng => (origin as PutAddressDocProvider).lng;
 }
 
-String _$connectAddressDocHash() => r'338ea52f91a36d116cdd2b45488fc886018d84aa';
+String _$connectAddressDocHash() => r'6b2af76303d019569814926b510953dd655db9f2';
 
 /// See also [connectAddressDoc].
 @ProviderFor(connectAddressDoc)
 const connectAddressDocProvider = ConnectAddressDocFamily();
 
 /// See also [connectAddressDoc].
-class ConnectAddressDocFamily extends Family<AsyncValue<void>> {
+class ConnectAddressDocFamily extends Family<AsyncValue<String?>> {
   /// See also [connectAddressDoc].
   const ConnectAddressDocFamily();
 
@@ -222,7 +222,7 @@ class ConnectAddressDocFamily extends Family<AsyncValue<void>> {
 }
 
 /// See also [connectAddressDoc].
-class ConnectAddressDocProvider extends AutoDisposeFutureProvider<void> {
+class ConnectAddressDocProvider extends AutoDisposeFutureProvider<String?> {
   /// See also [connectAddressDoc].
   ConnectAddressDocProvider(
     String id,
@@ -262,7 +262,7 @@ class ConnectAddressDocProvider extends AutoDisposeFutureProvider<void> {
 
   @override
   Override overrideWith(
-    FutureOr<void> Function(ConnectAddressDocRef provider) create,
+    FutureOr<String?> Function(ConnectAddressDocRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -280,7 +280,7 @@ class ConnectAddressDocProvider extends AutoDisposeFutureProvider<void> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<void> createElement() {
+  AutoDisposeFutureProviderElement<String?> createElement() {
     return _ConnectAddressDocProviderElement(this);
   }
 
@@ -303,7 +303,7 @@ class ConnectAddressDocProvider extends AutoDisposeFutureProvider<void> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin ConnectAddressDocRef on AutoDisposeFutureProviderRef<void> {
+mixin ConnectAddressDocRef on AutoDisposeFutureProviderRef<String?> {
   /// The parameter `id` of this provider.
   String get id;
 
@@ -312,7 +312,8 @@ mixin ConnectAddressDocRef on AutoDisposeFutureProviderRef<void> {
 }
 
 class _ConnectAddressDocProviderElement
-    extends AutoDisposeFutureProviderElement<void> with ConnectAddressDocRef {
+    extends AutoDisposeFutureProviderElement<String?>
+    with ConnectAddressDocRef {
   _ConnectAddressDocProviderElement(super.provider);
 
   @override

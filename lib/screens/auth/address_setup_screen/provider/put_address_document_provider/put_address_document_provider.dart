@@ -17,7 +17,7 @@ Future<String?> putAddressDoc(Ref ref, String lat, String lng) async {
 }
 
 @riverpod
-Future<void> connectAddressDoc(Ref ref, String id, String userID) async {
+Future<String?> connectAddressDoc(Ref ref, String id, String userID) async {
   final apiService = ref.read(apiServiceProvider);
   try {
     return await apiService.connectAddressWithDoc(id, userID);

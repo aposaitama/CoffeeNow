@@ -1,32 +1,30 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'current_location_provider.g.dart';
 
 @riverpod
-Future<LocationData?> getUserLocation(
-  Ref ref,
-) async {
-  Location location = Location();
-  bool _serviceEnabled;
-  PermissionStatus _permissionGranted;
-
-  _serviceEnabled = await location.serviceEnabled();
-  if (!_serviceEnabled) {
-    _serviceEnabled = await location.requestService();
-    if (!_serviceEnabled) {
+Future<Position?> getUserLocation(Ref ref) async {
+  try {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
       return null;
     }
-  }
 
-  _permissionGranted = await location.hasPermission();
-  if (_permissionGranted == PermissionStatus.denied) {
-    _permissionGranted = await location.requestPermission();
-    if (_permissionGranted != PermissionStatus.granted) {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return null;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
       return null;
     }
-  }
 
-  return location.getLocation();
+    return await Geolocator.getCurrentPosition();
+  } catch (e) {
+    return null;
+  }
 }

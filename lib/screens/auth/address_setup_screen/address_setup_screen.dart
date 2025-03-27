@@ -12,6 +12,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class AddressSetupScreen extends ConsumerWidget {
   const AddressSetupScreen({super.key});
@@ -24,12 +26,52 @@ class AddressSetupScreen extends ConsumerWidget {
     final user = ref.watch(userProvider).value;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final TextEditingController addressLine1Controller =
-        TextEditingController();
+        TextEditingController(text: 'Narbutivska 156/2');
     final TextEditingController addressLine2Controller =
         TextEditingController();
-    final TextEditingController zipCodeController = TextEditingController();
+    final TextEditingController zipCodeController =
+        TextEditingController(text: '18000');
     final TextEditingController cityController = TextEditingController();
-    final TextEditingController addressController = TextEditingController();
+
+    Future<void> _fetchAndShowLocation() async {
+      final address =
+          '${addressLine1Controller.text} ${addressLine2Controller.text} ${zipCodeController.text} ${cityController.text}';
+
+      if (address.trim().isEmpty) {
+        BotToast.showText(text: 'Please enter a valid address');
+        return;
+      }
+
+      try {
+        final response = await ref.read(fetchLatLongProvider(address).future);
+
+        if (response?.results.isEmpty ?? true) {
+          BotToast.showText(text: 'Address not found');
+          return;
+        }
+
+        final lat = response!.results[0].geometry.location.lat;
+        final lng = response.results[0].geometry.location.lng;
+
+        final idResponse = await ref
+            .read(PutAddressDocProvider(lat.toString(), lng.toString()).future);
+
+        if (idResponse != null) {
+          showLocationPicker(context, lat, lng, () async {
+            final connectResponse = await ref.read(
+                ConnectAddressDocProvider(idResponse, user?.id.toString() ?? '')
+                    .future);
+            if (connectResponse != null) {
+              ref.invalidate(userProvider);
+
+              context.go('/home');
+            }
+          });
+        }
+      } catch (e) {
+        BotToast.showText(text: 'Error: $e');
+      }
+    }
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -95,56 +137,79 @@ class AddressSetupScreen extends ConsumerWidget {
               ),
               const Gap(36.0),
               GestureDetector(
-                onTap: () => context.go('/home'),
+                onTap: _fetchAndShowLocation,
                 child: const CustomButton(
                   buttonText: 'ADD ADDRESS',
                 ),
               ),
               const Gap(19.0),
               GestureDetector(
-                onTap: () async {
-                  try {
-                    final response = await ref.read(fetchLatLongProvider(
-                            '${addressLine1Controller.text} ${addressLine2Controller.text} ${zipCodeController.text} ${cityController.text}')
-                        .future);
-                    if (response!.results.isEmpty) {
-                      BotToast.showText(text: 'Enter correct address');
-                    }
+                onTap: () => context.go('/home'),
+                // onTap: () async {
+                //   try {
+                //     final response = await ref.read(fetchLatLongProvider(
+                //             '${addressLine1Controller.text} ${addressLine2Controller.text} ${zipCodeController.text} ${cityController.text}')
+                //         .future);
 
-                    final idResponse = await ref.read(PutAddressDocProvider(
-                            response.results[0].geometry.location.lat
-                                .toString(),
-                            response.results[0].geometry.location.lng
-                                .toString())
-                        .future);
-                    if (idResponse != null) {
-                      ref.read(
-                        ConnectAddressDocProvider(
-                          idResponse,
-                          user!.id.toString(),
-                        ),
-                      );
-                      context.go('/home');
-                    }
-                  } catch (e) {
-                    BotToast.showText(text: 'Enter correct address');
-                  }
-                },
+                //     // if ((response?.results ?? []).isEmpty) {
+                //     //   print(response);
+                //     //   BotToast.showText(text: 'Enter correct addressssss');
+                //     // }
+
+                //     final idResponse = await ref.read(PutAddressDocProvider(
+                //             response?.results[0].geometry.location.lat
+                //                     .toString() ??
+                //                 '',
+                //             response?.results[0].geometry.location.lng
+                //                     .toString() ??
+                //                 '')
+                //         .future);
+                //     if (idResponse != null) {
+                //       showLocationPicker(
+                //           context,
+                //           response?.results[0].geometry.location.lat ?? 0.0,
+                //           response?.results[0].geometry.location.lng ?? 0.0,
+                //           () async {
+                //         final idResponse = await ref.read(PutAddressDocProvider(
+                //                 response?.results[0].geometry.location.lat
+                //                         .toString() ??
+                //                     '',
+                //                 response?.results[0].geometry.location.lng
+                //                         .toString() ??
+                //                     '')
+                //             .future);
+                //         idResponse != null
+                //             ? ref.read(
+                //                 ConnectAddressDocProvider(
+                //                   idResponse,
+                //                   user!.id.toString(),
+                //                 ),
+                //               )
+                //             : null;
+                //       });
+                //     }
+                //   } catch (e) {
+                //     print(e);
+                //     BotToast.showText(text: 'Enter correct address');
+                //   }
+                // },
                 child: const Text(
                   'Skip for now',
                   style: AppFonts.poppinsMedium,
                 ),
               ),
               const Gap(19.0),
-              GestureDetector(
-                onTap: () {
-                  showLocationBottomSheet(context, ref, addressController);
-                },
-                child: const Text(
-                  'Use current location',
-                  style: AppFonts.poppinsMedium,
-                ),
-              ),
+              // GestureDetector(
+              //   onTap: () => {
+              //     // showLocationPicker(
+              //     //   context,
+              //     // ),
+              //   },
+              //   child: const Text(
+              //     'Use current location',
+              //     style: AppFonts.poppinsMedium,
+              //   ),
+              // ),
             ],
           ),
         ),

@@ -335,12 +335,12 @@ class ApiService {
     }
   }
 
-  Future<void> connectAddressWithDoc(
+  Future<String?> connectAddressWithDoc(
     String addressDocID,
     String id,
   ) async {
     try {
-      await _dio.put(
+      final response = await _dio.put(
         '/users/$id',
         data: {
           "addresses": {
@@ -348,7 +348,10 @@ class ApiService {
           }
         },
       );
-    } catch (e) {}
+      return response.data['id'].toString();
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<DetailedCoffeeShopModel?> getDetailedCoffeeShop(
