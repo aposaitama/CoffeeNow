@@ -6,7 +6,10 @@ import 'package:coffee_now/models/detailed_coffee_shop/detailed_coffee_shop_mode
 import 'package:coffee_now/models/detailed_product/detailed_product_model.dart';
 import 'package:coffee_now/models/categories/categories_model.dart';
 import 'package:coffee_now/models/google_maps_models/latlong_model/lat_long_model.dart';
+import 'package:coffee_now/models/hive_models/basket_hive_item_model/basket_hive_item_model.dart';
 import 'package:coffee_now/models/user/user_model.dart';
+import 'package:coffee_now/screens/checkout_page/provider/delivery_method_provider/delivery_method_provider.dart';
+import 'package:coffee_now/screens/checkout_page/provider/paymernt_method_provider/payment_method_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -354,6 +357,66 @@ class ApiService {
     }
   }
 
+  Future<List<String>> createOrderItemsFromBasket(
+      List<BasketItemHiveModel> basketItems) async {
+    List<String> documentIds = [];
+
+    for (var item in basketItems) {
+      try {
+        final response = await _dio.post(
+          '/order-items',
+          data: {
+            "data": {
+              "productID": item.documentId,
+              "productCount": item.productCount,
+              "selectedOptions": item.selectedOptions,
+            }
+          },
+        );
+
+        final String? id = response.data['data']['documentId'];
+        if (id != null) {
+          documentIds.add(id);
+        }
+      } catch (e) {
+        print('Помилка при створенні елемента замовлення: $e');
+      }
+    }
+
+    return documentIds;
+  }
+
+  Future<String?> createOrderWithOrderItems(
+    String userID,
+    DeliveryMethod deliveryMethod,
+    PaymentMethod paymentMethod,
+    String orderTotal,
+    String destanationAddress,
+    List<String> orderItems,
+  ) async {
+    try {
+      final response = await _dio.post(
+        '/orders',
+        data: {
+          "data": {
+            "orderAssemblyStatus": "initial",
+            "deliveryStatus": "initial",
+            "userID": userID,
+            "deliveryMethod": deliveryMethod.name,
+            "paymentOption": paymentMethod.name,
+            "orderTotal": orderTotal,
+            "destanationAddress": destanationAddress,
+            "order_items": orderItems,
+          },
+        },
+      );
+
+      return response.data['id'].toString();
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<DetailedCoffeeShopModel?> getDetailedCoffeeShop(
     String coffeeShopID,
   ) async {
@@ -377,29 +440,6 @@ class ApiService {
       throw Exception('Failed to load coffee shop');
     }
   }
-
-  // Future<CoffeeShopProducts?> getConcreteProduct(
-  //   String documentID,
-  // ) async {
-  //   print(documentID);
-  //   try {
-  //     final response = await _dio.get(
-  //       '/coffee-shop-products/$documentID',
-  //       queryParameters: {
-  //         'populate': '*',
-  //       },
-  //     );
-
-  //     final Map<String, dynamic>? data = response.data['data'] ?? [];
-
-  //     if (data == null) return null;
-
-  //     return CoffeeShopProducts.fromJson(data);
-  //   } catch (e) {
-  //     print('Error fetching coffee shop: $e');
-  //     throw Exception('Failed to load coffee shop');
-  //   }
-  // }
 
   Future<DetailedProductModel?> getConcreteProduct(
     String documentID,
