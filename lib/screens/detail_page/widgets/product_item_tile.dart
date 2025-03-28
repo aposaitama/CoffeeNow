@@ -46,8 +46,8 @@ class ProductItemTile extends ConsumerWidget {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    ref.read(toogleFavoutireItemStatusProvider(
-                        shopProduct.documentId, shopProduct.isInFavourite));
+                    // ref.read(toogleFavoutireItemStatusProvider(
+                    //     shopProduct.documentId, shopProduct.isInFavourite));
                   },
                   child: SvgPicture.asset(
                     fit: BoxFit.scaleDown,

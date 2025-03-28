@@ -423,6 +423,28 @@ class ApiService {
     }
   }
 
+  Future<CoffeeShopProducts?> getLightModelConcreteProduct(
+    String documentID,
+  ) async {
+    try {
+      final response = await _dio.get(
+        '/coffee-shop-products/$documentID',
+        queryParameters: {
+          'populate[]': 'productImage',
+          'populate': 'instructions.instructions_elems',
+        },
+      );
+
+      final Map<String, dynamic>? data = response.data['data'] ?? [];
+
+      if (data == null) return null;
+
+      return CoffeeShopProducts.fromJson(data);
+    } catch (e) {
+      throw Exception('Failed to load coffee shop');
+    }
+  }
+
   Future<UserModel?> getUser() async {
     final token = await getToken();
     if (token == null) return null;

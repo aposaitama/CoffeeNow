@@ -1,19 +1,25 @@
 import 'package:coffee_now/models/coffee_shop/coffee_shop_model.dart';
+import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/screens/home_screen/widgets/separated_dot.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-class ConcreteProductTop extends StatelessWidget {
+class ConcreteProductTop extends ConsumerWidget {
   final String productImage;
+  final bool isInFavourite;
+  final void Function()? onHeartTap;
   const ConcreteProductTop({
     super.key,
     required this.productImage,
+    required this.isInFavourite,
+    required this.onHeartTap,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Stack(
       alignment: Alignment.topCenter,
       children: [
@@ -56,7 +62,7 @@ class ConcreteProductTop extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: onHeartTap,
                 child: Container(
                   width: 32.0,
                   height: 32.0,
@@ -68,7 +74,9 @@ class ConcreteProductTop extends StatelessWidget {
                   ),
                   child: SvgPicture.asset(
                     fit: BoxFit.scaleDown,
-                    'lib/assets/icons/Heart2.svg',
+                    isInFavourite
+                        ? 'lib/assets/icons/FilledHeart.svg'
+                        : 'lib/assets/icons/Heart.svg',
                     colorFilter: const ColorFilter.mode(
                       Colors.white,
                       BlendMode.srcIn,

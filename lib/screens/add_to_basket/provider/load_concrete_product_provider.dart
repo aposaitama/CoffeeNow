@@ -19,3 +19,16 @@ Future<DetailedProductModel?> fetchConcreteProduct(
     throw Exception('Failed to load brands: $e');
   }
 }
+
+@riverpod
+Future<CoffeeShopProducts?> fetchLightModelConcreteProduct(
+  Ref ref,
+  String documentID,
+) async {
+  final apiService = ref.read(apiServiceProvider);
+  try {
+    return await apiService.getLightModelConcreteProduct(documentID);
+  } catch (e) {
+    throw Exception('Failed to load brands: $e');
+  }
+}

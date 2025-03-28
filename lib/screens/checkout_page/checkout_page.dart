@@ -323,7 +323,7 @@ class CheckoutPage extends ConsumerWidget {
       user?.addresses[0].lng ?? '',
       locationString,
     ));
-    print(totalDistanceDelivery.value);
+
     final distanceValue = distance?.value ?? '';
     final totalDistanceDeliveryValue = totalDistanceDelivery.value ?? '';
     final selectedDeliveryMethod = ref.watch(deliveryMethodProvider);

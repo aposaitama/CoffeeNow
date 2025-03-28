@@ -1,6 +1,7 @@
 import 'package:coffee_now/models/detailed_coffee_shop/detailed_coffee_shop_model.dart';
 import 'package:coffee_now/screens/favourite_screen.dart/favourite_screen.dart';
 import 'package:coffee_now/screens/favourite_screen.dart/provider/favourite_items_provider.dart';
+import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,12 @@ class FavouriteProductItemTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider).value;
     final productWidth = MediaQuery.of(context).size.width;
+    final isInFavourite = ref
+        .watch(UserFavouritesProvider(user?.id.toString() ?? ''))
+        .contains(shopProduct.documentId);
+
     return Container(
       width: (productWidth - 60) / 2,
       height: 225.0,
@@ -31,7 +37,6 @@ class FavouriteProductItemTile extends ConsumerWidget {
         ],
       ),
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(alignment: Alignment.topRight, children: [
@@ -60,12 +65,15 @@ class FavouriteProductItemTile extends ConsumerWidget {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    ref.read(toogleFavoutireItemStatusProvider(
-                        shopProduct.documentId, shopProduct.isInFavourite));
+                    ref
+                        .read(UserFavouritesProvider(user?.id.toString() ?? '')
+                            .notifier)
+                        .toggleFavouriteItem(
+                            user?.id.toString() ?? '', shopProduct.documentId);
                   },
                   child: SvgPicture.asset(
                     fit: BoxFit.scaleDown,
-                    shopProduct.isInFavourite
+                    isInFavourite
                         ? 'lib/assets/icons/FilledHeart.svg'
                         : 'lib/assets/icons/Heart.svg',
                   ),

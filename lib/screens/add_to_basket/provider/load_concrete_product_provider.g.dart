@@ -163,5 +163,145 @@ class _FetchConcreteProductProviderElement
   @override
   String get documentID => (origin as FetchConcreteProductProvider).documentID;
 }
+
+String _$fetchLightModelConcreteProductHash() =>
+    r'0e845bf8c781fc402f5a47b2a73df58283f63233';
+
+/// See also [fetchLightModelConcreteProduct].
+@ProviderFor(fetchLightModelConcreteProduct)
+const fetchLightModelConcreteProductProvider =
+    FetchLightModelConcreteProductFamily();
+
+/// See also [fetchLightModelConcreteProduct].
+class FetchLightModelConcreteProductFamily
+    extends Family<AsyncValue<CoffeeShopProducts?>> {
+  /// See also [fetchLightModelConcreteProduct].
+  const FetchLightModelConcreteProductFamily();
+
+  /// See also [fetchLightModelConcreteProduct].
+  FetchLightModelConcreteProductProvider call(
+    String documentID,
+  ) {
+    return FetchLightModelConcreteProductProvider(
+      documentID,
+    );
+  }
+
+  @override
+  FetchLightModelConcreteProductProvider getProviderOverride(
+    covariant FetchLightModelConcreteProductProvider provider,
+  ) {
+    return call(
+      provider.documentID,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'fetchLightModelConcreteProductProvider';
+}
+
+/// See also [fetchLightModelConcreteProduct].
+class FetchLightModelConcreteProductProvider
+    extends AutoDisposeFutureProvider<CoffeeShopProducts?> {
+  /// See also [fetchLightModelConcreteProduct].
+  FetchLightModelConcreteProductProvider(
+    String documentID,
+  ) : this._internal(
+          (ref) => fetchLightModelConcreteProduct(
+            ref as FetchLightModelConcreteProductRef,
+            documentID,
+          ),
+          from: fetchLightModelConcreteProductProvider,
+          name: r'fetchLightModelConcreteProductProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$fetchLightModelConcreteProductHash,
+          dependencies: FetchLightModelConcreteProductFamily._dependencies,
+          allTransitiveDependencies:
+              FetchLightModelConcreteProductFamily._allTransitiveDependencies,
+          documentID: documentID,
+        );
+
+  FetchLightModelConcreteProductProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.documentID,
+  }) : super.internal();
+
+  final String documentID;
+
+  @override
+  Override overrideWith(
+    FutureOr<CoffeeShopProducts?> Function(
+            FetchLightModelConcreteProductRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: FetchLightModelConcreteProductProvider._internal(
+        (ref) => create(ref as FetchLightModelConcreteProductRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        documentID: documentID,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<CoffeeShopProducts?> createElement() {
+    return _FetchLightModelConcreteProductProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FetchLightModelConcreteProductProvider &&
+        other.documentID == documentID;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, documentID.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin FetchLightModelConcreteProductRef
+    on AutoDisposeFutureProviderRef<CoffeeShopProducts?> {
+  /// The parameter `documentID` of this provider.
+  String get documentID;
+}
+
+class _FetchLightModelConcreteProductProviderElement
+    extends AutoDisposeFutureProviderElement<CoffeeShopProducts?>
+    with FetchLightModelConcreteProductRef {
+  _FetchLightModelConcreteProductProviderElement(super.provider);
+
+  @override
+  String get documentID =>
+      (origin as FetchLightModelConcreteProductProvider).documentID;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

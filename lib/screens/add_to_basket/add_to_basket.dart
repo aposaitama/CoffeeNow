@@ -9,6 +9,7 @@ import 'package:coffee_now/screens/add_to_basket/widgets/product_count_widget.da
 import 'package:coffee_now/screens/add_to_basket/widgets/product_instruction_item_tile.dart';
 import 'package:coffee_now/screens/add_to_basket/widgets/special_instructions_product_part.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_button.dart';
+import 'package:coffee_now/screens/favourite_screen.dart/provider/favourite_items_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
@@ -32,6 +33,9 @@ class AddToBasket extends ConsumerWidget {
     final selectedInstuctions = ref.watch(selectedInstructionsProvider);
     final concreteProduct =
         ref.watch(fetchConcreteProductProvider(coffeeShopID)).value;
+    final isInFavourite = ref
+        .watch(UserFavouritesProvider(user?.id.toString() ?? ''))
+        .contains(concreteProduct?.documentId ?? '');
     return Scaffold(
       body: concreteProduct == null
           ? const Center(
@@ -41,6 +45,14 @@ class AddToBasket extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ConcreteProductTop(
+                  onHeartTap: () {
+                    ref
+                        .read(UserFavouritesProvider(user?.id.toString() ?? '')
+                            .notifier)
+                        .toggleFavouriteItem(user?.id.toString() ?? '',
+                            concreteProduct.documentId);
+                  },
+                  isInFavourite: isInFavourite,
                   productImage: concreteProduct.productImage.url,
                 ),
                 Expanded(

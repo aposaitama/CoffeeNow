@@ -1,20 +1,24 @@
+import 'package:coffee_now/screens/add_to_basket/provider/load_concrete_product_provider.dart';
 import 'package:coffee_now/screens/detail_page/widgets/favourite_product_item_tile.dart';
-import 'package:coffee_now/screens/detail_page/widgets/product_item_tile.dart';
+
 import 'package:coffee_now/screens/favourite_screen.dart/provider/favourite_items_provider.dart';
-import 'package:coffee_now/screens/home_screen/providers/recomended_items_provider/recomended_items_provider.dart';
+
+import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 class FavouriteScreen extends ConsumerWidget {
   const FavouriteScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final recomendedItems = ref.watch(fetchFavoutireItemsProvider).value ?? [];
+    final user = ref.watch(userProvider).value;
+    final recomendedItems =
+        ref.watch(UserFavouritesProvider(user?.id.toString() ?? ''));
+
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
@@ -67,20 +71,13 @@ class FavouriteScreen extends ConsumerWidget {
               itemCount: recomendedItems.isEmpty ? 0 : recomendedItems.length,
               itemBuilder: (context, index) {
                 final product = recomendedItems[index];
-                // return ListTile(
-                //   contentPadding: const EdgeInsets.symmetric(
-                //       horizontal: 20.0, vertical: 10.0),
-                //   leading: Image.network(
-                //       'http://localhost:1337${product.productImage.url}',
-                //       width: 50,
-                //       height: 50),
-                //   title: Text(product.productName),
-                //   subtitle: Text(product.productDescription),
-                //   trailing: Text('\$${product.price.toStringAsFixed(2)}'),
-                // );
-                return FavouriteProductItemTile(
-                  shopProduct: product,
-                );
+                final productInfo = ref
+                    .watch(fetchLightModelConcreteProductProvider(product))
+                    .value;
+
+                return productInfo == null
+                    ? const SizedBox()
+                    : FavouriteProductItemTile(shopProduct: productInfo);
               },
             ),
           ),

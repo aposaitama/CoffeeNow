@@ -6,28 +6,26 @@ part of 'favourite_items_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fetchFavoutireItemsHash() =>
-    r'602c121c051a09211759be8cef4d516f64b84d66';
+String _$userFavouritesBoxHash() => r'02a8492ee0821e7ee89c74f869e22d3671054a7d';
 
-/// See also [fetchFavoutireItems].
-@ProviderFor(fetchFavoutireItems)
-final fetchFavoutireItemsProvider =
-    AutoDisposeFutureProvider<List<CoffeeShopProducts>>.internal(
-  fetchFavoutireItems,
-  name: r'fetchFavoutireItemsProvider',
+/// See also [userFavouritesBox].
+@ProviderFor(userFavouritesBox)
+final userFavouritesBoxProvider =
+    AutoDisposeProvider<Box<FavouriteHiveItemModel>>.internal(
+  userFavouritesBox,
+  name: r'userFavouritesBoxProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$fetchFavoutireItemsHash,
+      : _$userFavouritesBoxHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef FetchFavoutireItemsRef
-    = AutoDisposeFutureProviderRef<List<CoffeeShopProducts>>;
-String _$toogleFavoutireItemStatusHash() =>
-    r'c13adf3929d050fb9c4824a48a514e1fb797f07e';
+typedef UserFavouritesBoxRef
+    = AutoDisposeProviderRef<Box<FavouriteHiveItemModel>>;
+String _$userFavouritesHash() => r'2015279b7d4470427e2f3583d139d3797f908cc1';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -50,33 +48,39 @@ class _SystemHash {
   }
 }
 
-/// See also [toogleFavoutireItemStatus].
-@ProviderFor(toogleFavoutireItemStatus)
-const toogleFavoutireItemStatusProvider = ToogleFavoutireItemStatusFamily();
+abstract class _$UserFavourites
+    extends BuildlessAutoDisposeNotifier<List<String>> {
+  late final String userID;
 
-/// See also [toogleFavoutireItemStatus].
-class ToogleFavoutireItemStatusFamily extends Family<AsyncValue<void>> {
-  /// See also [toogleFavoutireItemStatus].
-  const ToogleFavoutireItemStatusFamily();
+  List<String> build(
+    String userID,
+  );
+}
 
-  /// See also [toogleFavoutireItemStatus].
-  ToogleFavoutireItemStatusProvider call(
-    String documentId,
-    bool currentStatus,
+/// See also [UserFavourites].
+@ProviderFor(UserFavourites)
+const userFavouritesProvider = UserFavouritesFamily();
+
+/// See also [UserFavourites].
+class UserFavouritesFamily extends Family<List<String>> {
+  /// See also [UserFavourites].
+  const UserFavouritesFamily();
+
+  /// See also [UserFavourites].
+  UserFavouritesProvider call(
+    String userID,
   ) {
-    return ToogleFavoutireItemStatusProvider(
-      documentId,
-      currentStatus,
+    return UserFavouritesProvider(
+      userID,
     );
   }
 
   @override
-  ToogleFavoutireItemStatusProvider getProviderOverride(
-    covariant ToogleFavoutireItemStatusProvider provider,
+  UserFavouritesProvider getProviderOverride(
+    covariant UserFavouritesProvider provider,
   ) {
     return call(
-      provider.documentId,
-      provider.currentStatus,
+      provider.userID,
     );
   }
 
@@ -92,85 +96,81 @@ class ToogleFavoutireItemStatusFamily extends Family<AsyncValue<void>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'toogleFavoutireItemStatusProvider';
+  String? get name => r'userFavouritesProvider';
 }
 
-/// See also [toogleFavoutireItemStatus].
-class ToogleFavoutireItemStatusProvider
-    extends AutoDisposeFutureProvider<void> {
-  /// See also [toogleFavoutireItemStatus].
-  ToogleFavoutireItemStatusProvider(
-    String documentId,
-    bool currentStatus,
+/// See also [UserFavourites].
+class UserFavouritesProvider
+    extends AutoDisposeNotifierProviderImpl<UserFavourites, List<String>> {
+  /// See also [UserFavourites].
+  UserFavouritesProvider(
+    String userID,
   ) : this._internal(
-          (ref) => toogleFavoutireItemStatus(
-            ref as ToogleFavoutireItemStatusRef,
-            documentId,
-            currentStatus,
-          ),
-          from: toogleFavoutireItemStatusProvider,
-          name: r'toogleFavoutireItemStatusProvider',
+          () => UserFavourites()..userID = userID,
+          from: userFavouritesProvider,
+          name: r'userFavouritesProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$toogleFavoutireItemStatusHash,
-          dependencies: ToogleFavoutireItemStatusFamily._dependencies,
+                  : _$userFavouritesHash,
+          dependencies: UserFavouritesFamily._dependencies,
           allTransitiveDependencies:
-              ToogleFavoutireItemStatusFamily._allTransitiveDependencies,
-          documentId: documentId,
-          currentStatus: currentStatus,
+              UserFavouritesFamily._allTransitiveDependencies,
+          userID: userID,
         );
 
-  ToogleFavoutireItemStatusProvider._internal(
+  UserFavouritesProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.documentId,
-    required this.currentStatus,
+    required this.userID,
   }) : super.internal();
 
-  final String documentId;
-  final bool currentStatus;
+  final String userID;
 
   @override
-  Override overrideWith(
-    FutureOr<void> Function(ToogleFavoutireItemStatusRef provider) create,
+  List<String> runNotifierBuild(
+    covariant UserFavourites notifier,
   ) {
+    return notifier.build(
+      userID,
+    );
+  }
+
+  @override
+  Override overrideWith(UserFavourites Function() create) {
     return ProviderOverride(
       origin: this,
-      override: ToogleFavoutireItemStatusProvider._internal(
-        (ref) => create(ref as ToogleFavoutireItemStatusRef),
+      override: UserFavouritesProvider._internal(
+        () => create()..userID = userID,
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        documentId: documentId,
-        currentStatus: currentStatus,
+        userID: userID,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<void> createElement() {
-    return _ToogleFavoutireItemStatusProviderElement(this);
+  AutoDisposeNotifierProviderElement<UserFavourites, List<String>>
+      createElement() {
+    return _UserFavouritesProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ToogleFavoutireItemStatusProvider &&
-        other.documentId == documentId &&
-        other.currentStatus == currentStatus;
+    return other is UserFavouritesProvider && other.userID == userID;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, documentId.hashCode);
-    hash = _SystemHash.combine(hash, currentStatus.hashCode);
+    hash = _SystemHash.combine(hash, userID.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -178,25 +178,18 @@ class ToogleFavoutireItemStatusProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin ToogleFavoutireItemStatusRef on AutoDisposeFutureProviderRef<void> {
-  /// The parameter `documentId` of this provider.
-  String get documentId;
-
-  /// The parameter `currentStatus` of this provider.
-  bool get currentStatus;
+mixin UserFavouritesRef on AutoDisposeNotifierProviderRef<List<String>> {
+  /// The parameter `userID` of this provider.
+  String get userID;
 }
 
-class _ToogleFavoutireItemStatusProviderElement
-    extends AutoDisposeFutureProviderElement<void>
-    with ToogleFavoutireItemStatusRef {
-  _ToogleFavoutireItemStatusProviderElement(super.provider);
+class _UserFavouritesProviderElement
+    extends AutoDisposeNotifierProviderElement<UserFavourites, List<String>>
+    with UserFavouritesRef {
+  _UserFavouritesProviderElement(super.provider);
 
   @override
-  String get documentId =>
-      (origin as ToogleFavoutireItemStatusProvider).documentId;
-  @override
-  bool get currentStatus =>
-      (origin as ToogleFavoutireItemStatusProvider).currentStatus;
+  String get userID => (origin as UserFavouritesProvider).userID;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

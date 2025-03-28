@@ -3,6 +3,7 @@ import 'package:coffee_now/di/service_locator.dart';
 import 'package:coffee_now/models/hive_models/basket_hive_item_model/basket_hive_item_model.dart';
 import 'package:coffee_now/models/hive_models/basket_hive_model.dart/basket_hive_model.dart';
 import 'package:coffee_now/models/hive_models/coffee_shop_image_hive_model/coffee_shop_image_hive_model.dart';
+import 'package:coffee_now/models/hive_models/favourite_hive_item_model/favourite_hive_item_model.dart';
 import 'package:coffee_now/models/hive_models/instructions_elem_hive_model/instructions_elem_hive_model.dart';
 import 'package:coffee_now/models/hive_models/products_instruction_hive_model/products_instruction_hive_model.dart';
 import 'package:coffee_now/models/hive_models/search_history_hive_model/search_history_hive_model.dart';
@@ -19,15 +20,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
   await Hive.initFlutter();
-  Hive.registerAdapter(SearchHistoryHiveModelAdapter()); //1
+  Hive.registerAdapter(SearchHistoryHiveModelAdapter());
   Hive.registerAdapter(ProductInstructionHiveModelAdapter());
-  Hive.registerAdapter(InstructionsElemHiveModelAdapter()); //4
-  Hive.registerAdapter(BasketItemHiveModelAdapter()); //2
-  Hive.registerAdapter(CoffeeShopImageHiveModelAdapter()); //3
-  Hive.registerAdapter(BasketHiveModelAdapter()); //3
+  Hive.registerAdapter(InstructionsElemHiveModelAdapter());
+  Hive.registerAdapter(BasketItemHiveModelAdapter());
+  Hive.registerAdapter(CoffeeShopImageHiveModelAdapter());
+  Hive.registerAdapter(BasketHiveModelAdapter());
+  Hive.registerAdapter(FavouriteHiveItemModelAdapter());
 
   await Hive.openBox<SearchHistoryHiveModel>('userSearchHistory');
   await Hive.openBox<BasketHiveModel>('userBasket');
+  await Hive.openBox<FavouriteHiveItemModel>('userFavourites');
 
   runApp(
     MultiBlocProvider(
