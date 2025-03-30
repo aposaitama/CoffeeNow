@@ -25,6 +25,10 @@ class MyBasketScreen extends ConsumerWidget {
       ),
     );
     final basketListItems = basketModel?.basketItem ?? [];
+    final totalProductCount = basketListItems.fold<int>(
+      0,
+      (sum, item) => sum + item.productCount,
+    );
     final totalBasketSumm = ref
         .watch(
           BasketHiveProvider(
@@ -97,8 +101,8 @@ class MyBasketScreen extends ConsumerWidget {
                     '/checkout',
                   );
                 },
-                checkoutItemCount: basketListItems.length.toString(),
-                basketSumm: totalBasketSumm.toString(),
+                checkoutItemCount: totalProductCount.toString(),
+                basketSumm: totalBasketSumm.toStringAsFixed(2),
               ),
             )
           ],

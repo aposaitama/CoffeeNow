@@ -79,6 +79,27 @@ class BasketHive extends _$BasketHive {
   //   }
   // }
 
+  void addListOfProductsToCart(List<BasketItemModel> products) {
+    final box = ref.watch(basketBoxProvider);
+    final currentBasket = box.get(userID);
+    if (currentBasket != null) {
+      for (BasketItemModel product in products) {
+        final basketItemHiveModel = BasketItemHiveModel.fromBasketItem(product);
+        final existingItemIndex = currentBasket.basketItem.indexWhere(
+          (item) =>
+              item.documentId == product.documentId &&
+              _compareMaps(item.selectedOptions, product.selectedOptions),
+        );
+
+        if (existingItemIndex != -1) {
+          currentBasket.basketItem[existingItemIndex].productCount += 1;
+        } else {
+          currentBasket.basketItem.add(basketItemHiveModel);
+        }
+      }
+    }
+  }
+
   double productCartTotalSumm() {
     final box = ref.watch(basketBoxProvider);
     final currentBasket = box.get(userID);

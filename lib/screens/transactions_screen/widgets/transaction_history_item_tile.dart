@@ -1,4 +1,5 @@
 import 'package:coffee_now/models/transaction_item_model/transaction_item_model.dart';
+import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
 
 import 'package:coffee_now/screens/detail_page/provider/shop_basic_info_provider/shop_basic_info.dart';
 
@@ -9,8 +10,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class TransactionHistoryItemTile extends ConsumerWidget {
+  final String userID;
   final TransactionItemModel transactionItem;
-  const TransactionHistoryItemTile({
+  const TransactionHistoryItemTile(
+    this.userID, {
     super.key,
     required this.transactionItem,
   });
@@ -133,11 +136,14 @@ class TransactionHistoryItemTile extends ConsumerWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 4.0),
-                      child: Text(
-                        'Reorder',
-                        style: AppFonts.poppinsMedium.copyWith(
-                          color: AppColors.orangeColor,
-                          fontSize: 13.0,
+                      child: GestureDetector(
+                        // onTap: () => ref.read(BasketHiveProvider(userID).notifier).addListOfProductsToCart(transactionItem.order_items),
+                        child: Text(
+                          'Reorder',
+                          style: AppFonts.poppinsMedium.copyWith(
+                            color: AppColors.orangeColor,
+                            fontSize: 13.0,
+                          ),
                         ),
                       ),
                     ),

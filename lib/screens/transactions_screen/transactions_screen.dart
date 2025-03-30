@@ -38,6 +38,7 @@ class TransactionsScreen extends ConsumerWidget {
                     itemBuilder: (context, index) {
                       final transactionItem = transactionHistory[index];
                       return TransactionHistoryItemTile(
+                        ((user?.id ?? 0).toString()),
                         transactionItem: transactionItem,
                       );
                     },
