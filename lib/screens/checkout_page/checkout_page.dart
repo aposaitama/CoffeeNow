@@ -128,7 +128,6 @@ class CheckoutPage extends ConsumerWidget {
       locationString,
     ));
 
-    final distanceValue = distance?.value ?? '';
     final totalDistanceDeliveryValue = totalDistanceDelivery.value ?? '';
     final selectedDeliveryMethod = ref.watch(deliveryMethodProvider);
     final totalDistanceDeliveryValueParsed =
@@ -136,20 +135,7 @@ class CheckoutPage extends ConsumerWidget {
                 double.tryParse(totalDistanceDeliveryValue) != null
             ? double.parse(totalDistanceDeliveryValue)
             : 0.0;
-    final distanceValueParsed =
-        distanceValue.isNotEmpty && double.tryParse(distanceValue) != null
-            ? double.parse(distanceValue)
-            : 0.0;
 
-    final totalPrice = selectedDeliveryMethod == DeliveryMethod.delivery
-        ? distanceValue.isNotEmpty
-            ? (totalBasketSumm +
-                    (distanceValueParsed /
-                        1000 *
-                        (deliveryPricePerKm.value ?? 0)))
-                .toStringAsFixed(2)
-            : totalBasketSumm.toStringAsFixed(2)
-        : totalBasketSumm.toStringAsFixed(2);
     final totalOrderPrice = selectedDeliveryMethod == DeliveryMethod.delivery
         ? totalDistanceDeliveryValue.isNotEmpty
             ? (totalBasketSumm +

@@ -7,6 +7,7 @@ import 'package:coffee_now/models/detailed_product/detailed_product_model.dart';
 import 'package:coffee_now/models/categories/categories_model.dart';
 import 'package:coffee_now/models/google_maps_models/latlong_model/lat_long_model.dart';
 import 'package:coffee_now/models/hive_models/basket_hive_item_model/basket_hive_item_model.dart';
+import 'package:coffee_now/models/transaction_item_model/transaction_item_model.dart';
 import 'package:coffee_now/models/user/user_model.dart';
 import 'package:coffee_now/screens/checkout_page/provider/delivery_method_provider/delivery_method_provider.dart';
 import 'package:coffee_now/screens/checkout_page/provider/paymernt_method_provider/payment_method_provider.dart';
@@ -367,6 +368,7 @@ class ApiService {
           '/order-items',
           data: {
             "data": {
+              "shopID": item.shopID,
               "productID": item.documentId,
               "productCount": item.productCount,
               "selectedOptions": item.selectedOptions,
@@ -384,6 +386,24 @@ class ApiService {
     }
 
     return documentIds;
+  }
+
+  Future<List<TransactionItemModel>> getTransactions(int userID) async {
+    try {
+      final response = await _dio.get('/orders', queryParameters: {
+        'filters[userID][\$eq]': userID,
+        'populate': '*',
+      });
+
+      final List<dynamic> data = response.data['data'] ?? [];
+      final String deliveryStatus = data[0]['deliveryStatus'];
+      print(deliveryStatus);
+      print(deliveryStatus);
+
+      return data.map((json) => TransactionItemModel.fromJson(json)).toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   Future<String?> createOrderWithOrderItems(

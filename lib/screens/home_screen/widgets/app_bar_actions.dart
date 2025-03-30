@@ -14,23 +14,23 @@ class AppBarActions extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            width: 28.0,
-            height: 28.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                6.0,
-              ),
-              color: Theme.of(context).colorScheme.secondary,
-            ),
-            child: SvgPicture.asset(
-              fit: BoxFit.scaleDown,
-              'lib/assets/icons/Ticket.svg',
-            ),
-          ),
-          const SizedBox(
-            width: 10.0,
-          ),
+          // Container(
+          //   width: 28.0,
+          //   height: 28.0,
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(
+          //       6.0,
+          //     ),
+          //     color: Theme.of(context).colorScheme.secondary,
+          //   ),
+          //   child: SvgPicture.asset(
+          //     fit: BoxFit.scaleDown,
+          //     'lib/assets/icons/Ticket.svg',
+          //   ),
+          // ),
+          // const SizedBox(
+          //   width: 10.0,
+          // ),
           IconButton(
             onPressed: () => context.push('/favourite_page'),
             icon: Container(

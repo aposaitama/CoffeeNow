@@ -9,6 +9,8 @@ import 'package:coffee_now/screens/add_to_basket/widgets/product_count_widget.da
 import 'package:coffee_now/screens/add_to_basket/widgets/product_instruction_item_tile.dart';
 import 'package:coffee_now/screens/add_to_basket/widgets/special_instructions_product_part.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_button.dart';
+import 'package:coffee_now/screens/checkout_page/provider/get_shop_info_provider.dart';
+import 'package:coffee_now/screens/detail_page/provider/shop_basic_info_provider/shop_basic_info.dart';
 import 'package:coffee_now/screens/favourite_screen.dart/provider/favourite_items_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/style/colors.dart';
@@ -28,6 +30,8 @@ class AddToBasket extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final coffeeShopConcreteID =
+        ref.watch(fetchShopIDProvider(coffeeShopID)).value ?? '';
     final count = ref.watch(productCount);
     final user = ref.watch(userProvider).value;
     final selectedInstuctions = ref.watch(selectedInstructionsProvider);
@@ -137,7 +141,7 @@ class AddToBasket extends ConsumerWidget {
                                 );
                               } else {
                                 final basketItem = BasketItemModel(
-                                  shopID: coffeeShopID,
+                                  shopID: coffeeShopConcreteID,
                                   documentId: concreteProduct.documentId,
                                   price: concreteProduct.price,
                                   productName: concreteProduct.productName,
