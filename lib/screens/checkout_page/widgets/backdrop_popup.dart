@@ -49,8 +49,16 @@ class BackdropPopup extends StatelessWidget {
               const SizedBox(
                 height: 45.0,
               ),
-              const CustomButton(
-                buttonText: 'Track Order',
+              GestureDetector(
+                onTap: () {
+                  context.pop();
+                  context.pop();
+                  context.pop();
+                  context.push('/track_order');
+                },
+                child: const CustomButton(
+                  buttonText: 'Track Order',
+                ),
               ),
               const SizedBox(
                 height: 25.0,

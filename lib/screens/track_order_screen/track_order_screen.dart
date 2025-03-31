@@ -30,14 +30,13 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
   }
 
   _initPolylines() {
-    // Ініціалізація полілінії між двома маркерами
     final polyline = Polyline(
       polylineId: const PolylineId('route1'),
-      points: [
+      points: const [
         LatLng(49.44694895603774, 32.055307926186245),
         LatLng(49.4190841, 32.0831215),
       ],
-      color: Colors.blue,
+      color: Theme.of(context).colorScheme.tertiary,
       width: 5,
     );
 
@@ -118,7 +117,9 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
         ),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
           return Stack(
             alignment: Alignment.bottomCenter,

@@ -33,18 +33,25 @@ class CheckoutPage extends ConsumerWidget {
         user?.id.toString() ?? '',
       ),
     );
+
     final basketListItems = basketModel?.basketItem ?? [];
 
     final groupedItems =
         ref.watch(groupProductsByShopProvider(basketListItems));
 
-    final userAddress = ref.watch(FetchLocationProvider(
+    final userAddress = ref.watch(
+      FetchLocationProvider(
         user?.addresses.firstOrNull?.lat ?? '',
-        user?.addresses.firstOrNull?.lng ?? ''));
-    final fullUserDecodedAddress =
-        Address(userAddress.value?.results[0].address_components ?? []);
+        user?.addresses.firstOrNull?.lng ?? '',
+      ),
+    );
+    final fullUserDecodedAddress = Address(
+      userAddress.value?.results[0].address_components ?? [],
+    );
 
-    final deliveryPricePerKm = ref.watch(fetchDeliveryPriceProvider);
+    final deliveryPricePerKm = ref.watch(
+      fetchDeliveryPriceProvider,
+    );
 
     final totalBasketSumm = ref
         .watch(
@@ -79,10 +86,12 @@ class CheckoutPage extends ConsumerWidget {
     // };
 
     String createLocationString(Map<String, List<dynamic>> locationMap) {
-      final locationStrings = locationMap.entries.skip(1).map((entry) {
-        final latLngString = entry.value.map((e) => e.toString()).join(',');
-        return latLngString;
-      }).toList();
+      final locationStrings = locationMap.entries.skip(1).map(
+        (entry) {
+          final latLngString = entry.value.map((e) => e.toString()).join(',');
+          return latLngString;
+        },
+      ).toList();
 
       return locationStrings.join('|');
     }
@@ -97,20 +106,27 @@ class CheckoutPage extends ConsumerWidget {
 
     final firstLng = firstLocation[1].toString();
 
-    final totalDistanceDelivery = ref.watch(fetchDeliveryDistanceProvider(
-      firstLat,
-      firstLng,
-      user?.addresses[0].lat ?? '',
-      user?.addresses[0].lng ?? '',
-      locationString,
-    ));
+    final totalDistanceDelivery = ref.watch(
+      fetchDeliveryDistanceProvider(
+        firstLat,
+        firstLng,
+        user?.addresses[0].lat ?? '',
+        user?.addresses[0].lng ?? '',
+        locationString,
+      ),
+    );
 
     final totalDistanceDeliveryValue = totalDistanceDelivery.value ?? '';
     final selectedDeliveryMethod = ref.watch(deliveryMethodProvider);
     final totalDistanceDeliveryValueParsed =
         totalDistanceDeliveryValue.isNotEmpty &&
-                double.tryParse(totalDistanceDeliveryValue) != null
-            ? double.parse(totalDistanceDeliveryValue)
+                double.tryParse(
+                      totalDistanceDeliveryValue,
+                    ) !=
+                    null
+            ? double.parse(
+                totalDistanceDeliveryValue,
+              )
             : 0.0;
 
     final totalOrderPrice = selectedDeliveryMethod == DeliveryMethod.delivery
@@ -152,7 +168,8 @@ class CheckoutPage extends ConsumerWidget {
                       itemBuilder: (context, index) {
                         final location = ref.watch(
                           fetchLocationConcreteShopProvider(
-                              entryList[index].key),
+                            entryList[index].key,
+                          ),
                         );
                         final distance = location.value != null
                             ? ref.watch(
@@ -175,8 +192,11 @@ class CheckoutPage extends ConsumerWidget {
                               ),
                               child: ShopTitleBuilder(
                                 shopName: ref
-                                        .watch(fetchConcreteCoffeeShopProvider(
-                                            entry.key))
+                                        .watch(
+                                          fetchConcreteCoffeeShopProvider(
+                                            entry.key,
+                                          ),
+                                        )
                                         .value
                                         ?.first
                                         .shopName ??

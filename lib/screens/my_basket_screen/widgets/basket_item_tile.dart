@@ -1,4 +1,5 @@
 import 'package:coffee_now/models/basket_item/basket_item_model.dart';
+import 'package:coffee_now/screens/my_basket_screen/edit_product_screen/edit_product_screen.dart';
 import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
@@ -84,11 +85,21 @@ class BasketItemTile extends StatelessWidget {
                   padding: const EdgeInsets.only(
                     top: 5.0,
                   ),
-                  child: Text(
-                    'Edit',
-                    style: AppFonts.poppinsMedium.copyWith(
-                      fontSize: 13.0,
-                      color: AppColors.orangeColor,
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditProductScreen(
+                          product: basketItem,
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      'Edit',
+                      style: AppFonts.poppinsMedium.copyWith(
+                        fontSize: 13.0,
+                        color: AppColors.orangeColor,
+                      ),
                     ),
                   ),
                 ),

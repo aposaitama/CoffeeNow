@@ -22,7 +22,7 @@ final basketBoxProvider = AutoDisposeProvider<Box<BasketHiveModel>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef BasketBoxRef = AutoDisposeProviderRef<Box<BasketHiveModel>>;
-String _$basketHiveHash() => r'8f9aaf18383d23b33435f7314498e4b06f30f656';
+String _$basketHiveHash() => r'c71d5b82218ffbfbf0df8b951dc1a4e702381f09';
 
 /// Copied from Dart SDK
 class _SystemHash {

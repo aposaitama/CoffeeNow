@@ -82,7 +82,11 @@ class MyBasketScreen extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   return BasketItemTile(
                     onPressed: () => ref
-                        .read(BasketHiveProvider(user.id.toString()).notifier)
+                        .read(
+                          BasketHiveProvider(
+                            user.id.toString(),
+                          ).notifier,
+                        )
                         .removeProductFromCart(
                           basketListItems[index],
                         ),

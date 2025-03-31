@@ -29,6 +29,10 @@ class RootScreen extends ConsumerWidget {
         user?.id.toString() ?? '',
       ),
     );
+    final totalProductCount = basketModel?.basketItem.fold<int>(
+      0,
+      (sum, item) => sum + item.productCount,
+    );
 
     return Scaffold(
       key: scaffoldKey,
@@ -78,7 +82,7 @@ class RootScreen extends ConsumerWidget {
                       ),
                       child: Center(
                           child: Text(
-                        basketModel?.basketItem.length.toString() ?? '0',
+                        totalProductCount.toString(),
                         style: AppFonts.poppinsSemiBold.copyWith(
                           color: Colors.white,
                           fontSize: 11.0,
