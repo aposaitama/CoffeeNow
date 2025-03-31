@@ -46,17 +46,6 @@ class CheckoutPage extends ConsumerWidget {
 
     final deliveryPricePerKm = ref.watch(fetchDeliveryPriceProvider);
 
-    final coffeeShopData = ref.watch(
-      FetchShopIDProvider(
-        basketListItems[0].shopID,
-      ),
-    );
-
-    final location = ref.watch(
-      fetchLocationConcreteShopProvider(
-        coffeeShopData.value ?? '',
-      ),
-    );
     final totalBasketSumm = ref
         .watch(
           BasketHiveProvider(
@@ -65,18 +54,6 @@ class CheckoutPage extends ConsumerWidget {
         )
         .productCartTotalSumm();
 
-    final distance = location.value != null
-        ? ref.watch(
-            fetchDistanceProvider(
-              user?.addresses[0].lat ?? '',
-              user?.addresses[0].lng ?? '',
-              location.value?[0] ?? '',
-              location.value?[1] ?? '',
-            ),
-          )
-        : null;
-
-    // Використовуємо один раз
     final entryList = groupedItems.value?.entries.toList() ?? [];
     final shopIDsList =
         entryList.isNotEmpty ? entryList.map((e) => e.key).toList() : [];
@@ -112,7 +89,7 @@ class CheckoutPage extends ConsumerWidget {
 
     final paymentMethod = ref.watch(paymentMethodProvider);
     final locationString = createLocationString(shopLocationMap);
-    print('$locationString LOCATIONSTRING');
+
     final firstLocation = shopLocationMap.isNotEmpty
         ? shopLocationMap.entries.first.value
         : ['0.0', '0.0'];
@@ -239,29 +216,23 @@ class CheckoutPage extends ConsumerWidget {
           ),
           PlaceorderWidget(
             totalPrice: totalOrderPrice,
-            // selectedDeliveryMethod == DeliveryMethod.delivery
-            //     ? distanceValue.isNotEmpty
-            //         ? (totalBasketSumm +
-            //                 (int.parse(totalDistanceDeliveryValue) *
-            //                     (deliveryPricePerKm.value ?? 0)))
-            //             .toStringAsFixed(2)
-            //         : totalBasketSumm.toStringAsFixed(2)
-            //     : totalBasketSumm.toStringAsFixed(2),
             onTap: () async {
-              ref.read(
-                checkoutProvider(
-                  basketListItems,
-                  (user?.id.toString() ?? ''),
-                  selectedDeliveryMethod,
-                  paymentMethod,
-                  totalOrderPrice,
-                  '',
-                ),
-              );
-              // showDialog(
-              //   context: context,
-              //   builder: (context) => const BackdropPopup(),
-              // );
+              if (paymentMethod == PaymentMethod.cash) {
+                // ref.read(
+                //   checkoutProvider(
+                //     basketListItems,
+                //     (user?.id.toString() ?? ''),
+                //     selectedDeliveryMethod,
+                //     paymentMethod,
+                //     totalOrderPrice,
+                //     '',
+                //   ),
+                // );
+                showDialog(
+                  context: context,
+                  builder: (context) => const BackdropPopup(),
+                );
+              }
             },
           )
         ],

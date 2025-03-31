@@ -6,12 +6,13 @@ import 'package:coffee_now/screens/auth/login_screen/login_screen.dart';
 import 'package:coffee_now/screens/auth/register_screen/register_screen.dart';
 import 'package:coffee_now/screens/checkout_page/checkout_page.dart';
 import 'package:coffee_now/screens/detail_page/detail_coffee_page.dart';
-import 'package:coffee_now/screens/favourite_screen.dart/favourite_screen.dart';
+import 'package:coffee_now/screens/favourite_screen/favourite_screen.dart';
 import 'package:coffee_now/screens/home_screen/home_screen.dart';
 import 'package:coffee_now/screens/my_basket_screen/my_basket_screen.dart';
 import 'package:coffee_now/screens/profile_screen/profile_screen.dart';
 import 'package:coffee_now/screens/root_screen/root_screen.dart';
 import 'package:coffee_now/screens/search_screen/search_screen.dart';
+import 'package:coffee_now/screens/track_order_screen/track_order_screen.dart';
 import 'package:coffee_now/screens/transactions_screen/transactions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -20,7 +21,7 @@ class AppRouter {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GoRouter createRouter(BuildContext context) {
     return GoRouter(
-      initialLocation: '/transactions',
+      initialLocation: '/track_order',
       // initialLocation: '/auth_gate',
       // redirect: (context, state) {
       //   if (hasToken) {
@@ -91,6 +92,10 @@ class AppRouter {
           builder: (context, state) {
             return const MyBasketScreen();
           },
+        ),
+        GoRoute(
+          path: '/track_order',
+          builder: (context, state) => const TrackOrderScreen(),
         ),
         GoRoute(
           path: '/add_to_basket/:documentID',

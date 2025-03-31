@@ -1,5 +1,5 @@
 import 'package:coffee_now/models/detailed_coffee_shop/detailed_coffee_shop_model.dart';
-import 'package:coffee_now/screens/favourite_screen.dart/provider/favourite_items_provider.dart';
+import 'package:coffee_now/screens/favourite_screen/provider/favourite_items_provider.dart';
 import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';

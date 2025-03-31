@@ -1,6 +1,6 @@
 import 'package:coffee_now/models/detailed_coffee_shop/detailed_coffee_shop_model.dart';
-import 'package:coffee_now/screens/favourite_screen.dart/favourite_screen.dart';
-import 'package:coffee_now/screens/favourite_screen.dart/provider/favourite_items_provider.dart';
+import 'package:coffee_now/screens/favourite_screen/favourite_screen.dart';
+import 'package:coffee_now/screens/favourite_screen/provider/favourite_items_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';

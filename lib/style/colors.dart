@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const greyTitleColor = Color.fromRGBO(170, 170, 170, 1);
+  static const brownColor = Color.fromRGBO(50, 29, 11, 1.0);
   static const greyRegularTextColor = Color.fromRGBO(149, 149, 149, 1);
   static const greyA4TextColor = Color.fromRGBO(164, 164, 164, 1);
   static const grey50TextColor = Color.fromRGBO(39, 50, 69, 1);

@@ -1,7 +1,7 @@
 import 'package:coffee_now/screens/add_to_basket/provider/load_concrete_product_provider.dart';
 import 'package:coffee_now/screens/detail_page/widgets/favourite_product_item_tile.dart';
 
-import 'package:coffee_now/screens/favourite_screen.dart/provider/favourite_items_provider.dart';
+import 'package:coffee_now/screens/favourite_screen/provider/favourite_items_provider.dart';
 
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/style/font.dart';

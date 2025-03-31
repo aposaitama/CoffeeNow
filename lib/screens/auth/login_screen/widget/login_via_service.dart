@@ -10,25 +10,26 @@ class LoginViaService extends StatelessWidget {
       height: 80.0,
       width: 80.0,
       decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primaryContainer,
-          borderRadius: BorderRadius.circular(
-            20.0,
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(
+          20.0,
+        ),
+        border: Border.all(
+          width: 1.0,
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context)
+                .colorScheme
+                .onPrimaryContainer
+                .withOpacity(0.3),
+            blurRadius: 15.0,
+            spreadRadius: 2.0,
+            offset: const Offset(2.0, 2.0),
           ),
-          border: Border.all(
-            width: 1.0,
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context)
-                  .colorScheme
-                  .onPrimaryContainer
-                  .withOpacity(0.3),
-              blurRadius: 15.0,
-              spreadRadius: 2.0,
-              offset: const Offset(2.0, 2.0),
-            ),
-          ]),
+        ],
+      ),
       child: Center(
         child: Image.asset(
           assetName,
