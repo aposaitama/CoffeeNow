@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:coffee_now/screens/auth/address_setup_screen/provider/current_location/current_location_provider.dart';
+import 'package:coffee_now/screens/transactions_screen/widgets/reorder_popup_button.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -92,60 +93,81 @@ void showLocationPicker(
             return const Center(child: CircularProgressIndicator());
           }
 
-          return SizedBox(
-            height: 400,
-            child: Column(
-              children: [
-                Expanded(
-                  child: GoogleMap(
-                    myLocationButtonEnabled: false,
-                    style: snapshot.data,
-                    buildingsEnabled: true,
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(latitude, longitude),
-                      zoom: 17.0,
+          return Column(
+            children: [
+              const SizedBox(
+                height: 30.0,
+              ),
+              Text(
+                textAlign: TextAlign.center,
+                'Is it correct location?',
+                style: AppFonts.poppinsSemiBold.copyWith(
+                  height: 1.5,
+                  fontSize: 20.0,
+                ),
+              ),
+              const SizedBox(
+                height: 30.0,
+              ),
+              Expanded(
+                child: GoogleMap(
+                  myLocationButtonEnabled: false,
+                  style: snapshot.data,
+                  buildingsEnabled: true,
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(latitude, longitude),
+                    zoom: 17.0,
+                  ),
+                  markers: {
+                    Marker(
+                      markerId: const MarkerId('current_location'),
+                      position: LatLng(latitude, longitude),
                     ),
-                    markers: {
-                      Marker(
-                        markerId: const MarkerId('current_location'),
-                        position: LatLng(latitude, longitude),
-                      ),
-                    },
-                  ),
+                  },
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 30.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: onSubmitted,
-                        child: Text(
-                          'Confirm',
-                          style: AppFonts.poppinsSemiBold.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontSize: 18,
-                          ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: onSubmitted,
+                        child: const ReorderPopupButton(
+                          buttonText: 'Yes',
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          'Cancel',
-                          style: AppFonts.poppinsSemiBold.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontSize: 18,
-                          ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: const ReorderPopupButton(
+                          buttonText: 'No',
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    // ElevatedButton(
+                    //   style: ButtonStyle(
+                    //     backgroundColor: WidgetStatePropertyAll(
+                    //         Theme.of(context).colorScheme.onPrimaryContainer),
+                    //   ),
+                    //   onPressed: () {
+                    //     Navigator.pop(context);
+                    //   },
+                    //   child: Text(
+                    //     'No',
+                    //     style: AppFonts.poppinsSemiBold.copyWith(
+                    //       color: Theme.of(context).colorScheme.onSurface,
+                    //       fontSize: 18,
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         },
       );

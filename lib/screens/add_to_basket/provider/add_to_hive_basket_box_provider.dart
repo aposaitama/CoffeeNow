@@ -79,9 +79,10 @@ class BasketHive extends _$BasketHive {
   //   }
   // }
 
-  void addListOfProductsToCart(List<BasketItemModel> products) {
+  void addListOfProductsToExistingCart(List<BasketItemModel> products) {
     final box = ref.watch(basketBoxProvider);
     final currentBasket = box.get(userID);
+
     if (currentBasket != null) {
       for (BasketItemModel product in products) {
         final basketItemHiveModel = BasketItemHiveModel.fromBasketItem(product);
@@ -92,11 +93,37 @@ class BasketHive extends _$BasketHive {
         );
 
         if (existingItemIndex != -1) {
-          currentBasket.basketItem[existingItemIndex].productCount += 1;
+          currentBasket.basketItem[existingItemIndex].productCount +=
+              product.productCount;
         } else {
           currentBasket.basketItem.add(basketItemHiveModel);
         }
       }
+      box.put(userID, currentBasket);
+    }
+  }
+
+  void addListOfProductsToNewCart(List<BasketItemModel> products) {
+    final box = ref.watch(basketBoxProvider);
+    final currentBasket = box.get(userID);
+
+    final newBasketItems =
+        products.map(BasketItemHiveModel.fromBasketItem).toList();
+
+    if (currentBasket != null) {
+      currentBasket.basketItem
+        ..clear()
+        ..addAll(newBasketItems);
+
+      box.put(userID, currentBasket);
+    } else {
+      box.put(
+        userID,
+        BasketHiveModel(
+          basketItem: newBasketItems,
+          userID: userID,
+        ),
+      );
     }
   }
 

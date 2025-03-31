@@ -26,14 +26,14 @@ class AddressSetupScreen extends ConsumerWidget {
     final user = ref.watch(userProvider).value;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final TextEditingController addressLine1Controller =
-        TextEditingController(text: 'Narbutivska 156/2');
+        TextEditingController(text: 'Narbutivska 156');
     final TextEditingController addressLine2Controller =
         TextEditingController();
     final TextEditingController zipCodeController =
         TextEditingController(text: '18000');
     final TextEditingController cityController = TextEditingController();
 
-    Future<void> _fetchAndShowLocation() async {
+    Future<void> fetchAndShowLocation() async {
       final address =
           '${addressLine1Controller.text} ${addressLine2Controller.text} ${zipCodeController.text} ${cityController.text}';
 
@@ -137,7 +137,7 @@ class AddressSetupScreen extends ConsumerWidget {
               ),
               const Gap(36.0),
               GestureDetector(
-                onTap: _fetchAndShowLocation,
+                onTap: fetchAndShowLocation,
                 child: const CustomButton(
                   buttonText: 'ADD ADDRESS',
                 ),

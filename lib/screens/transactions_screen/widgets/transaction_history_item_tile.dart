@@ -1,12 +1,18 @@
+import 'package:chopper/chopper.dart';
+import 'package:coffee_now/models/basket_item/basket_item_model.dart';
 import 'package:coffee_now/models/transaction_item_model/transaction_item_model.dart';
+import 'package:coffee_now/navigation/app_navigation.dart';
 import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
+import 'package:coffee_now/screens/add_to_basket/provider/load_concrete_product_provider.dart';
 
 import 'package:coffee_now/screens/detail_page/provider/shop_basic_info_provider/shop_basic_info.dart';
+import 'package:coffee_now/screens/transactions_screen/widgets/confirmation_reorder_popup.dart';
 
 import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class TransactionHistoryItemTile extends ConsumerWidget {
@@ -27,15 +33,44 @@ class TransactionHistoryItemTile extends ConsumerWidget {
       0,
       (sum, item) => sum + item.productCount,
     );
-    final uniqueShopIds = transactionItem.order_items
-        .map((item) => item.shopID) // Отримуємо всі shopID
-        .toSet() // Видаляємо дублікати
-        .toList(); // Перетворюємо назад у список
+    final uniqueShopIds =
+        transactionItem.order_items.map((item) => item.shopID).toSet().toList();
     final firstCoffeeShopInfo =
         ref.watch(fetchConcreteCoffeeShopProvider(uniqueShopIds[0])).value ??
             [];
     final orderCreatedTime =
         DateFormat('d MMMM, yy').format(transactionItem.updatedAt);
+
+    final basketModel = ref.watch(
+      BasketHiveProvider(
+        userID,
+      ),
+    );
+
+    final List<BasketItemModel> newTransactionItemList = [];
+
+    for (OrderItemModel item in transactionItem.order_items) {
+      final concreteProductAsync =
+          ref.watch(fetchConcreteProductProvider(item.productID));
+
+      if (concreteProductAsync.hasValue && concreteProductAsync.value != null) {
+        final concreteProduct = concreteProductAsync.value!;
+
+        final basketItem = BasketItemModel(
+          shopID: item.shopID,
+          documentId: item.productID,
+          productCount: item.productCount,
+          price: concreteProduct.price,
+          productName: concreteProduct.productName,
+          productDescription: concreteProduct.productDescription,
+          productImage: concreteProduct.productImage,
+          instructions: concreteProduct.instructions,
+          selectedOptions: item.selectedOptions,
+        );
+
+        newTransactionItemList.add(basketItem);
+      }
+    }
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 14.0),
@@ -136,16 +171,69 @@ class TransactionHistoryItemTile extends ConsumerWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 4.0),
-                      child: GestureDetector(
-                        // onTap: () => ref.read(BasketHiveProvider(userID).notifier).addListOfProductsToCart(transactionItem.order_items),
-                        child: Text(
-                          'Reorder',
-                          style: AppFonts.poppinsMedium.copyWith(
-                            color: AppColors.orangeColor,
-                            fontSize: 13.0,
-                          ),
-                        ),
-                      ),
+                      child: (basketModel?.basketItem ?? []).isNotEmpty
+                          ? GestureDetector(
+                              onTap: () => confirmationReorderPopup(
+                                context,
+                                ref,
+                                'Confirm action',
+                                'Would you like to add these items to a new or to existing cart?',
+                                'Create New Cart',
+                                'Add to Existing Cart',
+                                () {
+                                  ref
+                                      .read(BasketHiveProvider(userID).notifier)
+                                      .addListOfProductsToNewCart(
+                                          newTransactionItemList);
+                                  context.pop();
+                                  context.push('/my_basket');
+                                },
+                                () {
+                                  ref
+                                      .read(BasketHiveProvider(userID).notifier)
+                                      .addListOfProductsToExistingCart(
+                                          newTransactionItemList);
+                                  context.pop();
+                                  context.push('/my_basket');
+                                },
+                              ),
+                              child: Text(
+                                'Reorder',
+                                style: AppFonts.poppinsMedium.copyWith(
+                                  color: AppColors.orangeColor,
+                                  fontSize: 13.0,
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () => confirmationReorderPopup(
+                                context,
+                                ref,
+                                'Confirm action',
+                                'Would you like to reorder these items?',
+                                'Yes',
+                                'No',
+                                () {
+                                  ref
+                                      .read(BasketHiveProvider(userID).notifier)
+                                      .addListOfProductsToExistingCart(
+                                          newTransactionItemList);
+                                  // ref.invalidate(BasketHiveProvider(userID));
+                                  context.pop();
+                                  context.push('/my_basket');
+                                },
+                                () {
+                                  context.pop();
+                                },
+                              ),
+                              child: Text(
+                                'Reorder',
+                                style: AppFonts.poppinsMedium.copyWith(
+                                  color: AppColors.orangeColor,
+                                  fontSize: 13.0,
+                                ),
+                              ),
+                            ),
                     ),
                   ],
                 ),

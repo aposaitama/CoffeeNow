@@ -49,11 +49,9 @@ class TransactionsScreen extends ConsumerWidget {
                 ],
               ),
             )
-          : const Expanded(
-              child: Center(
-                child: Text(
-                  'You don\'t have transactions',
-                ),
+          : const Center(
+              child: Text(
+                'You don\'t have transactions',
               ),
             ),
     );
