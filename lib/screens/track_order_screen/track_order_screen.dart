@@ -1,15 +1,99 @@
+// import 'package:coffee_now/screens/track_order_screen/provider/concrete_track_order.dart';
+// import 'package:coffee_now/screens/track_order_screen/provider/maps_provider.dart';
+// import 'package:coffee_now/screens/track_order_screen/widgets/map_marker.dart';
+// import 'package:coffee_now/screens/track_order_screen/widgets/track_order_app_bar.dart';
+// import 'package:coffee_now/style/colors.dart';
+// import 'package:coffee_now/style/font.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:widget_to_marker/widget_to_marker.dart';
+
+// class TrackOrderScreen extends ConsumerWidget {
+//   final String trackOrderID;
+//   const TrackOrderScreen({super.key, required this.trackOrderID});
+
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     GoogleMapController? mapController;
+//     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+//     final markers = ref.watch(markersProvider);
+//     final polylines = ref.watch(polylinesProvider);
+
+//     return Scaffold(
+//       appBar: const TrackOrderAppBar(
+//         shopName: 'Starbucks - CSB Mall',
+//         distanceValue: '2',
+//       ),
+//       body: FutureBuilder(
+//         future: rootBundle.loadString(
+//           isDarkMode
+//               ? 'lib/assets/map_style/dark_mode/dark.json'
+//               : 'lib/assets/map_style/light_mode/silver.json',
+//         ),
+//         builder: (context, snapshot) {
+//           if (!snapshot.hasData) {
+//             return const Center(
+//               child: CircularProgressIndicator(),
+//             );
+//           }
+
+//           // ініціалізація маркерів і полігонів
+//           initPolylines(ref, isDarkMode);
+//           initMarkers(ref, isDarkMode);
+
+//           // Обчислення кордонів для маркерів
+
+//           // Анімування камери до нових маркерів
+
+//           return Stack(
+//             alignment: Alignment.bottomCenter,
+//             children: [
+//               Column(
+//                 children: [
+//                   Expanded(
+//                     child: GoogleMap(
+//                       polylines: polylines,
+//                       onMapCreated: (controller) {
+//                         mapController = controller;
+//                       },
+//                       myLocationButtonEnabled: false,
+//                       style: snapshot.data,
+//                       buildingsEnabled: true,
+//                       initialCameraPosition: const CameraPosition(
+//                         target: LatLng(49.4190841, 32.0831215),
+//                         zoom: 17.0,
+//                       ),
+//                       markers: markers,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ],
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+
+import 'package:coffee_now/screens/track_order_screen/provider/concrete_track_order.dart';
 import 'package:coffee_now/screens/track_order_screen/widgets/map_marker.dart';
 import 'package:coffee_now/screens/track_order_screen/widgets/track_order_app_bar.dart';
 import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:widget_to_marker/widget_to_marker.dart';
 
 class TrackOrderScreen extends StatefulWidget {
-  const TrackOrderScreen({super.key});
+  final String trackOrderID;
+  const TrackOrderScreen({super.key, required this.trackOrderID});
 
   @override
   State<TrackOrderScreen> createState() => _TrackOrderScreenState();
@@ -98,6 +182,8 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final trackItem =
+    //     ref.watch(ConcreteTrackOrderProvider(widget.trackOrderID));
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     const latitude = 49.4190841;
     const longitude = 32.0831215;

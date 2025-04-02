@@ -94,8 +94,13 @@ class AppRouter {
           },
         ),
         GoRoute(
-          path: '/track_order',
-          builder: (context, state) => const TrackOrderScreen(),
+          path: '/track_order/:trackOrderID',
+          builder: (context, state) {
+            final trackOrderID = state.pathParameters['trackOrderID'] ?? '';
+            return TrackOrderScreen(
+              trackOrderID: trackOrderID,
+            );
+          },
         ),
         GoRoute(
           path: '/add_to_basket/:documentID',

@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class MapMarker extends StatelessWidget {
   final bool isDarkMode;
   final String imageUrl;
+
   const MapMarker({
     super.key,
     required this.isDarkMode,

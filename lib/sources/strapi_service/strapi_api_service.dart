@@ -1,4 +1,5 @@
 import 'package:coffee_now/di/service_locator.dart';
+import 'package:coffee_now/models/active_order/active_order_model.dart';
 import 'package:coffee_now/models/advert_banner/advert_banner_model.dart';
 import 'package:coffee_now/models/brand_image/brand_image_model.dart';
 import 'package:coffee_now/models/coffee_shop/coffee_shop_model.dart';
@@ -101,6 +102,40 @@ class ApiService {
       return data.map((json) => BrandImageModel.fromJson(json)).toList();
     } catch (e) {
       return [];
+    }
+  }
+
+  Future<List<ActiveOrderModel>> getActiveOrders(
+    String userID,
+  ) async {
+    try {
+      final response = await _dio.get('/orders', queryParameters: {
+        'filters[deliveryStatus][\$notContains]': 'finished',
+        'filters[userID][\$eq]': userID,
+        'populate': '*',
+      });
+
+      final List<dynamic> data = response.data['data'] ?? [];
+
+      return data.map((json) => ActiveOrderModel.fromJson(json)).toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<ActiveOrderModel?> getConcreteActiveOrder(String documentID) async {
+    try {
+      final response = await _dio.get('/orders/$documentID', queryParameters: {
+        'populate': '*',
+      });
+
+      final List<dynamic> data = response.data['data'] ?? [];
+      if (data.isEmpty) {
+        return null;
+      }
+      return ActiveOrderModel.fromJson(data.first);
+    } catch (e) {
+      return null;
     }
   }
 

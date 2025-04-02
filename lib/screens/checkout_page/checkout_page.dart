@@ -1,6 +1,5 @@
 import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
 import 'package:coffee_now/screens/checkout_page/grouped_basket_provider/grouped_basket_provider.dart';
-import 'package:coffee_now/screens/checkout_page/provider/checkout_provider/checkout_provider.dart';
 import 'package:coffee_now/screens/checkout_page/provider/delivery_method_provider/delivery_method_provider.dart';
 import 'package:coffee_now/screens/checkout_page/provider/paymernt_method_provider/payment_method_provider.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/backdrop_popup.dart';

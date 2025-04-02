@@ -1,28 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'add_to_hive_basket_box_provider.dart';
+part of 'has_active_order_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$basketBoxHash() => r'f3871cd8d6ddbdb1870b2d200ed64bea60250c62';
-
-/// See also [basketBox].
-@ProviderFor(basketBox)
-final basketBoxProvider = AutoDisposeProvider<Box<BasketHiveModel>>.internal(
-  basketBox,
-  name: r'basketBoxProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$basketBoxHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef BasketBoxRef = AutoDisposeProviderRef<Box<BasketHiveModel>>;
-String _$basketHiveHash() => r'da105f32368569342d20912eebe906de43c1b8e7';
+String _$hasActiveOrderHash() => r'517d3dad1b433520d5ebdd6ee8e86ada34ac74fd';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -45,36 +29,36 @@ class _SystemHash {
   }
 }
 
-abstract class _$BasketHive
-    extends BuildlessAutoDisposeNotifier<BasketHiveModel?> {
+abstract class _$HasActiveOrder
+    extends BuildlessAutoDisposeNotifier<List<ActiveOrderModel>> {
   late final String userID;
 
-  BasketHiveModel? build(
+  List<ActiveOrderModel> build(
     String userID,
   );
 }
 
-/// See also [BasketHive].
-@ProviderFor(BasketHive)
-const basketHiveProvider = BasketHiveFamily();
+/// See also [HasActiveOrder].
+@ProviderFor(HasActiveOrder)
+const hasActiveOrderProvider = HasActiveOrderFamily();
 
-/// See also [BasketHive].
-class BasketHiveFamily extends Family<BasketHiveModel?> {
-  /// See also [BasketHive].
-  const BasketHiveFamily();
+/// See also [HasActiveOrder].
+class HasActiveOrderFamily extends Family<List<ActiveOrderModel>> {
+  /// See also [HasActiveOrder].
+  const HasActiveOrderFamily();
 
-  /// See also [BasketHive].
-  BasketHiveProvider call(
+  /// See also [HasActiveOrder].
+  HasActiveOrderProvider call(
     String userID,
   ) {
-    return BasketHiveProvider(
+    return HasActiveOrderProvider(
       userID,
     );
   }
 
   @override
-  BasketHiveProvider getProviderOverride(
-    covariant BasketHiveProvider provider,
+  HasActiveOrderProvider getProviderOverride(
+    covariant HasActiveOrderProvider provider,
   ) {
     return call(
       provider.userID,
@@ -93,30 +77,30 @@ class BasketHiveFamily extends Family<BasketHiveModel?> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'basketHiveProvider';
+  String? get name => r'hasActiveOrderProvider';
 }
 
-/// See also [BasketHive].
-class BasketHiveProvider
-    extends AutoDisposeNotifierProviderImpl<BasketHive, BasketHiveModel?> {
-  /// See also [BasketHive].
-  BasketHiveProvider(
+/// See also [HasActiveOrder].
+class HasActiveOrderProvider extends AutoDisposeNotifierProviderImpl<
+    HasActiveOrder, List<ActiveOrderModel>> {
+  /// See also [HasActiveOrder].
+  HasActiveOrderProvider(
     String userID,
   ) : this._internal(
-          () => BasketHive()..userID = userID,
-          from: basketHiveProvider,
-          name: r'basketHiveProvider',
+          () => HasActiveOrder()..userID = userID,
+          from: hasActiveOrderProvider,
+          name: r'hasActiveOrderProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$basketHiveHash,
-          dependencies: BasketHiveFamily._dependencies,
+                  : _$hasActiveOrderHash,
+          dependencies: HasActiveOrderFamily._dependencies,
           allTransitiveDependencies:
-              BasketHiveFamily._allTransitiveDependencies,
+              HasActiveOrderFamily._allTransitiveDependencies,
           userID: userID,
         );
 
-  BasketHiveProvider._internal(
+  HasActiveOrderProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -129,8 +113,8 @@ class BasketHiveProvider
   final String userID;
 
   @override
-  BasketHiveModel? runNotifierBuild(
-    covariant BasketHive notifier,
+  List<ActiveOrderModel> runNotifierBuild(
+    covariant HasActiveOrder notifier,
   ) {
     return notifier.build(
       userID,
@@ -138,10 +122,10 @@ class BasketHiveProvider
   }
 
   @override
-  Override overrideWith(BasketHive Function() create) {
+  Override overrideWith(HasActiveOrder Function() create) {
     return ProviderOverride(
       origin: this,
-      override: BasketHiveProvider._internal(
+      override: HasActiveOrderProvider._internal(
         () => create()..userID = userID,
         from: from,
         name: null,
@@ -154,14 +138,14 @@ class BasketHiveProvider
   }
 
   @override
-  AutoDisposeNotifierProviderElement<BasketHive, BasketHiveModel?>
+  AutoDisposeNotifierProviderElement<HasActiveOrder, List<ActiveOrderModel>>
       createElement() {
-    return _BasketHiveProviderElement(this);
+    return _HasActiveOrderProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is BasketHiveProvider && other.userID == userID;
+    return other is HasActiveOrderProvider && other.userID == userID;
   }
 
   @override
@@ -175,18 +159,18 @@ class BasketHiveProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin BasketHiveRef on AutoDisposeNotifierProviderRef<BasketHiveModel?> {
+mixin HasActiveOrderRef
+    on AutoDisposeNotifierProviderRef<List<ActiveOrderModel>> {
   /// The parameter `userID` of this provider.
   String get userID;
 }
 
-class _BasketHiveProviderElement
-    extends AutoDisposeNotifierProviderElement<BasketHive, BasketHiveModel?>
-    with BasketHiveRef {
-  _BasketHiveProviderElement(super.provider);
+class _HasActiveOrderProviderElement extends AutoDisposeNotifierProviderElement<
+    HasActiveOrder, List<ActiveOrderModel>> with HasActiveOrderRef {
+  _HasActiveOrderProviderElement(super.provider);
 
   @override
-  String get userID => (origin as BasketHiveProvider).userID;
+  String get userID => (origin as HasActiveOrderProvider).userID;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
