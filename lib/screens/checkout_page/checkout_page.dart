@@ -1,7 +1,9 @@
 import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
-import 'package:coffee_now/screens/checkout_page/grouped_basket_provider/grouped_basket_provider.dart';
+import 'package:coffee_now/screens/checkout_page/provider/checkout_provider/checkout_provider.dart';
+import 'package:coffee_now/screens/checkout_page/provider/grouped_basket_provider/grouped_basket_provider.dart';
 import 'package:coffee_now/screens/checkout_page/provider/delivery_method_provider/delivery_method_provider.dart';
 import 'package:coffee_now/screens/checkout_page/provider/paymernt_method_provider/payment_method_provider.dart';
+import 'package:coffee_now/screens/checkout_page/provider/stripe_payment_provider/payment_provider.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/backdrop_popup.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/baket_item_builder.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/change_delivery_method.dart';
@@ -236,17 +238,40 @@ class CheckoutPage extends ConsumerWidget {
           PlaceorderWidget(
             totalPrice: totalOrderPrice,
             onTap: () async {
+              if (paymentMethod == PaymentMethod.card) {
+                final int totalInCents =
+                    (double.tryParse(totalOrderPrice)! * 100).toInt();
+
+                final result = await ref.read(
+                    makePaymentProvider(totalInCents.toString(), 'usd').future);
+                if (result) {
+                  ref.read(
+                    checkoutProvider(
+                      basketListItems,
+                      (user?.id.toString() ?? ''),
+                      selectedDeliveryMethod,
+                      paymentMethod,
+                      totalOrderPrice,
+                      '',
+                    ),
+                  );
+                  showDialog(
+                    context: context,
+                    builder: (context) => const BackdropPopup(),
+                  );
+                }
+              }
               if (paymentMethod == PaymentMethod.cash) {
-                // ref.read(
-                //   checkoutProvider(
-                //     basketListItems,
-                //     (user?.id.toString() ?? ''),
-                //     selectedDeliveryMethod,
-                //     paymentMethod,
-                //     totalOrderPrice,
-                //     '',
-                //   ),
-                // );
+                ref.read(
+                  checkoutProvider(
+                    basketListItems,
+                    (user?.id.toString() ?? ''),
+                    selectedDeliveryMethod,
+                    paymentMethod,
+                    totalOrderPrice,
+                    '',
+                  ),
+                );
                 showDialog(
                   context: context,
                   builder: (context) => const BackdropPopup(),

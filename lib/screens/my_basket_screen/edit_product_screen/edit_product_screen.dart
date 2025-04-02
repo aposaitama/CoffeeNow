@@ -7,7 +7,7 @@ import 'package:coffee_now/screens/add_to_basket/widgets/concrete_product_top.da
 import 'package:coffee_now/screens/add_to_basket/widgets/product_instruction_item_tile.dart';
 import 'package:coffee_now/screens/add_to_basket/widgets/special_instructions_product_part.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_button.dart';
-import 'package:coffee_now/screens/checkout_page/grouped_basket_provider/grouped_basket_provider.dart';
+import 'package:coffee_now/screens/checkout_page/provider/grouped_basket_provider/grouped_basket_provider.dart';
 import 'package:coffee_now/screens/favourite_screen/provider/favourite_items_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/screens/my_basket_screen/edit_product_screen/provider/edit_product_count_provider.dart';

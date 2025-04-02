@@ -9,15 +9,20 @@ import 'package:coffee_now/models/hive_models/products_instruction_hive_model/pr
 import 'package:coffee_now/models/hive_models/search_history_hive_model/search_history_hive_model.dart';
 import 'package:coffee_now/navigation/app_navigation.dart';
 import 'package:coffee_now/navigation/cubit/navigation_cubit.dart';
-import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
 import 'package:coffee_now/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
+  await dotenv.load(fileName: "lib/stripe.env");
+  String stripeKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
+
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = stripeKey;
   await setupLocator();
   await Hive.initFlutter();
   Hive.registerAdapter(SearchHistoryHiveModelAdapter());

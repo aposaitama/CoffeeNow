@@ -68,6 +68,7 @@ dependencies:
   intl: ^0.20.2
   widget_to_marker: ^1.0.6
   flutter_stripe: ^11.4.0
+  flutter_dotenv: ^5.2.1
   
 
 dev_dependencies:
@@ -105,6 +106,7 @@ flutter:
     - lib/assets/icons/
     - lib/assets/map_style/dark_mode/dark.json
     - lib/assets/map_style/light_mode/silver.json
+    - lib/stripe.env
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
