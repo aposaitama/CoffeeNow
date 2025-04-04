@@ -36,7 +36,7 @@ class RootScreen extends ConsumerWidget {
 
     final activeOrders =
         ref.watch(hasActiveOrderProvider((user?.id ?? '').toString()));
-
+    print(activeOrders);
     final totalProductCount = basketModel?.basketItem.fold<int>(
       0,
       (sum, item) => sum + item.productCount,
@@ -63,7 +63,7 @@ class RootScreen extends ConsumerWidget {
                       }
                       if (activeOrders.length == 1) {
                         context.push(
-                            '/track_order/:${activeOrders.first.documentId}');
+                            '/track_order2/${activeOrders.first.documentId}');
                       }
                     },
                     child: Stack(

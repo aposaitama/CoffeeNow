@@ -14,7 +14,7 @@ class ConcreteTrackOrder extends _$ConcreteTrackOrder {
   ActiveOrderModel? build(String documentID) {
     if (documentID.isEmpty) return null;
     state = null;
-    _fetchActiveOrder(documentID);
+    _fetchActiveOrder();
     _startPolling(documentID);
 
     return state;
@@ -23,16 +23,16 @@ class ConcreteTrackOrder extends _$ConcreteTrackOrder {
   void _startPolling(String documentID) {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) async {
-      await _fetchActiveOrder(documentID);
+      await _fetchActiveOrder();
     });
   }
 
-  Future<void> _fetchActiveOrder(String documentID) async {
+  Future<void> _fetchActiveOrder() async {
     final apiService = ref.read(apiServiceProvider);
 
     try {
       final orderItem = await apiService.getConcreteActiveOrder(documentID);
-
+      print(orderItem);
       state = orderItem;
     } catch (e) {
       // Обробка помилки

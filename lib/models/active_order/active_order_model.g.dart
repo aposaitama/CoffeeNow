@@ -23,6 +23,9 @@ _$ActiveOrderModelImpl _$$ActiveOrderModelImplFromJson(
       order_items: (json['order_items'] as List<dynamic>)
           .map((e) => OrderItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      courier: json['courier'] == null
+          ? null
+          : CourierModel.fromJson(json['courier'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ActiveOrderModelImplToJson(
@@ -37,6 +40,7 @@ Map<String, dynamic> _$$ActiveOrderModelImplToJson(
       'deliveryMethod': _$DeliveryOrderMethodEnumMap[instance.deliveryMethod]!,
       'paymentOption': _$PaymentOrderOptionEnumMap[instance.paymentOption]!,
       'order_items': instance.order_items,
+      'courier': instance.courier,
     };
 
 const _$OrderAssemblyStatusEnumMap = {
@@ -76,4 +80,28 @@ Map<String, dynamic> _$$OrderItemModelImplToJson(
       'productID': instance.productID,
       'productCount': instance.productCount,
       'selectedOptions': instance.selectedOptions,
+    };
+
+_$CourierModelImpl _$$CourierModelImplFromJson(Map<String, dynamic> json) =>
+    _$CourierModelImpl(
+      id: (json['id'] as num).toInt(),
+      lat: (json['lat'] as num).toDouble(),
+      lng: (json['lng'] as num).toDouble(),
+      fullName: json['fullName'] as String,
+      phoneNum: json['phoneNum'] as String,
+      jobPosition: json['jobPosition'] as String,
+      photo: json['photo'] == null
+          ? null
+          : CoffeeShopImage.fromJson(json['photo'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$CourierModelImplToJson(_$CourierModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'lat': instance.lat,
+      'lng': instance.lng,
+      'fullName': instance.fullName,
+      'phoneNum': instance.phoneNum,
+      'jobPosition': instance.jobPosition,
+      'photo': instance.photo,
     };

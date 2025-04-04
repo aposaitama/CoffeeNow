@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 class TrackOrderAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String shopName;
-  final String distanceValue;
+  final double distanceValue;
 
   const TrackOrderAppBar({
     super.key,
@@ -29,9 +29,8 @@ class TrackOrderAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           children: [
             TextSpan(
-              text: distanceValue.isNotEmpty
-                  ? '\nDistance from you: ${((double.tryParse(distanceValue) ?? 0) / 1000).toStringAsFixed(1)} km'
-                  : '\nDistance from you:',
+              text:
+                  '\nDistance from you: ${(distanceValue).toStringAsFixed(1)} km',
               style: AppFonts.poppinsRegular.copyWith(
                 fontSize: 12.0,
                 color: AppColors.greyRegularTextColor,

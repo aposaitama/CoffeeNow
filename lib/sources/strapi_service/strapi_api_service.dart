@@ -123,17 +123,36 @@ class ApiService {
     }
   }
 
+  // Future<ActiveOrderModel?> getConcreteActiveOrder(String documentID) async {
+  //   try {
+  //     final response = await _dio.get('/orders/$documentID', queryParameters: {
+  //       'populate': '*',
+  //     });
+
+  //     final List<dynamic> data = response.data['data'] ?? [];
+  //     if (data.isEmpty) {
+  //       return null;
+  //     }
+  //     print(ActiveOrderModel.fromJson(data.first));
+  //     return ActiveOrderModel.fromJson(data.first);
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
+
   Future<ActiveOrderModel?> getConcreteActiveOrder(String documentID) async {
     try {
       final response = await _dio.get('/orders/$documentID', queryParameters: {
-        'populate': '*',
+        'populate': 'courier.photo',
+        'populate[]': 'order_items',
       });
-
-      final List<dynamic> data = response.data['data'] ?? [];
+      // print(response.data['data']);
+      final data = response.data['data'];
       if (data.isEmpty) {
         return null;
       }
-      return ActiveOrderModel.fromJson(data.first);
+
+      return ActiveOrderModel.fromJson(response.data['data']);
     } catch (e) {
       return null;
     }

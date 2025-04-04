@@ -1,3 +1,4 @@
+import 'package:coffee_now/models/detailed_coffee_shop/detailed_coffee_shop_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'active_order_model.freezed.dart';
@@ -50,6 +51,7 @@ class ActiveOrderModel with _$ActiveOrderModel {
     required DeliveryOrderMethod deliveryMethod,
     required PaymentOrderOption paymentOption,
     required List<OrderItemModel> order_items,
+    required CourierModel? courier,
   }) = _ActiveOrderModel;
 
   factory ActiveOrderModel.fromJson(Map<String, dynamic> json) =>
@@ -67,4 +69,20 @@ class OrderItemModel with _$OrderItemModel {
 
   factory OrderItemModel.fromJson(Map<String, dynamic> json) =>
       _$OrderItemModelFromJson(json);
+}
+
+@freezed
+class CourierModel with _$CourierModel {
+  const factory CourierModel({
+    required int id,
+    required double lat,
+    required double lng,
+    required String fullName,
+    required String phoneNum,
+    required String jobPosition,
+    required CoffeeShopImage? photo,
+  }) = _CourierModel;
+
+  factory CourierModel.fromJson(Map<String, dynamic> json) =>
+      _$CourierModelFromJson(json);
 }

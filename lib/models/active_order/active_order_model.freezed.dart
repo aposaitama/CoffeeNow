@@ -29,6 +29,7 @@ mixin _$ActiveOrderModel {
   DeliveryOrderMethod get deliveryMethod => throw _privateConstructorUsedError;
   PaymentOrderOption get paymentOption => throw _privateConstructorUsedError;
   List<OrderItemModel> get order_items => throw _privateConstructorUsedError;
+  CourierModel? get courier => throw _privateConstructorUsedError;
 
   /// Serializes this ActiveOrderModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -54,7 +55,10 @@ abstract class $ActiveOrderModelCopyWith<$Res> {
       DeliveryStatus deliveryStatus,
       DeliveryOrderMethod deliveryMethod,
       PaymentOrderOption paymentOption,
-      List<OrderItemModel> order_items});
+      List<OrderItemModel> order_items,
+      CourierModel? courier});
+
+  $CourierModelCopyWith<$Res>? get courier;
 }
 
 /// @nodoc
@@ -80,6 +84,7 @@ class _$ActiveOrderModelCopyWithImpl<$Res, $Val extends ActiveOrderModel>
     Object? deliveryMethod = null,
     Object? paymentOption = null,
     Object? order_items = null,
+    Object? courier = freezed,
   }) {
     return _then(_value.copyWith(
       documentId: null == documentId
@@ -114,7 +119,25 @@ class _$ActiveOrderModelCopyWithImpl<$Res, $Val extends ActiveOrderModel>
           ? _value.order_items
           : order_items // ignore: cast_nullable_to_non_nullable
               as List<OrderItemModel>,
+      courier: freezed == courier
+          ? _value.courier
+          : courier // ignore: cast_nullable_to_non_nullable
+              as CourierModel?,
     ) as $Val);
+  }
+
+  /// Create a copy of ActiveOrderModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CourierModelCopyWith<$Res>? get courier {
+    if (_value.courier == null) {
+      return null;
+    }
+
+    return $CourierModelCopyWith<$Res>(_value.courier!, (value) {
+      return _then(_value.copyWith(courier: value) as $Val);
+    });
   }
 }
 
@@ -134,7 +157,11 @@ abstract class _$$ActiveOrderModelImplCopyWith<$Res>
       DeliveryStatus deliveryStatus,
       DeliveryOrderMethod deliveryMethod,
       PaymentOrderOption paymentOption,
-      List<OrderItemModel> order_items});
+      List<OrderItemModel> order_items,
+      CourierModel? courier});
+
+  @override
+  $CourierModelCopyWith<$Res>? get courier;
 }
 
 /// @nodoc
@@ -158,6 +185,7 @@ class __$$ActiveOrderModelImplCopyWithImpl<$Res>
     Object? deliveryMethod = null,
     Object? paymentOption = null,
     Object? order_items = null,
+    Object? courier = freezed,
   }) {
     return _then(_$ActiveOrderModelImpl(
       documentId: null == documentId
@@ -192,6 +220,10 @@ class __$$ActiveOrderModelImplCopyWithImpl<$Res>
           ? _value._order_items
           : order_items // ignore: cast_nullable_to_non_nullable
               as List<OrderItemModel>,
+      courier: freezed == courier
+          ? _value.courier
+          : courier // ignore: cast_nullable_to_non_nullable
+              as CourierModel?,
     ));
   }
 }
@@ -207,7 +239,8 @@ class _$ActiveOrderModelImpl implements _ActiveOrderModel {
       required this.deliveryStatus,
       required this.deliveryMethod,
       required this.paymentOption,
-      required final List<OrderItemModel> order_items})
+      required final List<OrderItemModel> order_items,
+      required this.courier})
       : _order_items = order_items;
 
   factory _$ActiveOrderModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -236,8 +269,11 @@ class _$ActiveOrderModelImpl implements _ActiveOrderModel {
   }
 
   @override
+  final CourierModel? courier;
+
+  @override
   String toString() {
-    return 'ActiveOrderModel(documentId: $documentId, userID: $userID, orderTotal: $orderTotal, orderAssemblyStatus: $orderAssemblyStatus, deliveryStatus: $deliveryStatus, deliveryMethod: $deliveryMethod, paymentOption: $paymentOption, order_items: $order_items)';
+    return 'ActiveOrderModel(documentId: $documentId, userID: $userID, orderTotal: $orderTotal, orderAssemblyStatus: $orderAssemblyStatus, deliveryStatus: $deliveryStatus, deliveryMethod: $deliveryMethod, paymentOption: $paymentOption, order_items: $order_items, courier: $courier)';
   }
 
   @override
@@ -259,7 +295,8 @@ class _$ActiveOrderModelImpl implements _ActiveOrderModel {
             (identical(other.paymentOption, paymentOption) ||
                 other.paymentOption == paymentOption) &&
             const DeepCollectionEquality()
-                .equals(other._order_items, _order_items));
+                .equals(other._order_items, _order_items) &&
+            (identical(other.courier, courier) || other.courier == courier));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -273,7 +310,8 @@ class _$ActiveOrderModelImpl implements _ActiveOrderModel {
       deliveryStatus,
       deliveryMethod,
       paymentOption,
-      const DeepCollectionEquality().hash(_order_items));
+      const DeepCollectionEquality().hash(_order_items),
+      courier);
 
   /// Create a copy of ActiveOrderModel
   /// with the given fields replaced by the non-null parameter values.
@@ -294,15 +332,15 @@ class _$ActiveOrderModelImpl implements _ActiveOrderModel {
 
 abstract class _ActiveOrderModel implements ActiveOrderModel {
   const factory _ActiveOrderModel(
-          {required final String documentId,
-          required final String userID,
-          required final String orderTotal,
-          required final OrderAssemblyStatus orderAssemblyStatus,
-          required final DeliveryStatus deliveryStatus,
-          required final DeliveryOrderMethod deliveryMethod,
-          required final PaymentOrderOption paymentOption,
-          required final List<OrderItemModel> order_items}) =
-      _$ActiveOrderModelImpl;
+      {required final String documentId,
+      required final String userID,
+      required final String orderTotal,
+      required final OrderAssemblyStatus orderAssemblyStatus,
+      required final DeliveryStatus deliveryStatus,
+      required final DeliveryOrderMethod deliveryMethod,
+      required final PaymentOrderOption paymentOption,
+      required final List<OrderItemModel> order_items,
+      required final CourierModel? courier}) = _$ActiveOrderModelImpl;
 
   factory _ActiveOrderModel.fromJson(Map<String, dynamic> json) =
       _$ActiveOrderModelImpl.fromJson;
@@ -323,6 +361,8 @@ abstract class _ActiveOrderModel implements ActiveOrderModel {
   PaymentOrderOption get paymentOption;
   @override
   List<OrderItemModel> get order_items;
+  @override
+  CourierModel? get courier;
 
   /// Create a copy of ActiveOrderModel
   /// with the given fields replaced by the non-null parameter values.
@@ -554,5 +594,301 @@ abstract class _OrderItemModel implements OrderItemModel {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OrderItemModelImplCopyWith<_$OrderItemModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+CourierModel _$CourierModelFromJson(Map<String, dynamic> json) {
+  return _CourierModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CourierModel {
+  int get id => throw _privateConstructorUsedError;
+  double get lat => throw _privateConstructorUsedError;
+  double get lng => throw _privateConstructorUsedError;
+  String get fullName => throw _privateConstructorUsedError;
+  String get phoneNum => throw _privateConstructorUsedError;
+  String get jobPosition => throw _privateConstructorUsedError;
+  CoffeeShopImage? get photo => throw _privateConstructorUsedError;
+
+  /// Serializes this CourierModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of CourierModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $CourierModelCopyWith<CourierModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CourierModelCopyWith<$Res> {
+  factory $CourierModelCopyWith(
+          CourierModel value, $Res Function(CourierModel) then) =
+      _$CourierModelCopyWithImpl<$Res, CourierModel>;
+  @useResult
+  $Res call(
+      {int id,
+      double lat,
+      double lng,
+      String fullName,
+      String phoneNum,
+      String jobPosition,
+      CoffeeShopImage? photo});
+
+  $CoffeeShopImageCopyWith<$Res>? get photo;
+}
+
+/// @nodoc
+class _$CourierModelCopyWithImpl<$Res, $Val extends CourierModel>
+    implements $CourierModelCopyWith<$Res> {
+  _$CourierModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of CourierModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? lat = null,
+    Object? lng = null,
+    Object? fullName = null,
+    Object? phoneNum = null,
+    Object? jobPosition = null,
+    Object? photo = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      lat: null == lat
+          ? _value.lat
+          : lat // ignore: cast_nullable_to_non_nullable
+              as double,
+      lng: null == lng
+          ? _value.lng
+          : lng // ignore: cast_nullable_to_non_nullable
+              as double,
+      fullName: null == fullName
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneNum: null == phoneNum
+          ? _value.phoneNum
+          : phoneNum // ignore: cast_nullable_to_non_nullable
+              as String,
+      jobPosition: null == jobPosition
+          ? _value.jobPosition
+          : jobPosition // ignore: cast_nullable_to_non_nullable
+              as String,
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as CoffeeShopImage?,
+    ) as $Val);
+  }
+
+  /// Create a copy of CourierModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CoffeeShopImageCopyWith<$Res>? get photo {
+    if (_value.photo == null) {
+      return null;
+    }
+
+    return $CoffeeShopImageCopyWith<$Res>(_value.photo!, (value) {
+      return _then(_value.copyWith(photo: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$CourierModelImplCopyWith<$Res>
+    implements $CourierModelCopyWith<$Res> {
+  factory _$$CourierModelImplCopyWith(
+          _$CourierModelImpl value, $Res Function(_$CourierModelImpl) then) =
+      __$$CourierModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      double lat,
+      double lng,
+      String fullName,
+      String phoneNum,
+      String jobPosition,
+      CoffeeShopImage? photo});
+
+  @override
+  $CoffeeShopImageCopyWith<$Res>? get photo;
+}
+
+/// @nodoc
+class __$$CourierModelImplCopyWithImpl<$Res>
+    extends _$CourierModelCopyWithImpl<$Res, _$CourierModelImpl>
+    implements _$$CourierModelImplCopyWith<$Res> {
+  __$$CourierModelImplCopyWithImpl(
+      _$CourierModelImpl _value, $Res Function(_$CourierModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CourierModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? lat = null,
+    Object? lng = null,
+    Object? fullName = null,
+    Object? phoneNum = null,
+    Object? jobPosition = null,
+    Object? photo = freezed,
+  }) {
+    return _then(_$CourierModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      lat: null == lat
+          ? _value.lat
+          : lat // ignore: cast_nullable_to_non_nullable
+              as double,
+      lng: null == lng
+          ? _value.lng
+          : lng // ignore: cast_nullable_to_non_nullable
+              as double,
+      fullName: null == fullName
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneNum: null == phoneNum
+          ? _value.phoneNum
+          : phoneNum // ignore: cast_nullable_to_non_nullable
+              as String,
+      jobPosition: null == jobPosition
+          ? _value.jobPosition
+          : jobPosition // ignore: cast_nullable_to_non_nullable
+              as String,
+      photo: freezed == photo
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as CoffeeShopImage?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CourierModelImpl implements _CourierModel {
+  const _$CourierModelImpl(
+      {required this.id,
+      required this.lat,
+      required this.lng,
+      required this.fullName,
+      required this.phoneNum,
+      required this.jobPosition,
+      required this.photo});
+
+  factory _$CourierModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CourierModelImplFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final double lat;
+  @override
+  final double lng;
+  @override
+  final String fullName;
+  @override
+  final String phoneNum;
+  @override
+  final String jobPosition;
+  @override
+  final CoffeeShopImage? photo;
+
+  @override
+  String toString() {
+    return 'CourierModel(id: $id, lat: $lat, lng: $lng, fullName: $fullName, phoneNum: $phoneNum, jobPosition: $jobPosition, photo: $photo)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CourierModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.lat, lat) || other.lat == lat) &&
+            (identical(other.lng, lng) || other.lng == lng) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName) &&
+            (identical(other.phoneNum, phoneNum) ||
+                other.phoneNum == phoneNum) &&
+            (identical(other.jobPosition, jobPosition) ||
+                other.jobPosition == jobPosition) &&
+            (identical(other.photo, photo) || other.photo == photo));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, id, lat, lng, fullName, phoneNum, jobPosition, photo);
+
+  /// Create a copy of CourierModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CourierModelImplCopyWith<_$CourierModelImpl> get copyWith =>
+      __$$CourierModelImplCopyWithImpl<_$CourierModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CourierModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CourierModel implements CourierModel {
+  const factory _CourierModel(
+      {required final int id,
+      required final double lat,
+      required final double lng,
+      required final String fullName,
+      required final String phoneNum,
+      required final String jobPosition,
+      required final CoffeeShopImage? photo}) = _$CourierModelImpl;
+
+  factory _CourierModel.fromJson(Map<String, dynamic> json) =
+      _$CourierModelImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  double get lat;
+  @override
+  double get lng;
+  @override
+  String get fullName;
+  @override
+  String get phoneNum;
+  @override
+  String get jobPosition;
+  @override
+  CoffeeShopImage? get photo;
+
+  /// Create a copy of CourierModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CourierModelImplCopyWith<_$CourierModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

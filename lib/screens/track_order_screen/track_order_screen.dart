@@ -182,6 +182,8 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.trackOrderID);
+
     // final trackItem =
     //     ref.watch(ConcreteTrackOrderProvider(widget.trackOrderID));
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -191,10 +193,10 @@ class _TrackOrderScreenState extends State<TrackOrderScreen> {
     const distanceValue = '2';
 
     return Scaffold(
-      appBar: const TrackOrderAppBar(
-        shopName: shopName,
-        distanceValue: distanceValue,
-      ),
+      // appBar: const TrackOrderAppBar(
+      //   shopName: shopName,
+      //   distanceValue: distanceValue,
+      // ),
       body: FutureBuilder(
         future: rootBundle.loadString(
           isDarkMode

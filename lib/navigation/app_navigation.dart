@@ -13,6 +13,7 @@ import 'package:coffee_now/screens/profile_screen/profile_screen.dart';
 import 'package:coffee_now/screens/root_screen/root_screen.dart';
 import 'package:coffee_now/screens/search_screen/search_screen.dart';
 import 'package:coffee_now/screens/track_order_screen/track_order_screen.dart';
+import 'package:coffee_now/screens/track_order_screen/track_order_screen2.dart';
 import 'package:coffee_now/screens/transactions_screen/transactions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -99,6 +100,15 @@ class AppRouter {
             final trackOrderID = state.pathParameters['trackOrderID'] ?? '';
             return TrackOrderScreen(
               trackOrderID: trackOrderID,
+            );
+          },
+        ),
+        GoRoute(
+          path: '/track_order2/:trackOrderID',
+          builder: (context, state) {
+            final trackOrderID = state.pathParameters['trackOrderID'] ?? '';
+            return TrackOrderScreen2(
+              trackOrderID,
             );
           },
         ),
