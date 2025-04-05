@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
 
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
@@ -101,9 +102,15 @@ class MyBasketScreen extends ConsumerWidget {
               ),
               child: CheckoutButton(
                 onCheckout: () {
-                  context.push(
-                    '/checkout',
-                  );
+                  if (user.addresses.isEmpty) {
+                    context.push('/address_basket_setup');
+                    BotToast.showText(text: 'You have to add address');
+                  }
+                  if (user.addresses.isNotEmpty) {
+                    context.push(
+                      '/checkout',
+                    );
+                  }
                 },
                 checkoutItemCount: totalProductCount.toString(),
                 basketSumm: totalBasketSumm.toStringAsFixed(2),

@@ -8,6 +8,7 @@ import 'package:coffee_now/screens/checkout_page/checkout_page.dart';
 import 'package:coffee_now/screens/detail_page/detail_coffee_page.dart';
 import 'package:coffee_now/screens/favourite_screen/favourite_screen.dart';
 import 'package:coffee_now/screens/home_screen/home_screen.dart';
+import 'package:coffee_now/screens/my_basket_screen/add_address_basket_screen/add_address_basket_screen.dart';
 import 'package:coffee_now/screens/my_basket_screen/my_basket_screen.dart';
 import 'package:coffee_now/screens/profile_screen/about_coffee_screen/about_coffee_screen.dart';
 import 'package:coffee_now/screens/profile_screen/privacy_policy_screen/privacy_policy_screen.dart';
@@ -151,6 +152,10 @@ class AppRouter {
         GoRoute(
           path: '/forgot_password',
           builder: (context, state) => const ForgotPasswordScreen(),
+        ),
+        GoRoute(
+          path: '/address_basket_setup',
+          builder: (context, state) => const AddAddressBasketScreen(),
         ),
         GoRoute(
           path: '/address_setup',
