@@ -6,7 +6,7 @@ part of 'add_to_hive_basket_box_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$basketBoxHash() => r'f3871cd8d6ddbdb1870b2d200ed64bea60250c62';
+String _$basketBoxHash() => r'd09e5295cd233fd718f6724533196fbdfe6acb87';
 
 /// See also [basketBox].
 @ProviderFor(basketBox)
@@ -22,7 +22,7 @@ final basketBoxProvider = AutoDisposeProvider<Box<BasketHiveModel>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef BasketBoxRef = AutoDisposeProviderRef<Box<BasketHiveModel>>;
-String _$basketHiveHash() => r'da105f32368569342d20912eebe906de43c1b8e7';
+String _$basketHiveHash() => r'cce87ed07ad834449da0259dc161e4772ab321a4';
 
 /// Copied from Dart SDK
 class _SystemHash {

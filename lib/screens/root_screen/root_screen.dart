@@ -36,7 +36,7 @@ class RootScreen extends ConsumerWidget {
 
     final activeOrders =
         ref.watch(hasActiveOrderProvider((user?.id ?? '').toString()));
-    print(activeOrders);
+
     final totalProductCount = basketModel?.basketItem.fold<int>(
       0,
       (sum, item) => sum + item.productCount,

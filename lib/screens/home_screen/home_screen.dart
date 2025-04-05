@@ -43,9 +43,8 @@ class HomeScreen extends ConsumerWidget {
       appBar: AppBar(
         centerTitle: false,
         title: AppBarTitle(
-          city: address.city.isNotEmpty ? address.city : 'Unknown City',
-          country:
-              address.country.isNotEmpty ? address.country : 'Unknown Country',
+          city: address.city,
+          country: address.country,
           userName: user?.username ?? '',
         ),
         actions: const [AppBarActions()],

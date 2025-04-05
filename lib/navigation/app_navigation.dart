@@ -9,7 +9,10 @@ import 'package:coffee_now/screens/detail_page/detail_coffee_page.dart';
 import 'package:coffee_now/screens/favourite_screen/favourite_screen.dart';
 import 'package:coffee_now/screens/home_screen/home_screen.dart';
 import 'package:coffee_now/screens/my_basket_screen/my_basket_screen.dart';
+import 'package:coffee_now/screens/profile_screen/about_coffee_screen/about_coffee_screen.dart';
+import 'package:coffee_now/screens/profile_screen/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:coffee_now/screens/profile_screen/profile_screen.dart';
+import 'package:coffee_now/screens/profile_screen/settings_screen/settings_screen.dart';
 import 'package:coffee_now/screens/root_screen/root_screen.dart';
 import 'package:coffee_now/screens/search_screen/search_screen.dart';
 import 'package:coffee_now/screens/track_order_screen/track_order_screen.dart';
@@ -20,7 +23,7 @@ import 'package:go_router/go_router.dart';
 
 class AppRouter {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  GoRouter createRouter(BuildContext context) {
+  GoRouter createRouter() {
     return GoRouter(
       initialLocation: '/auth_gate',
       // initialLocation: '/auth_gate',
@@ -120,6 +123,18 @@ class AppRouter {
               coffeeShopID: coffeeShopID,
             );
           },
+        ),
+        GoRoute(
+          path: '/about',
+          builder: (context, state) => const AboutCoffeeScreen(),
+        ),
+        GoRoute(
+          path: '/privpolicy',
+          builder: (context, state) => const PrivacyPolicyScreen(),
+        ),
+        GoRoute(
+          path: '/settings',
+          builder: (context, state) => const SettingsScreen(),
         ),
         GoRoute(
           path: '/checkout',

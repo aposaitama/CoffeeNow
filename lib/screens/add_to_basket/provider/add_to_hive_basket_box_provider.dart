@@ -20,7 +20,14 @@ class BasketHive extends _$BasketHive {
   @override
   BasketHiveModel? build(String userID) {
     final box = ref.watch(basketBoxProvider);
-    return box.get(userID);
+    var currentBasket = box.get(userID);
+    if (currentBasket == null) {
+      final newBasket = BasketHiveModel(userID: userID, basketItem: []);
+      box.put(userID, newBasket);
+      currentBasket = newBasket;
+    }
+
+    return currentBasket;
   }
 
   void addProductToCart(String userID, BasketItemModel product) {
@@ -42,6 +49,7 @@ class BasketHive extends _$BasketHive {
       }
 
       box.put(userID, currentBasket);
+      ref.notifyListeners();
     } else {
       final newBasket = BasketHiveModel(
         userID: userID,
@@ -49,36 +57,9 @@ class BasketHive extends _$BasketHive {
       );
 
       box.put(userID, newBasket);
+      ref.notifyListeners();
     }
   }
-  // void addProductToCart(String userID, BasketItemModel product) {
-  //   final box = ref.watch(basketBoxProvider);
-  //   final currentBasket = box.get(userID);
-
-  //   if (currentBasket != null) {
-  //     final existingItem = currentBasket.basketItem.firstWhere(
-  //       (item) =>
-  //           item.documentId == product.documentId &&
-  //           item.instructions == product.instructions,
-  //     );
-
-  //     if (existingItem.productCount != -1) {
-  //       existingItem.productCount += 1; // Просто збільшуємо кількість товару
-  //     } else {
-  //       final basketItemHiveModel = BasketItemHiveModel.fromBasketItem(product);
-  //       currentBasket.basketItem.add(basketItemHiveModel);
-  //     }
-
-  //     box.put(userID, currentBasket);
-  //   } else {
-  //     final newBasket = BasketHiveModel(
-  //       userID: userID,
-  //       basketItem: [BasketItemHiveModel.fromBasketItem(product)],
-  //     );
-
-  //     box.put(userID, newBasket);
-  //   }
-  // }
 
   void addListOfProductsToExistingCart(List<BasketItemModel> products) {
     final box = ref.watch(basketBoxProvider);
@@ -192,31 +173,6 @@ class BasketHive extends _$BasketHive {
     box.delete(userID);
   }
 }
-
-// bool _compareInstructions(List<ProductInstructionHiveModel> hiveInstructions,
-//     List<ProductInstruction> instructions) {
-//   if (hiveInstructions.length != instructions.length) return false;
-
-//   for (int i = 0; i < hiveInstructions.length; i++) {
-//     if (hiveInstructions[i].toProductInstruction() != instructions[i]) {
-//       return false;
-//     }
-//   }
-//   return true;
-// }
-
-// bool _compareInstructions(List<ProductInstructionHiveModel> hiveInstructions,
-//     List<ProductInstruction> instructions) {
-//   if (hiveInstructions.length != instructions.length) return false;
-
-//   for (int i = 0; i < hiveInstructions.length; i++) {
-//
-//     if (hiveInstructions[i].toProductInstruction() != instructions[i]) {
-//       return false;
-//     }
-//   }
-//   return true;
-// }
 
 bool _compareMaps(Map<String, String> map1, Map<String, String> map2) {
   if (map1.length != map2.length) return false;

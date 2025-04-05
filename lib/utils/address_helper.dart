@@ -8,8 +8,8 @@ class Address {
   String get city {
     final cityComponent = _addressComponents.firstWhere(
       (component) => component.types.contains('locality'),
-      orElse: () => const AddressComponent(
-          long_name: 'City', short_name: 'City', types: []),
+      orElse: () =>
+          const AddressComponent(long_name: '', short_name: '', types: []),
     );
     return cityComponent.long_name;
   }
@@ -17,8 +17,8 @@ class Address {
   String get country {
     final countryComponent = _addressComponents.firstWhere(
       (component) => component.types.contains('country'),
-      orElse: () => const AddressComponent(
-          long_name: 'Country', short_name: 'Country', types: []),
+      orElse: () =>
+          const AddressComponent(long_name: '', short_name: '', types: []),
     );
     return countryComponent.long_name;
   }
@@ -26,8 +26,8 @@ class Address {
   String get fullAddress {
     final streetComponent = _addressComponents.firstWhere(
       (component) => component.types.contains('route'),
-      orElse: () => const AddressComponent(
-          long_name: 'Street', short_name: 'Street', types: []),
+      orElse: () =>
+          const AddressComponent(long_name: '', short_name: '', types: []),
     );
     final streetName = streetComponent.long_name;
 
@@ -37,8 +37,8 @@ class Address {
   String get address {
     final streetComponent = _addressComponents.firstWhere(
       (component) => component.types.contains('route'),
-      orElse: () => const AddressComponent(
-          long_name: 'Street', short_name: 'Street', types: []),
+      orElse: () =>
+          const AddressComponent(long_name: '', short_name: '', types: []),
     );
     final streetName = streetComponent.long_name;
 

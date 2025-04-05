@@ -1,8 +1,6 @@
 import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AppBarTitle extends StatelessWidget {
@@ -47,28 +45,30 @@ class AppBarTitle extends StatelessWidget {
                       ])
                 ]),
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              SvgPicture.asset(
-                'lib/assets/icons/Location.svg',
-                width: 16.0,
-                height: 16.0,
-                colorFilter: const ColorFilter.mode(
-                  AppColors.orangeColor,
-                  BlendMode.srcIn,
-                ),
-              ),
-              const SizedBox(width: 6.0),
-              Text(
-                '$city, $country',
-                style: AppFonts.bebasMedium.copyWith(
-                  color: AppColors.orangeColor,
-                  fontSize: 14.0,
-                ),
-              ),
-            ],
-          ),
+          city.isNotEmpty && country.isNotEmpty
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    SvgPicture.asset(
+                      'lib/assets/icons/Location.svg',
+                      width: 16.0,
+                      height: 16.0,
+                      colorFilter: const ColorFilter.mode(
+                        AppColors.orangeColor,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    const SizedBox(width: 6.0),
+                    Text(
+                      '$city, $country',
+                      style: AppFonts.bebasMedium.copyWith(
+                        color: AppColors.orangeColor,
+                        fontSize: 14.0,
+                      ),
+                    ),
+                  ],
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );

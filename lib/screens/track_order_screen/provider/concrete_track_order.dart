@@ -32,7 +32,7 @@ class ConcreteTrackOrder extends _$ConcreteTrackOrder {
 
     try {
       final orderItem = await apiService.getConcreteActiveOrder(documentID);
-      print(orderItem);
+
       state = orderItem;
     } catch (e) {
       // Обробка помилки

@@ -6,10 +6,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class ProfilePageListItemTile extends StatelessWidget {
   final String imgUrl;
   final String pageTitle;
-  const ProfilePageListItemTile({
+  void Function()? onTap;
+  ProfilePageListItemTile({
     super.key,
     required this.pageTitle,
     required this.imgUrl,
+    this.onTap,
   });
 
   @override
@@ -56,15 +58,18 @@ class ProfilePageListItemTile extends StatelessWidget {
             ),
           ],
         ),
-        Transform.rotate(
-          angle: 3.14 * 1.5,
-          child: SvgPicture.asset(
-            fit: BoxFit.scaleDown,
-            'lib/assets/icons/Arrow - Down 2.svg',
-            // colorFilter: const ColorFilter.mode(
+        GestureDetector(
+          onTap: onTap,
+          child: Transform.rotate(
+            angle: 3.14 * 1.5,
+            child: SvgPicture.asset(
+              fit: BoxFit.scaleDown,
+              'lib/assets/icons/Arrow - Down 2.svg',
+              // colorFilter: const ColorFilter.mode(
 
-            //   BlendMode.srcIn,
-            // ),
+              //   BlendMode.srcIn,
+              // ),
+            ),
           ),
         )
       ],

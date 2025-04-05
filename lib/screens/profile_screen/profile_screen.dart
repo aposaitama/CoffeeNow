@@ -1,4 +1,3 @@
-import 'package:coffee_now/screens/auth/login_screen/widget/custom_button.dart';
 import 'package:coffee_now/screens/auth/providers/auth_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/screens/profile_screen/widgets/cutom_gray_button.dart';
@@ -63,49 +62,39 @@ class ProfileScreen extends ConsumerWidget {
               //     'logout',
               //   ),
               // ),
-              const ProfilePageListItemTile(
+              ProfilePageListItemTile(
                 pageTitle: 'Edit Account info',
                 imgUrl: 'lib/assets/icons/Edit.svg',
               ),
               const SizedBox(
                 height: 24.0,
               ),
-              const ProfilePageListItemTile(
+              ProfilePageListItemTile(
                 pageTitle: 'Address Info',
                 imgUrl: 'lib/assets/icons/Location_profile.svg',
               ),
               const SizedBox(
                 height: 24.0,
               ),
-              const ProfilePageListItemTile(
-                pageTitle: 'Payment Method',
-                imgUrl: 'lib/assets/icons/Wallet.svg',
-              ),
-              const SizedBox(
-                height: 24.0,
-              ),
-              const ProfilePageListItemTile(
-                pageTitle: 'Rewards or Coupon',
-                imgUrl: 'lib/assets/icons/Discount.svg',
-              ),
-              const SizedBox(
-                height: 24.0,
-              ),
-              const ProfilePageListItemTile(
+
+              ProfilePageListItemTile(
+                onTap: () => context.push('/settings'),
                 pageTitle: 'Settings',
                 imgUrl: 'lib/assets/icons/Setting.svg',
               ),
               const SizedBox(
                 height: 24.0,
               ),
-              const ProfilePageListItemTile(
+              ProfilePageListItemTile(
+                onTap: () => context.push('/privpolicy'),
                 pageTitle: 'Privacy Policy',
                 imgUrl: 'lib/assets/icons/Document_profile.svg',
               ),
               const SizedBox(
                 height: 24.0,
               ),
-              const ProfilePageListItemTile(
+              ProfilePageListItemTile(
+                onTap: () => context.push('/about'),
                 pageTitle: 'About Coffee Now Apps',
                 imgUrl: 'lib/assets/icons/Info Square.svg',
               ),

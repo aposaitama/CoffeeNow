@@ -17,8 +17,6 @@ class CoffeeShopItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(deliveryPrice);
-    print(distance);
     return Padding(
       padding: const EdgeInsets.only(bottom: 14.0),
       child: Container(

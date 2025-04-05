@@ -34,6 +34,7 @@ class AddToBasket extends ConsumerWidget {
         ref.watch(fetchShopIDProvider(coffeeShopID)).value ?? '';
     final count = ref.watch(productCount);
     final user = ref.watch(userProvider).value;
+    final basket = ref.watch(basketHiveProvider((user?.id ?? '').toString()));
     final selectedInstuctions = ref.watch(selectedInstructionsProvider);
     final concreteProduct =
         ref.watch(fetchConcreteProductProvider(coffeeShopID)).value;
@@ -152,6 +153,7 @@ class AddToBasket extends ConsumerWidget {
                                   selectedOptions: selectedInstuctions,
                                   productCount: count,
                                 );
+
                                 ref
                                     .read(
                                       BasketHiveProvider(user!.id.toString())
@@ -161,6 +163,7 @@ class AddToBasket extends ConsumerWidget {
                                       user.id.toString(),
                                       basketItem,
                                     );
+
                                 context.pop();
                               }
                             },

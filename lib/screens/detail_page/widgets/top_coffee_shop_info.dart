@@ -103,13 +103,15 @@ class TopCoffeeShopInfo extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SvgPicture.asset(
-                    'lib/assets/icons/Location.svg',
-                    colorFilter: const ColorFilter.mode(
-                      Colors.white,
-                      BlendMode.srcIn,
-                    ),
-                  ),
+                  distance.isNotEmpty
+                      ? SvgPicture.asset(
+                          'lib/assets/icons/Location.svg',
+                          colorFilter: const ColorFilter.mode(
+                            Colors.white,
+                            BlendMode.srcIn,
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                   const SizedBox(
                     width: 2.0,
                   ),
@@ -122,7 +124,9 @@ class TopCoffeeShopInfo extends StatelessWidget {
                       fontSize: 13.0,
                     ),
                   ),
-                  const SeparatedDot(),
+                  distance.isNotEmpty
+                      ? const SeparatedDot()
+                      : const SizedBox.shrink(),
                   Text(
                     '342',
                     style: AppFonts.poppinsMedium.copyWith(

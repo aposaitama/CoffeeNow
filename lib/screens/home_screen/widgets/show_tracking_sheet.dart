@@ -20,7 +20,6 @@ void showActiveOrdersSheet(
             shrinkWrap: true,
             itemCount: activeOrders.length,
             itemBuilder: (BuildContext context, int index) {
-              print(activeOrders[index].documentId);
               return ListTile(
                 title: Text(activeOrders[index].documentId),
                 onTap: () {
