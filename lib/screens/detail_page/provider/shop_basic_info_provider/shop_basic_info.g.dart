@@ -7,7 +7,7 @@ part of 'shop_basic_info.dart';
 // **************************************************************************
 
 String _$fetchConcreteCoffeeShopHash() =>
-    r'6971cd8ef698cdef07fb43594c3d679c9aa516fd';
+    r'2cd32a09958c0676ee73b655a5715473be09e990';
 
 /// Copied from Dart SDK
 class _SystemHash {

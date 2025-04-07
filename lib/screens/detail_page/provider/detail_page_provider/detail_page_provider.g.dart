@@ -165,5 +165,140 @@ class _FetchDetailedCoffeeShopProviderElement
   String get coffeeShopID =>
       (origin as FetchDetailedCoffeeShopProvider).coffeeShopID;
 }
+
+String _$fetchCoffeeShopOrderCountHash() =>
+    r'cc2daf6917bc69e349db48fc704abdb7a99ac6ac';
+
+/// See also [fetchCoffeeShopOrderCount].
+@ProviderFor(fetchCoffeeShopOrderCount)
+const fetchCoffeeShopOrderCountProvider = FetchCoffeeShopOrderCountFamily();
+
+/// See also [fetchCoffeeShopOrderCount].
+class FetchCoffeeShopOrderCountFamily extends Family<AsyncValue<int?>> {
+  /// See also [fetchCoffeeShopOrderCount].
+  const FetchCoffeeShopOrderCountFamily();
+
+  /// See also [fetchCoffeeShopOrderCount].
+  FetchCoffeeShopOrderCountProvider call(
+    String coffeeShopID,
+  ) {
+    return FetchCoffeeShopOrderCountProvider(
+      coffeeShopID,
+    );
+  }
+
+  @override
+  FetchCoffeeShopOrderCountProvider getProviderOverride(
+    covariant FetchCoffeeShopOrderCountProvider provider,
+  ) {
+    return call(
+      provider.coffeeShopID,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'fetchCoffeeShopOrderCountProvider';
+}
+
+/// See also [fetchCoffeeShopOrderCount].
+class FetchCoffeeShopOrderCountProvider
+    extends AutoDisposeFutureProvider<int?> {
+  /// See also [fetchCoffeeShopOrderCount].
+  FetchCoffeeShopOrderCountProvider(
+    String coffeeShopID,
+  ) : this._internal(
+          (ref) => fetchCoffeeShopOrderCount(
+            ref as FetchCoffeeShopOrderCountRef,
+            coffeeShopID,
+          ),
+          from: fetchCoffeeShopOrderCountProvider,
+          name: r'fetchCoffeeShopOrderCountProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$fetchCoffeeShopOrderCountHash,
+          dependencies: FetchCoffeeShopOrderCountFamily._dependencies,
+          allTransitiveDependencies:
+              FetchCoffeeShopOrderCountFamily._allTransitiveDependencies,
+          coffeeShopID: coffeeShopID,
+        );
+
+  FetchCoffeeShopOrderCountProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.coffeeShopID,
+  }) : super.internal();
+
+  final String coffeeShopID;
+
+  @override
+  Override overrideWith(
+    FutureOr<int?> Function(FetchCoffeeShopOrderCountRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: FetchCoffeeShopOrderCountProvider._internal(
+        (ref) => create(ref as FetchCoffeeShopOrderCountRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        coffeeShopID: coffeeShopID,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<int?> createElement() {
+    return _FetchCoffeeShopOrderCountProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FetchCoffeeShopOrderCountProvider &&
+        other.coffeeShopID == coffeeShopID;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, coffeeShopID.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin FetchCoffeeShopOrderCountRef on AutoDisposeFutureProviderRef<int?> {
+  /// The parameter `coffeeShopID` of this provider.
+  String get coffeeShopID;
+}
+
+class _FetchCoffeeShopOrderCountProviderElement
+    extends AutoDisposeFutureProviderElement<int?>
+    with FetchCoffeeShopOrderCountRef {
+  _FetchCoffeeShopOrderCountProviderElement(super.provider);
+
+  @override
+  String get coffeeShopID =>
+      (origin as FetchCoffeeShopOrderCountProvider).coffeeShopID;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

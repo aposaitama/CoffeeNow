@@ -34,8 +34,11 @@ class RootScreen extends ConsumerWidget {
       ),
     );
 
-    final activeOrders =
-        ref.watch(hasActiveOrderProvider((user?.id ?? '').toString()));
+    final activeOrders = ref.watch(
+      hasActiveOrderProvider(
+        (user?.id ?? '').toString(),
+      ),
+    );
 
     final totalProductCount = basketModel?.basketItem.fold<int>(
       0,
@@ -59,7 +62,7 @@ class RootScreen extends ConsumerWidget {
                   child: GestureDetector(
                     onTap: () {
                       if (activeOrders.length > 1) {
-                        showActiveOrdersSheet(context, activeOrders);
+                        showActiveOrdersSheet(context, activeOrders, ref);
                       }
                       if (activeOrders.length == 1) {
                         context.push(

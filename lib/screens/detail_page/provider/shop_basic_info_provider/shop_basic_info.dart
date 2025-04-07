@@ -12,7 +12,9 @@ Future<List<CoffeeShopModel>> fetchConcreteCoffeeShop(
 ) async {
   final apiService = ref.read(apiServiceProvider);
   try {
-    return await apiService.getConcreteCoffeeShop(coffeeShopID);
+    final result = await apiService.getConcreteCoffeeShop(coffeeShopID);
+
+    return result;
   } catch (e) {
     throw Exception('Failed to load brands: $e');
   }

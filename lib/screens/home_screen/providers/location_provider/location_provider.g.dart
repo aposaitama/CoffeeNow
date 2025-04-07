@@ -553,5 +553,203 @@ class _FetchDeliveryDistanceProviderElement
   @override
   String get waypoints => (origin as FetchDeliveryDistanceProvider).waypoints;
 }
+
+String _$fetchDeliveryTimeHash() => r'36ac7ae426668e08e409e4ec382d43e577a392c8';
+
+/// See also [fetchDeliveryTime].
+@ProviderFor(fetchDeliveryTime)
+const fetchDeliveryTimeProvider = FetchDeliveryTimeFamily();
+
+/// See also [fetchDeliveryTime].
+class FetchDeliveryTimeFamily extends Family<AsyncValue<String?>> {
+  /// See also [fetchDeliveryTime].
+  const FetchDeliveryTimeFamily();
+
+  /// See also [fetchDeliveryTime].
+  FetchDeliveryTimeProvider call(
+    String latOrigin,
+    String lngOrigin,
+    String latDestination,
+    String lngDestination,
+    String waypoints,
+  ) {
+    return FetchDeliveryTimeProvider(
+      latOrigin,
+      lngOrigin,
+      latDestination,
+      lngDestination,
+      waypoints,
+    );
+  }
+
+  @override
+  FetchDeliveryTimeProvider getProviderOverride(
+    covariant FetchDeliveryTimeProvider provider,
+  ) {
+    return call(
+      provider.latOrigin,
+      provider.lngOrigin,
+      provider.latDestination,
+      provider.lngDestination,
+      provider.waypoints,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'fetchDeliveryTimeProvider';
+}
+
+/// See also [fetchDeliveryTime].
+class FetchDeliveryTimeProvider extends AutoDisposeFutureProvider<String?> {
+  /// See also [fetchDeliveryTime].
+  FetchDeliveryTimeProvider(
+    String latOrigin,
+    String lngOrigin,
+    String latDestination,
+    String lngDestination,
+    String waypoints,
+  ) : this._internal(
+          (ref) => fetchDeliveryTime(
+            ref as FetchDeliveryTimeRef,
+            latOrigin,
+            lngOrigin,
+            latDestination,
+            lngDestination,
+            waypoints,
+          ),
+          from: fetchDeliveryTimeProvider,
+          name: r'fetchDeliveryTimeProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$fetchDeliveryTimeHash,
+          dependencies: FetchDeliveryTimeFamily._dependencies,
+          allTransitiveDependencies:
+              FetchDeliveryTimeFamily._allTransitiveDependencies,
+          latOrigin: latOrigin,
+          lngOrigin: lngOrigin,
+          latDestination: latDestination,
+          lngDestination: lngDestination,
+          waypoints: waypoints,
+        );
+
+  FetchDeliveryTimeProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.latOrigin,
+    required this.lngOrigin,
+    required this.latDestination,
+    required this.lngDestination,
+    required this.waypoints,
+  }) : super.internal();
+
+  final String latOrigin;
+  final String lngOrigin;
+  final String latDestination;
+  final String lngDestination;
+  final String waypoints;
+
+  @override
+  Override overrideWith(
+    FutureOr<String?> Function(FetchDeliveryTimeRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: FetchDeliveryTimeProvider._internal(
+        (ref) => create(ref as FetchDeliveryTimeRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        latOrigin: latOrigin,
+        lngOrigin: lngOrigin,
+        latDestination: latDestination,
+        lngDestination: lngDestination,
+        waypoints: waypoints,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<String?> createElement() {
+    return _FetchDeliveryTimeProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FetchDeliveryTimeProvider &&
+        other.latOrigin == latOrigin &&
+        other.lngOrigin == lngOrigin &&
+        other.latDestination == latDestination &&
+        other.lngDestination == lngDestination &&
+        other.waypoints == waypoints;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, latOrigin.hashCode);
+    hash = _SystemHash.combine(hash, lngOrigin.hashCode);
+    hash = _SystemHash.combine(hash, latDestination.hashCode);
+    hash = _SystemHash.combine(hash, lngDestination.hashCode);
+    hash = _SystemHash.combine(hash, waypoints.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin FetchDeliveryTimeRef on AutoDisposeFutureProviderRef<String?> {
+  /// The parameter `latOrigin` of this provider.
+  String get latOrigin;
+
+  /// The parameter `lngOrigin` of this provider.
+  String get lngOrigin;
+
+  /// The parameter `latDestination` of this provider.
+  String get latDestination;
+
+  /// The parameter `lngDestination` of this provider.
+  String get lngDestination;
+
+  /// The parameter `waypoints` of this provider.
+  String get waypoints;
+}
+
+class _FetchDeliveryTimeProviderElement
+    extends AutoDisposeFutureProviderElement<String?>
+    with FetchDeliveryTimeRef {
+  _FetchDeliveryTimeProviderElement(super.provider);
+
+  @override
+  String get latOrigin => (origin as FetchDeliveryTimeProvider).latOrigin;
+  @override
+  String get lngOrigin => (origin as FetchDeliveryTimeProvider).lngOrigin;
+  @override
+  String get latDestination =>
+      (origin as FetchDeliveryTimeProvider).latDestination;
+  @override
+  String get lngDestination =>
+      (origin as FetchDeliveryTimeProvider).lngDestination;
+  @override
+  String get waypoints => (origin as FetchDeliveryTimeProvider).waypoints;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

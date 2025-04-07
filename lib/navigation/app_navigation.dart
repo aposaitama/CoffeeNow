@@ -11,6 +11,7 @@ import 'package:coffee_now/screens/home_screen/home_screen.dart';
 import 'package:coffee_now/screens/my_basket_screen/add_address_basket_screen/add_address_basket_screen.dart';
 import 'package:coffee_now/screens/my_basket_screen/my_basket_screen.dart';
 import 'package:coffee_now/screens/profile_screen/about_coffee_screen/about_coffee_screen.dart';
+import 'package:coffee_now/screens/profile_screen/address_info_screen/address_info_screen.dart';
 import 'package:coffee_now/screens/profile_screen/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:coffee_now/screens/profile_screen/profile_screen.dart';
 import 'package:coffee_now/screens/profile_screen/settings_screen/settings_screen.dart';
@@ -26,7 +27,7 @@ class AppRouter {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GoRouter createRouter() {
     return GoRouter(
-      initialLocation: '/auth_gate',
+      initialLocation: '/address_info',
       // initialLocation: '/auth_gate',
       // redirect: (context, state) {
       //   if (hasToken) {
@@ -124,6 +125,10 @@ class AppRouter {
               coffeeShopID: coffeeShopID,
             );
           },
+        ),
+        GoRoute(
+          path: '/address_info',
+          builder: (context, state) => const AddressInfoScreen(),
         ),
         GoRoute(
           path: '/about',

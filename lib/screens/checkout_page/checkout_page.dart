@@ -245,31 +245,33 @@ class CheckoutPage extends ConsumerWidget {
                 final result = await ref.read(
                     makePaymentProvider(totalInCents.toString(), 'usd').future);
                 if (result) {
-                  ref.read(
-                    checkoutProvider(
-                      basketListItems,
-                      (user?.id.toString() ?? ''),
-                      selectedDeliveryMethod,
-                      paymentMethod,
-                      totalOrderPrice,
-                      '',
-                    ),
-                  );
-                  ref
-                      .read(
-                        BasketHiveProvider(
-                          user?.id.toString() ?? '',
-                        ).notifier,
-                      )
-                      .clearCart();
-                  showDialog(
-                    context: context,
-                    builder: (context) => const BackdropPopup(),
-                  );
+                  final orderID = await ref.read(checkoutProvider(
+                    basketListItems,
+                    (user?.id.toString() ?? ''),
+                    selectedDeliveryMethod,
+                    paymentMethod,
+                    totalOrderPrice,
+                    '',
+                  ).future);
+                  if (orderID != null) {
+                    ref
+                        .read(
+                          BasketHiveProvider(
+                            user?.id.toString() ?? '',
+                          ).notifier,
+                        )
+                        .clearCart();
+                    showDialog(
+                      context: context,
+                      builder: (context) => BackdropPopup(
+                        orderID: orderID,
+                      ),
+                    );
+                  }
                 }
               }
               if (paymentMethod == PaymentMethod.cash) {
-                final success = await ref.read(checkoutProvider(
+                final orderID = await ref.read(checkoutProvider(
                   basketListItems,
                   (user?.id.toString() ?? ''),
                   selectedDeliveryMethod,
@@ -277,7 +279,8 @@ class CheckoutPage extends ConsumerWidget {
                   totalOrderPrice,
                   '',
                 ).future);
-                if (success) {
+                print(orderID);
+                if (orderID != null) {
                   ref
                       .read(
                         BasketHiveProvider(
@@ -287,7 +290,9 @@ class CheckoutPage extends ConsumerWidget {
                       .clearCart();
                   showDialog(
                     context: context,
-                    builder: (context) => const BackdropPopup(),
+                    builder: (context) => BackdropPopup(
+                      orderID: orderID,
+                    ),
                   );
                 }
               }

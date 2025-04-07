@@ -54,3 +54,24 @@ Future<String?> fetchDeliveryDistance(
     throw Exception('Failed to load distance: $e');
   }
 }
+
+@riverpod
+Future<String?> fetchDeliveryTime(
+  Ref ref,
+  String latOrigin,
+  String lngOrigin,
+  String latDestination,
+  String lngDestination,
+  String waypoints,
+) async {
+  final apiService = ref.read(googleMapsServiceProvider);
+
+  try {
+    return await apiService.getDeliveryTimeWithWaypoints(
+        latOrigin, lngOrigin, latDestination, lngDestination, waypoints
+        // waypoints,
+        );
+  } catch (e) {
+    throw Exception('Failed to load distance: $e');
+  }
+}

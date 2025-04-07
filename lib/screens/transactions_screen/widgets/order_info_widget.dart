@@ -1,9 +1,11 @@
-import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 
 class OrderInfoWidget extends StatelessWidget {
-  const OrderInfoWidget({super.key});
+  final int orderID;
+  final String deliveryTime;
+  const OrderInfoWidget(
+      {super.key, required this.orderID, required this.deliveryTime});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class OrderInfoWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Order Code : 267890-2',
+                    'Order Code : $orderID',
                     style: AppFonts.poppinsMedium.copyWith(
                       fontSize: 12.0,
                       color: Colors.white,
@@ -39,7 +41,7 @@ class OrderInfoWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5.0),
                     child: Text(
-                      'ArrivedTime : 15 Min',
+                      'ArrivedTime : $deliveryTime Min',
                       style: AppFonts.poppinsMedium.copyWith(
                         fontSize: 12.0,
                         color: Colors.white,
@@ -53,19 +55,19 @@ class OrderInfoWidget extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5.0),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 17.0,
-                    vertical: 8.0,
-                  ),
-                  child: Text(
-                    'View',
-                    style: AppFonts.poppinsSemiBold.copyWith(
-                      fontSize: 12.0,
-                      color: AppColors.brownColor,
-                    ),
-                  ),
-                ),
+                // child: Padding(
+                //   padding: const EdgeInsets.symmetric(
+                //     horizontal: 17.0,
+                //     vertical: 8.0,
+                //   ),
+                //   child: Text(
+                //     'View',
+                //     style: AppFonts.poppinsSemiBold.copyWith(
+                //       fontSize: 12.0,
+                //       color: AppColors.brownColor,
+                //     ),
+                //   ),
+                // ),
               ),
             ],
           ),

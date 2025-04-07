@@ -1,29 +1,21 @@
 import 'package:coffee_now/models/active_order/active_order_model.dart';
-import 'package:coffee_now/screens/checkout_page/provider/delivery_method_provider/delivery_method_provider.dart';
 import 'package:coffee_now/screens/checkout_page/provider/get_shop_info_provider.dart';
-
 import 'package:coffee_now/screens/detail_page/provider/shop_basic_info_provider/shop_basic_info.dart';
 import 'package:coffee_now/screens/home_screen/providers/location_provider/location_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/screens/profile_screen/settings_screen/provider/theme_provider.dart';
 import 'package:coffee_now/screens/track_order_screen/provider/concrete_track_order.dart';
-
 import 'package:coffee_now/screens/track_order_screen/widgets/courier_section_widget.dart';
 import 'package:coffee_now/screens/track_order_screen/widgets/map_marker.dart';
 import 'package:coffee_now/screens/track_order_screen/widgets/order_assembly_info.dart';
 import 'package:coffee_now/screens/track_order_screen/widgets/track_order_app_bar.dart';
 import 'package:coffee_now/screens/transactions_screen/widgets/order_info_widget.dart';
 import 'package:coffee_now/style/colors.dart';
-import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:widget_to_marker/widget_to_marker.dart';
 
 final userMarkerProvider =
@@ -60,14 +52,19 @@ final polylineProvider = FutureProvider.family<List<Polyline>, String>(
 
     final trackOrderItems = trackItem?.order_items ?? [];
     final List<String> waypointsList = [];
+    final checkInShopIDs = (trackItem?.check_in_coffee_shops ?? [])
+        .map((e) => e.coffeeShopID)
+        .toSet();
     final groupedItemsByID =
         trackOrderItems.map((item) => item.shopID).toSet().toList();
     if (groupedItemsByID.isNotEmpty && groupedItemsByID.length > 1) {
       for (String shopID in groupedItemsByID) {
-        final shopLocation =
-            ref.watch(fetchLocationConcreteShopProvider(shopID)).value;
-        if (shopLocation != null) {
-          waypointsList.add('${shopLocation[0]},${shopLocation[1]}');
+        if (!checkInShopIDs.contains(shopID)) {
+          final shopLocation =
+              ref.watch(fetchLocationConcreteShopProvider(shopID)).value;
+          if (shopLocation != null) {
+            waypointsList.add('${shopLocation[0]},${shopLocation[1]}');
+          }
         }
       }
     }
@@ -84,32 +81,39 @@ final polylineProvider = FutureProvider.family<List<Polyline>, String>(
 
       coordinates.add(LatLng(shopLat, shopLng));
 
-      // Якщо є більше одного закладу, додаємо ще
       final groupedItemsByI = groupedItemsByID[0];
-      if (groupedItemsByID.length > 1) {
-        for (final anotherShopID in groupedItemsByID.sublist(1)) {
-          final anotherShopLocation =
-              ref.watch(fetchLocationConcreteShopProvider(anotherShopID)).value;
-          if (anotherShopLocation != null) {
-            final anotherShopLat = double.parse(anotherShopLocation[0]);
-            final anotherShopLng = double.parse(anotherShopLocation[1]);
-            coordinates.add(LatLng(anotherShopLat, anotherShopLng));
+      for (final anotherShopID in groupedItemsByID.sublist(1)) {
+        if (groupedItemsByID.length > 1) {
+          final matchedShopID = checkInShopIDs.firstWhere(
+            (shopID) => shopID == anotherShopID,
+            orElse: () => '',
+          );
+
+          if (matchedShopID.isEmpty) {
+            final anotherShopLocation = ref
+                .watch(fetchLocationConcreteShopProvider(anotherShopID))
+                .value;
+            if (anotherShopLocation != null) {
+              final anotherShopLat = double.parse(anotherShopLocation[0]);
+              final anotherShopLng = double.parse(anotherShopLocation[1]);
+              coordinates.add(LatLng(anotherShopLat, anotherShopLng));
+            }
           }
         }
       }
 
-      // Додаємо координати для користувача
       coordinates.add(LatLng(userLatParsed, userLngParsed));
 
-      // Отримуємо маршрут між першою локацією і кінцевим користувачем
       final result = await polylinesPoint.getRouteBetweenCoordinates(
         googleApiKey: 'AIzaSyBGHhRFdiPJxDxpX81Up_LhS71FQr4nJLY',
         request: PolylineRequest(
+          optimizeWaypoints: true,
           origin: trackItem != null &&
                   trackItem.deliveryStatus == DeliveryStatus.inProggress
               ? PointLatLng(
                   trackItem.courier?.lat ?? coordinates.first.latitude,
-                  trackItem.courier?.lng ?? coordinates.first.longitude)
+                  trackItem.courier?.lng ?? coordinates.first.longitude,
+                )
               : PointLatLng(
                   coordinates.first.latitude,
                   coordinates.first.longitude,
@@ -118,7 +122,6 @@ final polylineProvider = FutureProvider.family<List<Polyline>, String>(
             coordinates.last.latitude,
             coordinates.last.longitude,
           ),
-          // Перетворюємо координати з waypointsList у формат PointLatLng
           wayPoints: wayPointList.isNotEmpty
               ? wayPointList.map((waypoint) {
                   return PolylineWayPoint(
@@ -183,14 +186,21 @@ class TrackOrderScreen2 extends ConsumerWidget {
     );
 
     final trackOrderItems = trackItem?.order_items ?? [];
+    final checkInShopIDs = (trackItem?.check_in_coffee_shops ?? [])
+        .map((e) => e.coffeeShopID)
+        .toSet();
+
     final groupedItemsByID =
         trackOrderItems.map((item) => item.shopID).toSet().toList();
 
     final Map<String, List<String>> shopLocationMap = {
       for (String shopID in groupedItemsByID)
-        if (ref.watch(fetchLocationConcreteShopProvider(shopID)).value != null)
-          shopID: (ref.watch(fetchLocationConcreteShopProvider(shopID)).value!)
-              .cast<String>(),
+        if (!checkInShopIDs.contains(shopID))
+          if (ref.watch(fetchLocationConcreteShopProvider(shopID)).value !=
+              null)
+            shopID:
+                (ref.watch(fetchLocationConcreteShopProvider(shopID)).value!)
+                    .cast<String>(),
     };
 
     final firstCoffeeShopInfo = groupedItemsByID.isNotEmpty
@@ -200,12 +210,25 @@ class TrackOrderScreen2 extends ConsumerWidget {
             []
         : [];
     String createLocationString(Map<String, List<dynamic>> locationMap) {
-      final locationStrings = locationMap.entries.skip(1).map(
-        (entry) {
-          final latLngString = entry.value.map((e) => e.toString()).join(',');
-          return latLngString;
-        },
-      ).toList();
+      final locationStrings = trackItem?.courier != null &&
+              trackItem?.courier?.lat != 0 &&
+              trackItem?.courier?.lng != 0 &&
+              courierMarkerAsync.hasValue &&
+              trackItem?.deliveryStatus == DeliveryStatus.inProggress
+          ? locationMap.entries.map(
+              (entry) {
+                final latLngString =
+                    entry.value.map((e) => e.toString()).join(',');
+                return latLngString;
+              },
+            ).toList()
+          : locationMap.entries.skip(1).map(
+              (entry) {
+                final latLngString =
+                    entry.value.map((e) => e.toString()).join(',');
+                return latLngString;
+              },
+            ).toList();
 
       return locationStrings.join('|');
     }
@@ -220,15 +243,48 @@ class TrackOrderScreen2 extends ConsumerWidget {
 
     final totalDistanceDelivery = ref.watch(
       fetchDeliveryDistanceProvider(
-        firstLat,
-        firstLng,
+        trackItem?.courier != null &&
+                trackItem?.courier?.lat != 0 &&
+                trackItem?.courier?.lng != 0 &&
+                courierMarkerAsync.hasValue &&
+                trackItem?.deliveryStatus == DeliveryStatus.inProggress
+            ? (trackItem?.courier?.lat.toString() ?? '')
+            : firstLat,
+        trackItem?.courier != null &&
+                trackItem?.courier?.lat != 0 &&
+                trackItem?.courier?.lng != 0 &&
+                courierMarkerAsync.hasValue
+            ? (trackItem?.courier?.lng.toString() ?? '')
+            : firstLng,
+        user?.addresses[0].lat ?? '',
+        user?.addresses[0].lng ?? '',
+        locationString,
+      ),
+    );
+    final totalDistanceDeliveryValue = totalDistanceDelivery.value ?? '';
+    final totalDeliveryTime = ref.watch(
+      fetchDeliveryTimeProvider(
+        trackItem?.courier != null &&
+                trackItem?.courier?.lat != 0 &&
+                trackItem?.courier?.lng != 0 &&
+                courierMarkerAsync.hasValue &&
+                trackItem?.deliveryStatus == DeliveryStatus.inProggress
+            ? (trackItem?.courier?.lat.toString() ?? '')
+            : firstLat,
+        trackItem?.courier != null &&
+                trackItem?.courier?.lat != 0 &&
+                trackItem?.courier?.lng != 0 &&
+                courierMarkerAsync.hasValue
+            ? (trackItem?.courier?.lng.toString() ?? '')
+            : firstLng,
         user?.addresses[0].lat ?? '',
         user?.addresses[0].lng ?? '',
         locationString,
       ),
     );
 
-    final totalDistanceDeliveryValue = totalDistanceDelivery.value ?? '';
+    final totalDeliveryTimeValue = totalDeliveryTime.value ?? '';
+
     final totalDistanceDeliveryValueParsed =
         totalDistanceDeliveryValue.isNotEmpty &&
                 double.tryParse(
@@ -397,16 +453,6 @@ class TrackOrderScreen2 extends ConsumerWidget {
                                   'Your order is ready. We\'re waiting for you to self-pickup the order!',
                             )
                           : const SizedBox.shrink(),
-                      // trackItem?.orderAssemblyStatus ==
-                      //             OrderAssemblyStatus.finished &&
-                      //         trackItem?.courier != null &&
-                      //         trackItem?.deliveryStatus ==
-                      //             DeliveryStatus.initial
-                      //     ? const OrderAssemblyInfo(
-                      //         text:
-                      //             'Your order is being prepared. We\'re waiting for the courier!',
-                      //       )
-                      //     : const SizedBox.shrink(),
                       trackItem != null &&
                               trackItem.courier != null &&
                               trackItem.deliveryStatus !=
@@ -418,7 +464,10 @@ class TrackOrderScreen2 extends ConsumerWidget {
                           ? Column(
                               children: [
                                 CourierSectionWidget(trackItem: trackItem),
-                                const OrderInfoWidget(),
+                                OrderInfoWidget(
+                                  deliveryTime: totalDeliveryTimeValue,
+                                  orderID: trackItem.id,
+                                ),
                               ],
                             )
                           : const SizedBox.shrink(),

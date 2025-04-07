@@ -18,3 +18,16 @@ Future<DetailedCoffeeShopModel?> fetchDetailedCoffeeShop(
     throw Exception('Failed to load brands: $e');
   }
 }
+
+@riverpod
+Future<int?> fetchCoffeeShopOrderCount(
+  Ref ref,
+  String coffeeShopID,
+) async {
+  final apiService = ref.read(apiServiceProvider);
+  try {
+    return await apiService.getCoffeeShopOrderCount(coffeeShopID);
+  } catch (e) {
+    throw Exception('Failed to load brands: $e');
+  }
+}

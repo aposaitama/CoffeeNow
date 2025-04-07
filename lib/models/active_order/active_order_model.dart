@@ -43,6 +43,7 @@ enum PaymentOrderOption {
 @freezed
 class ActiveOrderModel with _$ActiveOrderModel {
   const factory ActiveOrderModel({
+    required int id,
     required String documentId,
     required String userID,
     required String orderTotal,
@@ -52,10 +53,21 @@ class ActiveOrderModel with _$ActiveOrderModel {
     required PaymentOrderOption paymentOption,
     required List<OrderItemModel> order_items,
     required CourierModel? courier,
+    required List<CheckInCoffeeShopsModel>? check_in_coffee_shops,
   }) = _ActiveOrderModel;
 
   factory ActiveOrderModel.fromJson(Map<String, dynamic> json) =>
       _$ActiveOrderModelFromJson(json);
+}
+
+@freezed
+class CheckInCoffeeShopsModel with _$CheckInCoffeeShopsModel {
+  const factory CheckInCoffeeShopsModel({
+    required String coffeeShopID,
+  }) = _CheckInCoffeeShopsModel;
+
+  factory CheckInCoffeeShopsModel.fromJson(Map<String, dynamic> json) =>
+      _$CheckInCoffeeShopsModelFromJson(json);
 }
 
 @freezed

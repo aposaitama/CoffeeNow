@@ -7,10 +7,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class BackdropPopup extends StatelessWidget {
-  const BackdropPopup({super.key});
+  final String orderID;
+  const BackdropPopup({super.key, required this.orderID});
 
   @override
   Widget build(BuildContext context) {
+    print(orderID);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: BackdropFilter(
@@ -54,7 +56,7 @@ class BackdropPopup extends StatelessWidget {
                   context.pop();
                   context.pop();
                   context.pop();
-                  context.push('/track_order');
+                  context.push('/track_order2/$orderID');
                 },
                 child: const CustomButton(
                   buttonText: 'Track Order',

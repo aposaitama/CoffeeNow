@@ -6,7 +6,7 @@ part of 'checkout_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$checkoutHash() => r'd7be80f1478ca0170b84587a2ad214d09d19899a';
+String _$checkoutHash() => r'c1934b6f6c846d3fd55454aeb3d01a9515d773e5';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,7 +34,7 @@ class _SystemHash {
 const checkoutProvider = CheckoutFamily();
 
 /// See also [checkout].
-class CheckoutFamily extends Family<AsyncValue<bool>> {
+class CheckoutFamily extends Family<AsyncValue<String?>> {
   /// See also [checkout].
   const CheckoutFamily();
 
@@ -87,7 +87,7 @@ class CheckoutFamily extends Family<AsyncValue<bool>> {
 }
 
 /// See also [checkout].
-class CheckoutProvider extends AutoDisposeFutureProvider<bool> {
+class CheckoutProvider extends AutoDisposeFutureProvider<String?> {
   /// See also [checkout].
   CheckoutProvider(
     List<BasketItemHiveModel> basketListItems,
@@ -146,7 +146,7 @@ class CheckoutProvider extends AutoDisposeFutureProvider<bool> {
 
   @override
   Override overrideWith(
-    FutureOr<bool> Function(CheckoutRef provider) create,
+    FutureOr<String?> Function(CheckoutRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -168,7 +168,7 @@ class CheckoutProvider extends AutoDisposeFutureProvider<bool> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<bool> createElement() {
+  AutoDisposeFutureProviderElement<String?> createElement() {
     return _CheckoutProviderElement(this);
   }
 
@@ -199,7 +199,7 @@ class CheckoutProvider extends AutoDisposeFutureProvider<bool> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin CheckoutRef on AutoDisposeFutureProviderRef<bool> {
+mixin CheckoutRef on AutoDisposeFutureProviderRef<String?> {
   /// The parameter `basketListItems` of this provider.
   List<BasketItemHiveModel> get basketListItems;
 
@@ -219,7 +219,7 @@ mixin CheckoutRef on AutoDisposeFutureProviderRef<bool> {
   String get destinationAddress;
 }
 
-class _CheckoutProviderElement extends AutoDisposeFutureProviderElement<bool>
+class _CheckoutProviderElement extends AutoDisposeFutureProviderElement<String?>
     with CheckoutRef {
   _CheckoutProviderElement(super.provider);
 

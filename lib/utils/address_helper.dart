@@ -14,6 +14,24 @@ class Address {
     return cityComponent.long_name;
   }
 
+  String get postalCode {
+    final postalCodeComponent = _addressComponents.firstWhere(
+      (component) => component.types.contains('postal_code'),
+      orElse: () =>
+          const AddressComponent(long_name: '', short_name: '', types: []),
+    );
+    return postalCodeComponent.long_name;
+  }
+
+  String get streetNumber {
+    final numberComponent = _addressComponents.firstWhere(
+      (component) => component.types.contains('street_number'),
+      orElse: () =>
+          const AddressComponent(long_name: '', short_name: '', types: []),
+    );
+    return numberComponent.long_name;
+  }
+
   String get country {
     final countryComponent = _addressComponents.firstWhere(
       (component) => component.types.contains('country'),

@@ -124,28 +124,12 @@ class ApiService {
     }
   }
 
-  // Future<ActiveOrderModel?> getConcreteActiveOrder(String documentID) async {
-  //   try {
-  //     final response = await _dio.get('/orders/$documentID', queryParameters: {
-  //       'populate': '*',
-  //     });
-
-  //     final List<dynamic> data = response.data['data'] ?? [];
-  //     if (data.isEmpty) {
-  //       return null;
-  //     }
-  //     print(ActiveOrderModel.fromJson(data.first));
-  //     return ActiveOrderModel.fromJson(data.first);
-  //   } catch (e) {
-  //     return null;
-  //   }
-  // }
-
   Future<ActiveOrderModel?> getConcreteActiveOrder(String documentID) async {
     try {
       final response = await _dio.get('/orders/$documentID', queryParameters: {
         'populate': 'courier.photo',
         'populate[]': 'order_items',
+        'populate[][]': 'check_in_coffee_shops',
       });
       // print(response.data['data']);
       final data = response.data['data'];
@@ -238,7 +222,8 @@ class ApiService {
   }
 
   Future<List<CoffeeShopModel>> getConcreteCoffeeShop(
-      String coffeeShopID) async {
+    String coffeeShopID,
+  ) async {
     try {
       final response = await _dio.get('/coffee-shops', queryParameters: {
         'filters[coffeeShopID][\$eq]': coffeeShopID,
@@ -484,8 +469,8 @@ class ApiService {
           },
         },
       );
-      print(response);
-      return response.data['id'].toString();
+
+      return response.data['data']['documentId'];
     } catch (e) {
       return null;
     }
@@ -512,6 +497,21 @@ class ApiService {
     } catch (e) {
       print('Error fetching coffee shop: $e');
       throw Exception('Failed to load coffee shop');
+    }
+  }
+
+  Future<int?> getCoffeeShopOrderCount(
+    String coffeeShopID,
+  ) async {
+    try {
+      final response = await _dio.get(
+        '/order-items',
+        queryParameters: {"filters[shopID][\$eq]": coffeeShopID},
+      );
+
+      return response.data['meta']['pagination']['total'];
+    } catch (e) {
+      return null;
     }
   }
 

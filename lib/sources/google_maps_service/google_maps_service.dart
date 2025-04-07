@@ -80,7 +80,7 @@ class GoogleMapsService {
       final response = await _dio.get('/directions/json', queryParameters: {
         'origin': '$latOrigin,$lngOrigin',
         'destination': '$latDestination,$lngDestination',
-        'waypoints': '$waypoints',
+        'waypoints': waypoints,
         'optimize': true,
         'key': 'AIzaSyBGHhRFdiPJxDxpX81Up_LhS71FQr4nJLY',
       });
@@ -89,7 +89,38 @@ class GoogleMapsService {
 
       double totalDistance =
           legs.fold(0, (sum, leg) => sum + leg['distance']['value'] as double);
+      double totalDeliveryTime =
+          legs.fold(0, (sum, leg) => sum + leg['duration']['value']);
+      print(totalDeliveryTime);
       return (totalDistance / 1000).toString();
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<String?> getDeliveryTimeWithWaypoints(
+    String latOrigin,
+    String lngOrigin,
+    String latDestination,
+    String lngDestination,
+    String waypoints,
+    // Map<String, List<dynamic>> waypoints,
+  ) async {
+    try {
+      final response = await _dio.get('/directions/json', queryParameters: {
+        'origin': '$latOrigin,$lngOrigin',
+        'destination': '$latDestination,$lngDestination',
+        'waypoints': waypoints,
+        'optimize': true,
+        'key': 'AIzaSyBGHhRFdiPJxDxpX81Up_LhS71FQr4nJLY',
+      });
+
+      final List<dynamic> legs = response.data['routes'][0]['legs'];
+
+      double totalDeliveryTime =
+          legs.fold(0, (sum, leg) => sum + leg['duration']['value']);
+
+      return (totalDeliveryTime / 60).toStringAsFixed(0);
     } catch (e) {
       return '';
     }

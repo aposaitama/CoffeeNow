@@ -70,6 +70,7 @@ class ProfileScreen extends ConsumerWidget {
                 height: 24.0,
               ),
               ProfilePageListItemTile(
+                onTap: () => context.push('/address_info'),
                 pageTitle: 'Address Info',
                 imgUrl: 'lib/assets/icons/Location_profile.svg',
               ),

@@ -9,7 +9,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'checkout_provider.g.dart';
 
 @riverpod
-Future<bool> checkout(
+Future<String?> checkout(
   Ref ref,
   List<BasketItemHiveModel> basketListItems,
   String userID,
@@ -22,7 +22,7 @@ Future<bool> checkout(
   try {
     final orderItemsDocIDList =
         await apiService.createOrderItemsFromBasket(basketListItems);
-    await apiService.createOrderWithOrderItems(
+    final documentID = await apiService.createOrderWithOrderItems(
       userID,
       deliveryMethod,
       paymentMethod,
@@ -31,8 +31,8 @@ Future<bool> checkout(
       orderItemsDocIDList,
     );
     ref.invalidate(FetchTransactionsProvider(int.parse(userID)));
-    return true;
+    return documentID;
   } catch (e) {
-    return false;
+    return null;
   }
 }

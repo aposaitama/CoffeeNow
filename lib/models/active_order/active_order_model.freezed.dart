@@ -20,6 +20,7 @@ ActiveOrderModel _$ActiveOrderModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ActiveOrderModel {
+  int get id => throw _privateConstructorUsedError;
   String get documentId => throw _privateConstructorUsedError;
   String get userID => throw _privateConstructorUsedError;
   String get orderTotal => throw _privateConstructorUsedError;
@@ -30,6 +31,8 @@ mixin _$ActiveOrderModel {
   PaymentOrderOption get paymentOption => throw _privateConstructorUsedError;
   List<OrderItemModel> get order_items => throw _privateConstructorUsedError;
   CourierModel? get courier => throw _privateConstructorUsedError;
+  List<CheckInCoffeeShopsModel>? get check_in_coffee_shops =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this ActiveOrderModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +51,8 @@ abstract class $ActiveOrderModelCopyWith<$Res> {
       _$ActiveOrderModelCopyWithImpl<$Res, ActiveOrderModel>;
   @useResult
   $Res call(
-      {String documentId,
+      {int id,
+      String documentId,
       String userID,
       String orderTotal,
       OrderAssemblyStatus orderAssemblyStatus,
@@ -56,7 +60,8 @@ abstract class $ActiveOrderModelCopyWith<$Res> {
       DeliveryOrderMethod deliveryMethod,
       PaymentOrderOption paymentOption,
       List<OrderItemModel> order_items,
-      CourierModel? courier});
+      CourierModel? courier,
+      List<CheckInCoffeeShopsModel>? check_in_coffee_shops});
 
   $CourierModelCopyWith<$Res>? get courier;
 }
@@ -76,6 +81,7 @@ class _$ActiveOrderModelCopyWithImpl<$Res, $Val extends ActiveOrderModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? documentId = null,
     Object? userID = null,
     Object? orderTotal = null,
@@ -85,8 +91,13 @@ class _$ActiveOrderModelCopyWithImpl<$Res, $Val extends ActiveOrderModel>
     Object? paymentOption = null,
     Object? order_items = null,
     Object? courier = freezed,
+    Object? check_in_coffee_shops = freezed,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       documentId: null == documentId
           ? _value.documentId
           : documentId // ignore: cast_nullable_to_non_nullable
@@ -123,6 +134,10 @@ class _$ActiveOrderModelCopyWithImpl<$Res, $Val extends ActiveOrderModel>
           ? _value.courier
           : courier // ignore: cast_nullable_to_non_nullable
               as CourierModel?,
+      check_in_coffee_shops: freezed == check_in_coffee_shops
+          ? _value.check_in_coffee_shops
+          : check_in_coffee_shops // ignore: cast_nullable_to_non_nullable
+              as List<CheckInCoffeeShopsModel>?,
     ) as $Val);
   }
 
@@ -150,7 +165,8 @@ abstract class _$$ActiveOrderModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String documentId,
+      {int id,
+      String documentId,
       String userID,
       String orderTotal,
       OrderAssemblyStatus orderAssemblyStatus,
@@ -158,7 +174,8 @@ abstract class _$$ActiveOrderModelImplCopyWith<$Res>
       DeliveryOrderMethod deliveryMethod,
       PaymentOrderOption paymentOption,
       List<OrderItemModel> order_items,
-      CourierModel? courier});
+      CourierModel? courier,
+      List<CheckInCoffeeShopsModel>? check_in_coffee_shops});
 
   @override
   $CourierModelCopyWith<$Res>? get courier;
@@ -177,6 +194,7 @@ class __$$ActiveOrderModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? documentId = null,
     Object? userID = null,
     Object? orderTotal = null,
@@ -186,8 +204,13 @@ class __$$ActiveOrderModelImplCopyWithImpl<$Res>
     Object? paymentOption = null,
     Object? order_items = null,
     Object? courier = freezed,
+    Object? check_in_coffee_shops = freezed,
   }) {
     return _then(_$ActiveOrderModelImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       documentId: null == documentId
           ? _value.documentId
           : documentId // ignore: cast_nullable_to_non_nullable
@@ -224,6 +247,10 @@ class __$$ActiveOrderModelImplCopyWithImpl<$Res>
           ? _value.courier
           : courier // ignore: cast_nullable_to_non_nullable
               as CourierModel?,
+      check_in_coffee_shops: freezed == check_in_coffee_shops
+          ? _value._check_in_coffee_shops
+          : check_in_coffee_shops // ignore: cast_nullable_to_non_nullable
+              as List<CheckInCoffeeShopsModel>?,
     ));
   }
 }
@@ -232,7 +259,8 @@ class __$$ActiveOrderModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ActiveOrderModelImpl implements _ActiveOrderModel {
   const _$ActiveOrderModelImpl(
-      {required this.documentId,
+      {required this.id,
+      required this.documentId,
       required this.userID,
       required this.orderTotal,
       required this.orderAssemblyStatus,
@@ -240,12 +268,16 @@ class _$ActiveOrderModelImpl implements _ActiveOrderModel {
       required this.deliveryMethod,
       required this.paymentOption,
       required final List<OrderItemModel> order_items,
-      required this.courier})
-      : _order_items = order_items;
+      required this.courier,
+      required final List<CheckInCoffeeShopsModel>? check_in_coffee_shops})
+      : _order_items = order_items,
+        _check_in_coffee_shops = check_in_coffee_shops;
 
   factory _$ActiveOrderModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ActiveOrderModelImplFromJson(json);
 
+  @override
+  final int id;
   @override
   final String documentId;
   @override
@@ -270,10 +302,20 @@ class _$ActiveOrderModelImpl implements _ActiveOrderModel {
 
   @override
   final CourierModel? courier;
+  final List<CheckInCoffeeShopsModel>? _check_in_coffee_shops;
+  @override
+  List<CheckInCoffeeShopsModel>? get check_in_coffee_shops {
+    final value = _check_in_coffee_shops;
+    if (value == null) return null;
+    if (_check_in_coffee_shops is EqualUnmodifiableListView)
+      return _check_in_coffee_shops;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'ActiveOrderModel(documentId: $documentId, userID: $userID, orderTotal: $orderTotal, orderAssemblyStatus: $orderAssemblyStatus, deliveryStatus: $deliveryStatus, deliveryMethod: $deliveryMethod, paymentOption: $paymentOption, order_items: $order_items, courier: $courier)';
+    return 'ActiveOrderModel(id: $id, documentId: $documentId, userID: $userID, orderTotal: $orderTotal, orderAssemblyStatus: $orderAssemblyStatus, deliveryStatus: $deliveryStatus, deliveryMethod: $deliveryMethod, paymentOption: $paymentOption, order_items: $order_items, courier: $courier, check_in_coffee_shops: $check_in_coffee_shops)';
   }
 
   @override
@@ -281,6 +323,7 @@ class _$ActiveOrderModelImpl implements _ActiveOrderModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ActiveOrderModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.documentId, documentId) ||
                 other.documentId == documentId) &&
             (identical(other.userID, userID) || other.userID == userID) &&
@@ -296,13 +339,16 @@ class _$ActiveOrderModelImpl implements _ActiveOrderModel {
                 other.paymentOption == paymentOption) &&
             const DeepCollectionEquality()
                 .equals(other._order_items, _order_items) &&
-            (identical(other.courier, courier) || other.courier == courier));
+            (identical(other.courier, courier) || other.courier == courier) &&
+            const DeepCollectionEquality()
+                .equals(other._check_in_coffee_shops, _check_in_coffee_shops));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      id,
       documentId,
       userID,
       orderTotal,
@@ -311,7 +357,8 @@ class _$ActiveOrderModelImpl implements _ActiveOrderModel {
       deliveryMethod,
       paymentOption,
       const DeepCollectionEquality().hash(_order_items),
-      courier);
+      courier,
+      const DeepCollectionEquality().hash(_check_in_coffee_shops));
 
   /// Create a copy of ActiveOrderModel
   /// with the given fields replaced by the non-null parameter values.
@@ -332,7 +379,8 @@ class _$ActiveOrderModelImpl implements _ActiveOrderModel {
 
 abstract class _ActiveOrderModel implements ActiveOrderModel {
   const factory _ActiveOrderModel(
-      {required final String documentId,
+      {required final int id,
+      required final String documentId,
       required final String userID,
       required final String orderTotal,
       required final OrderAssemblyStatus orderAssemblyStatus,
@@ -340,11 +388,15 @@ abstract class _ActiveOrderModel implements ActiveOrderModel {
       required final DeliveryOrderMethod deliveryMethod,
       required final PaymentOrderOption paymentOption,
       required final List<OrderItemModel> order_items,
-      required final CourierModel? courier}) = _$ActiveOrderModelImpl;
+      required final CourierModel? courier,
+      required final List<CheckInCoffeeShopsModel>?
+          check_in_coffee_shops}) = _$ActiveOrderModelImpl;
 
   factory _ActiveOrderModel.fromJson(Map<String, dynamic> json) =
       _$ActiveOrderModelImpl.fromJson;
 
+  @override
+  int get id;
   @override
   String get documentId;
   @override
@@ -363,6 +415,8 @@ abstract class _ActiveOrderModel implements ActiveOrderModel {
   List<OrderItemModel> get order_items;
   @override
   CourierModel? get courier;
+  @override
+  List<CheckInCoffeeShopsModel>? get check_in_coffee_shops;
 
   /// Create a copy of ActiveOrderModel
   /// with the given fields replaced by the non-null parameter values.
@@ -370,6 +424,163 @@ abstract class _ActiveOrderModel implements ActiveOrderModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ActiveOrderModelImplCopyWith<_$ActiveOrderModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+CheckInCoffeeShopsModel _$CheckInCoffeeShopsModelFromJson(
+    Map<String, dynamic> json) {
+  return _CheckInCoffeeShopsModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CheckInCoffeeShopsModel {
+  String get coffeeShopID => throw _privateConstructorUsedError;
+
+  /// Serializes this CheckInCoffeeShopsModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of CheckInCoffeeShopsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $CheckInCoffeeShopsModelCopyWith<CheckInCoffeeShopsModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CheckInCoffeeShopsModelCopyWith<$Res> {
+  factory $CheckInCoffeeShopsModelCopyWith(CheckInCoffeeShopsModel value,
+          $Res Function(CheckInCoffeeShopsModel) then) =
+      _$CheckInCoffeeShopsModelCopyWithImpl<$Res, CheckInCoffeeShopsModel>;
+  @useResult
+  $Res call({String coffeeShopID});
+}
+
+/// @nodoc
+class _$CheckInCoffeeShopsModelCopyWithImpl<$Res,
+        $Val extends CheckInCoffeeShopsModel>
+    implements $CheckInCoffeeShopsModelCopyWith<$Res> {
+  _$CheckInCoffeeShopsModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of CheckInCoffeeShopsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? coffeeShopID = null,
+  }) {
+    return _then(_value.copyWith(
+      coffeeShopID: null == coffeeShopID
+          ? _value.coffeeShopID
+          : coffeeShopID // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CheckInCoffeeShopsModelImplCopyWith<$Res>
+    implements $CheckInCoffeeShopsModelCopyWith<$Res> {
+  factory _$$CheckInCoffeeShopsModelImplCopyWith(
+          _$CheckInCoffeeShopsModelImpl value,
+          $Res Function(_$CheckInCoffeeShopsModelImpl) then) =
+      __$$CheckInCoffeeShopsModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String coffeeShopID});
+}
+
+/// @nodoc
+class __$$CheckInCoffeeShopsModelImplCopyWithImpl<$Res>
+    extends _$CheckInCoffeeShopsModelCopyWithImpl<$Res,
+        _$CheckInCoffeeShopsModelImpl>
+    implements _$$CheckInCoffeeShopsModelImplCopyWith<$Res> {
+  __$$CheckInCoffeeShopsModelImplCopyWithImpl(
+      _$CheckInCoffeeShopsModelImpl _value,
+      $Res Function(_$CheckInCoffeeShopsModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CheckInCoffeeShopsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? coffeeShopID = null,
+  }) {
+    return _then(_$CheckInCoffeeShopsModelImpl(
+      coffeeShopID: null == coffeeShopID
+          ? _value.coffeeShopID
+          : coffeeShopID // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CheckInCoffeeShopsModelImpl implements _CheckInCoffeeShopsModel {
+  const _$CheckInCoffeeShopsModelImpl({required this.coffeeShopID});
+
+  factory _$CheckInCoffeeShopsModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CheckInCoffeeShopsModelImplFromJson(json);
+
+  @override
+  final String coffeeShopID;
+
+  @override
+  String toString() {
+    return 'CheckInCoffeeShopsModel(coffeeShopID: $coffeeShopID)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CheckInCoffeeShopsModelImpl &&
+            (identical(other.coffeeShopID, coffeeShopID) ||
+                other.coffeeShopID == coffeeShopID));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, coffeeShopID);
+
+  /// Create a copy of CheckInCoffeeShopsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CheckInCoffeeShopsModelImplCopyWith<_$CheckInCoffeeShopsModelImpl>
+      get copyWith => __$$CheckInCoffeeShopsModelImplCopyWithImpl<
+          _$CheckInCoffeeShopsModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CheckInCoffeeShopsModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CheckInCoffeeShopsModel implements CheckInCoffeeShopsModel {
+  const factory _CheckInCoffeeShopsModel({required final String coffeeShopID}) =
+      _$CheckInCoffeeShopsModelImpl;
+
+  factory _CheckInCoffeeShopsModel.fromJson(Map<String, dynamic> json) =
+      _$CheckInCoffeeShopsModelImpl.fromJson;
+
+  @override
+  String get coffeeShopID;
+
+  /// Create a copy of CheckInCoffeeShopsModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CheckInCoffeeShopsModelImplCopyWith<_$CheckInCoffeeShopsModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 OrderItemModel _$OrderItemModelFromJson(Map<String, dynamic> json) {

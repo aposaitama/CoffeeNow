@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CoffeeShopItemTile extends StatelessWidget {
+  final int orderCount;
   final String deliveryPrice;
   final String distance;
   final CoffeeShopModel coffeeShop;
@@ -13,7 +14,8 @@ class CoffeeShopItemTile extends StatelessWidget {
       {super.key,
       required this.coffeeShop,
       required this.distance,
-      required this.deliveryPrice});
+      required this.deliveryPrice,
+      required this.orderCount});
 
   @override
   Widget build(BuildContext context) {
@@ -89,13 +91,15 @@ class CoffeeShopItemTile extends StatelessWidget {
                                       const SeparatedDot(),
                                     ],
                                   )
-                                : SizedBox.shrink(),
-                            SvgPicture.asset('lib/assets/icons/Star 1.svg'),
+                                : const SizedBox.shrink(),
+                            SvgPicture.asset(
+                              'lib/assets/icons/order_small.svg',
+                            ),
                             const SizedBox(
                               width: 2.0,
                             ),
                             Text(
-                              '4.5(342)',
+                              orderCount.toString(),
                               style: AppFonts.poppinsMedium.copyWith(
                                 color: AppColors.greyRegularTextColor,
                                 fontSize: 13.0,
