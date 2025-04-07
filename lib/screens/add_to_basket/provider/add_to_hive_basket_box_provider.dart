@@ -172,6 +172,17 @@ class BasketHive extends _$BasketHive {
     final box = ref.watch(basketBoxProvider);
     box.delete(userID);
   }
+
+  void clearCart() {
+    final box = ref.watch(basketBoxProvider);
+    final currentBasket = box.get(userID);
+
+    if (currentBasket != null) {
+      currentBasket.basketItem.clear();
+      box.put(userID, currentBasket);
+      ref.notifyListeners();
+    }
+  }
 }
 
 bool _compareMaps(Map<String, String> map1, Map<String, String> map2) {

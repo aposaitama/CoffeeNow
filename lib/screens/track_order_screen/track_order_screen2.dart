@@ -1,4 +1,5 @@
 import 'package:coffee_now/models/active_order/active_order_model.dart';
+import 'package:coffee_now/screens/checkout_page/provider/delivery_method_provider/delivery_method_provider.dart';
 import 'package:coffee_now/screens/checkout_page/provider/get_shop_info_provider.dart';
 
 import 'package:coffee_now/screens/detail_page/provider/shop_basic_info_provider/shop_basic_info.dart';
@@ -63,10 +64,8 @@ final polylineProvider = FutureProvider.family<List<Polyline>, String>(
         trackOrderItems.map((item) => item.shopID).toSet().toList();
     if (groupedItemsByID.isNotEmpty && groupedItemsByID.length > 1) {
       for (String shopID in groupedItemsByID) {
-        final shopLocation = ref
-            .watch(fetchLocationConcreteShopProvider(
-                shopID)) // Змінив з groupedItemsByID[0] на shopID
-            .value;
+        final shopLocation =
+            ref.watch(fetchLocationConcreteShopProvider(shopID)).value;
         if (shopLocation != null) {
           waypointsList.add('${shopLocation[0]},${shopLocation[1]}');
         }
@@ -83,11 +82,10 @@ final polylineProvider = FutureProvider.family<List<Polyline>, String>(
       final userLatParsed = double.parse(userLat);
       final userLngParsed = double.parse(userLng);
 
-      // Додаємо координати для першого закладу
       coordinates.add(LatLng(shopLat, shopLng));
 
       // Якщо є більше одного закладу, додаємо ще
-      final groupedItemsByI = groupedItemsByID[0]; // Ви вже маєте ці дані
+      final groupedItemsByI = groupedItemsByID[0];
       if (groupedItemsByID.length > 1) {
         for (final anotherShopID in groupedItemsByID.sublist(1)) {
           final anotherShopLocation =
@@ -107,10 +105,15 @@ final polylineProvider = FutureProvider.family<List<Polyline>, String>(
       final result = await polylinesPoint.getRouteBetweenCoordinates(
         googleApiKey: 'AIzaSyBGHhRFdiPJxDxpX81Up_LhS71FQr4nJLY',
         request: PolylineRequest(
-          origin: PointLatLng(
-            coordinates.first.latitude,
-            coordinates.first.longitude,
-          ),
+          origin: trackItem != null &&
+                  trackItem.deliveryStatus == DeliveryStatus.inProggress
+              ? PointLatLng(
+                  trackItem.courier?.lat ?? coordinates.first.latitude,
+                  trackItem.courier?.lng ?? coordinates.first.longitude)
+              : PointLatLng(
+                  coordinates.first.latitude,
+                  coordinates.first.longitude,
+                ),
           destination: PointLatLng(
             coordinates.last.latitude,
             coordinates.last.longitude,
@@ -374,10 +377,24 @@ class TrackOrderScreen2 extends ConsumerWidget {
                           : const SizedBox.shrink(),
                       trackItem?.orderAssemblyStatus ==
                                   OrderAssemblyStatus.finished &&
-                              trackItem?.courier == null
+                              trackItem?.courier == null &&
+                              trackItem?.deliveryMethod ==
+                                  DeliveryOrderMethod.delivery
                           ? const OrderAssemblyInfo(
                               text:
                                   'Your order is being prepared. We\'re searching for the courier!',
+                            )
+                          : const SizedBox.shrink(),
+                      trackItem?.orderAssemblyStatus ==
+                                  OrderAssemblyStatus.finished &&
+                              trackItem?.courier == null &&
+                              trackItem?.deliveryMethod ==
+                                  DeliveryOrderMethod.selfPickup &&
+                              trackItem?.deliveryStatus !=
+                                  DeliveryStatus.finished
+                          ? const OrderAssemblyInfo(
+                              text:
+                                  'Your order is ready. We\'re waiting for you to self-pickup the order!',
                             )
                           : const SizedBox.shrink(),
                       // trackItem?.orderAssemblyStatus ==
@@ -395,12 +412,23 @@ class TrackOrderScreen2 extends ConsumerWidget {
                               trackItem.deliveryStatus !=
                                   DeliveryStatus.finished &&
                               trackItem.orderAssemblyStatus ==
-                                  OrderAssemblyStatus.finished
+                                  OrderAssemblyStatus.finished &&
+                              trackItem.deliveryMethod ==
+                                  DeliveryOrderMethod.delivery
                           ? Column(
                               children: [
                                 CourierSectionWidget(trackItem: trackItem),
-                                OrderInfoWidget(),
+                                const OrderInfoWidget(),
                               ],
+                            )
+                          : const SizedBox.shrink(),
+                      trackItem != null &&
+                              trackItem.deliveryStatus ==
+                                  DeliveryStatus.finished &&
+                              trackItem.orderAssemblyStatus ==
+                                  OrderAssemblyStatus.finished
+                          ? const OrderAssemblyInfo(
+                              text: 'Tranks for your order!',
                             )
                           : const SizedBox.shrink(),
                       const SizedBox(

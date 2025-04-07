@@ -255,6 +255,13 @@ class CheckoutPage extends ConsumerWidget {
                       '',
                     ),
                   );
+                  ref
+                      .read(
+                        BasketHiveProvider(
+                          user?.id.toString() ?? '',
+                        ).notifier,
+                      )
+                      .clearCart();
                   showDialog(
                     context: context,
                     builder: (context) => const BackdropPopup(),
@@ -262,20 +269,27 @@ class CheckoutPage extends ConsumerWidget {
                 }
               }
               if (paymentMethod == PaymentMethod.cash) {
-                ref.read(
-                  checkoutProvider(
-                    basketListItems,
-                    (user?.id.toString() ?? ''),
-                    selectedDeliveryMethod,
-                    paymentMethod,
-                    totalOrderPrice,
-                    '',
-                  ),
-                );
-                showDialog(
-                  context: context,
-                  builder: (context) => const BackdropPopup(),
-                );
+                final success = await ref.read(checkoutProvider(
+                  basketListItems,
+                  (user?.id.toString() ?? ''),
+                  selectedDeliveryMethod,
+                  paymentMethod,
+                  totalOrderPrice,
+                  '',
+                ).future);
+                if (success) {
+                  ref
+                      .read(
+                        BasketHiveProvider(
+                          user?.id.toString() ?? '',
+                        ).notifier,
+                      )
+                      .clearCart();
+                  showDialog(
+                    context: context,
+                    builder: (context) => const BackdropPopup(),
+                  );
+                }
               }
             },
           )

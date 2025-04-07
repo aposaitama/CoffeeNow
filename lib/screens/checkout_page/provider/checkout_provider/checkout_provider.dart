@@ -9,7 +9,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'checkout_provider.g.dart';
 
 @riverpod
-Future<void> checkout(
+Future<bool> checkout(
   Ref ref,
   List<BasketItemHiveModel> basketListItems,
   String userID,
@@ -31,7 +31,8 @@ Future<void> checkout(
       orderItemsDocIDList,
     );
     ref.invalidate(FetchTransactionsProvider(int.parse(userID)));
+    return true;
   } catch (e) {
-    throw Exception('Failed to load brands: $e');
+    return false;
   }
 }
