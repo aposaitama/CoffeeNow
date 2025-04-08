@@ -31,6 +31,7 @@ class AuthNotifier extends _$AuthNotifier {
       String phoneNumber) async {
     final auth = ref.watch(apiServiceProvider);
     final token = await auth.register(username, email, password, phoneNumber);
+
     state = AsyncData(token);
   }
 

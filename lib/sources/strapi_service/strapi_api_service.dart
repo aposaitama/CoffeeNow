@@ -71,7 +71,7 @@ class ApiService {
 
       return token;
     } catch (e) {
-      return '';
+      throw Exception('Failed to register');
     }
   }
 

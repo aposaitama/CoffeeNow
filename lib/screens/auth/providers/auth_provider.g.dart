@@ -22,7 +22,7 @@ final storedTokenProvider = AutoDisposeFutureProvider<String?>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef StoredTokenRef = AutoDisposeFutureProviderRef<String?>;
-String _$authNotifierHash() => r'b0b56e19293407ef7a82bb4ee65b52618d1ad936';
+String _$authNotifierHash() => r'80985c1740f1b8a69cda40e5a88750f66cacda0d';
 
 /// See also [AuthNotifier].
 @ProviderFor(AuthNotifier)

@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_button.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_text_field.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_text_span.dart';
@@ -110,15 +111,19 @@ class RegisterScreen extends ConsumerWidget {
                       GestureDetector(
                         onTap: () async {
                           if (formKey.currentState?.validate() ?? false) {
-                            await authNotifier.register(
-                              fullName.text,
-                              email.text,
-                              password.text,
-                              phoneNum.text,
-                            );
-                            final token = ref.read(authNotifierProvider);
-                            if (token.hasValue) {
-                              context.go('/address_setup');
+                            try {
+                              await authNotifier.register(
+                                fullName.text,
+                                email.text,
+                                password.text,
+                                phoneNum.text,
+                              );
+                              if (context.mounted) context.go('/address_setup');
+                            } catch (e) {
+                              BotToast.showText(
+                                  text: e
+                                      .toString()
+                                      .replaceAll('Exception: ', ''));
                             }
                           }
 
