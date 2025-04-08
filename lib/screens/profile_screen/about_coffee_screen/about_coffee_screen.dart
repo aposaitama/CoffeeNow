@@ -1,8 +1,51 @@
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+
+const String aboutCoffeeNowMarkdown = """
+# ☕ About Coffee Now
+
+**Coffee Now** is a modern food delivery app crafted to bring your favorite coffee and snacks directly to your door — fast, fresh, and friendly.
+
+We believe that coffee is more than just a drink — it's a moment, a ritual, a mood. That’s why we built this app with love and attention to detail, making sure your experience is as smooth as your morning latte.
+
+
+
+## 🚀 Our Mission
+
+Our goal is simple:
+- Bring premium coffee from local cafes to your hands
+- Empower local businesses through technology
+- Make ordering coffee as delightful as drinking it
+
+
+
+## 🌍 What Makes Us Different?
+
+- **Lightning-fast delivery** within your area
+- **Smart order tracking** in real-time
+- **Personalized recommendations** based on your taste
+- **Seamless UX/UI** optimized for every coffee lover
+
+
+
+
+
+
+## 🤝 Let's Connect
+
+We’re always brewing up something new!  
+Have feedback, ideas, or just want to say hi?
+
+**Email**: support@coffeenow.app  
+**Instagram**: [@coffeenow.app](https://instagram.com/coffeenow.app)  
+**Website**: [www.coffeenow.app](https://www.coffeenow.app)
+
+Thanks for being part of our coffee journey 💛  
+""";
 
 class AboutCoffeeScreen extends StatelessWidget {
   const AboutCoffeeScreen({super.key});
@@ -34,20 +77,13 @@ class AboutCoffeeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20.0,
-            ),
-            child: Text(
-              'Coffee Now Apps is a modern food delivery application focused on providing a fast and convenient way to order your favorite meals and drinks. Whether you\'re craving a morning coffee, a tasty lunch, or a sweet treat, Coffee Now brings it right to your door. Built with a clean design and user-friendly interface, our app ensures a smooth and enjoyable experience from browsing to checkout. We\'re committed to quality, speed, and satisfaction—because great food should never keep you waiting.',
-              style: AppFonts.bebasMedium.copyWith(
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
-          )
-        ],
+      body: const Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20.0,
+        ),
+        child: Markdown(
+          data: aboutCoffeeNowMarkdown,
+        ),
       ),
     );
   }

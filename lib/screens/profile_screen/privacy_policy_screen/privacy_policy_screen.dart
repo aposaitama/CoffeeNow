@@ -10,7 +10,7 @@ At **Coffee Now Apps**, we are committed to protecting your privacy.
 This Privacy Policy outlines how we collect, use, and safeguard your information when you use our services.  
 By using our app, you agree to the practices described in this policy.
 
----
+
 
 ## 📌 1. Information We Collect
 
@@ -36,7 +36,7 @@ We may collect the following types of information to provide and improve our ser
 - Device type, OS version, and IP address
 - Frequency and duration of app usage
 
----
+
 
 ## 🧠 2. How We Use Your Information
 
@@ -48,7 +48,7 @@ Your information is used solely to enhance your experience with **Coffee Now App
 - To notify you of updates, offers, or changes
 - To ensure compliance with local regulations
 
----
+
 
 ## 🔒 3. Data Protection
 
@@ -59,7 +59,7 @@ We apply strong security measures to protect your data:
 - Access control and authentication systems
 - Regular audits and vulnerability checks
 
----
+
 
 ## 🚫 4. Data Sharing
 
@@ -70,7 +70,7 @@ However, we may share data with:
 - Payment providers (to process your transactions securely)
 - Legal authorities (if required by law)
 
----
+
 
 ## 🔁 5. Data Retention
 
@@ -80,7 +80,7 @@ We keep your data only as long as needed to provide services or meet legal oblig
 - Payment logs: retained for transaction records
 - Location: temporary for delivery purposes
 
----
+
 
 ## 📲 6. Your Choices
 
@@ -91,7 +91,7 @@ You have full control over your data:
 - Opt out of marketing notifications
 - Control app permissions (e.g., location, camera)
 
----
+
 
 ## 📝 7. Updates to This Policy
 
@@ -100,7 +100,7 @@ If changes are made, we will notify you via the app or email.
 
 _Last updated: April 7, 2025_
 
----
+
 
 ## 📧 Contact Us
 
