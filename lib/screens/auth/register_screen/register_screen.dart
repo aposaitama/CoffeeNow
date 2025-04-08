@@ -14,7 +14,7 @@ class RegisterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     final authNotifier = ref.watch(authNotifierProvider.notifier);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final TextEditingController fullName = TextEditingController();
@@ -41,7 +41,7 @@ class RegisterScreen extends ConsumerWidget {
                 height: 16.0,
               ),
               Form(
-                  key: _formKey,
+                  key: formKey,
                   child: Column(
                     children: [
                       const Text(
@@ -109,7 +109,7 @@ class RegisterScreen extends ConsumerWidget {
                       const Gap(36.0),
                       GestureDetector(
                         onTap: () async {
-                          if (_formKey.currentState?.validate() ?? false) {
+                          if (formKey.currentState?.validate() ?? false) {
                             await authNotifier.register(
                               fullName.text,
                               email.text,

@@ -13,6 +13,7 @@ class TransactionItemModel with _$TransactionItemModel {
     required String orderTotal,
     required String destanationAddress,
     required DateTime updatedAt,
+    // ignore: non_constant_identifier_names
     required List<OrderItemModel> order_items,
   }) = _TransactionItemModel;
 

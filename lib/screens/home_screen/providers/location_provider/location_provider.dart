@@ -1,8 +1,5 @@
-import 'package:coffee_now/models/detailed_coffee_shop/detailed_coffee_shop_model.dart';
 import 'package:coffee_now/models/google_maps_models/location_model/location_model.dart';
-import 'package:coffee_now/screens/checkout_page/provider/get_shop_info_provider.dart';
 import 'package:coffee_now/sources/google_maps_service/google_maps_service_provider.dart';
-import 'package:coffee_now/sources/strapi_service/strapi_api_service_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

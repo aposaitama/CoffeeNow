@@ -6,8 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 class ProfilePageListItemTile extends StatelessWidget {
   final String imgUrl;
   final String pageTitle;
-  void Function()? onTap;
-  ProfilePageListItemTile({
+  final void Function()? onTap;
+  const ProfilePageListItemTile({
     super.key,
     required this.pageTitle,
     required this.imgUrl,

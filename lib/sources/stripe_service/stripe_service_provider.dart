@@ -27,9 +27,9 @@ class StripeService {
 
   Future<void> processPayment() async {
     try {
-      final _stripe = Stripe.instance;
+      final stripe = Stripe.instance;
 
-      await _stripe.presentPaymentSheet();
+      await stripe.presentPaymentSheet();
     } catch (e) {
       throw Exception('Payment processing failed: $e');
     }

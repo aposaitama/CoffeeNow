@@ -1,4 +1,3 @@
-import 'package:coffee_now/models/advert_banner/advert_banner_model.dart';
 import 'package:coffee_now/models/hive_models/search_history_hive_model/search_history_hive_model.dart';
 import 'package:coffee_now/models/categories/categories_model.dart';
 import 'package:coffee_now/sources/strapi_service/strapi_api_service_provider.dart';

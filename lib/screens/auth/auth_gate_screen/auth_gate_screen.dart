@@ -1,7 +1,5 @@
-import 'package:coffee_now/navigation/app_navigation.dart';
 import 'package:coffee_now/screens/auth/login_screen/login_screen.dart';
 import 'package:coffee_now/screens/auth/providers/auth_provider.dart';
-import 'package:coffee_now/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

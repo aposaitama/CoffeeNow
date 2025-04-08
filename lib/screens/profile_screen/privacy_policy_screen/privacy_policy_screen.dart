@@ -1,11 +1,7 @@
-import 'package:coffee_now/screens/profile_screen/settings_screen/provider/theme_provider.dart';
-import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:markdown/markdown.dart';
 
 const String _privacyPolicyMarkdown = """
 # ☕ Privacy Policy
@@ -146,8 +142,8 @@ class PrivacyPolicyScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
+      body: const Padding(
+        padding: EdgeInsets.symmetric(
           horizontal: 20.0,
         ),
         child: Markdown(

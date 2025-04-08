@@ -1,5 +1,4 @@
 import 'package:coffee_now/models/marker_model/marker_model.dart';
-import 'package:coffee_now/screens/profile_screen/settings_screen/provider/theme_provider.dart';
 import 'package:coffee_now/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,9 +7,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class MapShopMarker extends ConsumerWidget {
   final MarkerShopModel markerShopModel;
   final String imageUrl;
-  Color? color;
+  final Color? color;
 
-  MapShopMarker(
+  const MapShopMarker(
       {super.key,
       required this.markerShopModel,
       required this.imageUrl,

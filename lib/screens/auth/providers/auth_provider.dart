@@ -17,10 +17,14 @@ class AuthNotifier extends _$AuthNotifier {
     return ref.watch(storedTokenProvider.future);
   }
 
-  Future<void> login(String email, String password) async {
+  Future<bool> login(String email, String password) async {
     final auth = ref.watch(apiServiceProvider);
     final token = await auth.login(email, password);
-    state = AsyncData(token);
+    if (token.isNotEmpty) {
+      state = AsyncData(token);
+      return true;
+    }
+    return false;
   }
 
   Future<void> register(String username, String email, String password,

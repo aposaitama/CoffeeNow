@@ -7,7 +7,7 @@ part of 'fetch_polylines_provider.dart';
 // **************************************************************************
 
 String _$fetchShopsWithDistanceHash() =>
-    r'a499818e630b670e496846f46fc62e8c2c09c5b2';
+    r'77359c7d95ab19850c304bc56494a6d5418ffee0';
 
 /// Copied from Dart SDK
 class _SystemHash {

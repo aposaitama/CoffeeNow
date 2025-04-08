@@ -1,5 +1,4 @@
 import 'package:coffee_now/screens/checkout_page/provider/paymernt_method_provider/payment_method_provider.dart';
-import 'package:coffee_now/screens/checkout_page/widgets/delivery_method_sheet.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/payment_method_sheet.dart';
 import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';

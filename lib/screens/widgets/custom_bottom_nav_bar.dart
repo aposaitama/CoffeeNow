@@ -188,7 +188,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             ),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.secondary,
-              borderRadius: BorderRadius.all(Radius.circular(18.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(18.0)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

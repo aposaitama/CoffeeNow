@@ -1,7 +1,6 @@
 import 'package:coffee_now/models/google_maps_models/latlong_model/lat_long_model.dart';
 import 'package:coffee_now/models/google_maps_models/location_model/location_model.dart';
 import 'package:dio/dio.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class GoogleMapsService {
   final Dio _dio;

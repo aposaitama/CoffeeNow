@@ -113,7 +113,8 @@ class ProfileScreen extends ConsumerWidget {
               GestureDetector(
                 onTap: () {
                   authNotifier.logout();
-                  ref.refresh(authNotifierProvider);
+
+                  ref.invalidate(authNotifierProvider);
                   context.go('/login');
                 },
                 child: const CutomGrayButton(

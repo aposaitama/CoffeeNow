@@ -11,6 +11,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'basket_hive_item_model.g.dart';
 
 @HiveType(typeId: 2)
+// ignore: must_be_immutable
 class BasketItemHiveModel extends Equatable {
   @HiveField(0)
   final String shopID;

@@ -69,7 +69,6 @@ class SearchScreen extends HookConsumerWidget {
     final categoriesList = categories?.categoryName ?? [];
     final searchHistory = ref.watch(searchHistoryProvider(currentUserID));
     final selectedCategory = ref.watch(selectedCategoryProvider);
-
     final searchText = ref.watch(searchTextProvider);
     final searchController = useTextEditingController(text: searchText);
     final filteredProducts = selectedCategory.isNotEmpty
@@ -122,7 +121,7 @@ class SearchScreen extends HookConsumerWidget {
                         ref.read(searchTextProvider.notifier).state = text;
                       },
                     )
-                  : SizedBox(
+                  : const SizedBox(
                       height: 48,
                     ),
             ),

@@ -1,7 +1,5 @@
-import 'package:chopper/chopper.dart';
 import 'package:coffee_now/models/basket_item/basket_item_model.dart';
 import 'package:coffee_now/models/transaction_item_model/transaction_item_model.dart';
-import 'package:coffee_now/navigation/app_navigation.dart';
 import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
 import 'package:coffee_now/screens/add_to_basket/provider/load_concrete_product_provider.dart';
 

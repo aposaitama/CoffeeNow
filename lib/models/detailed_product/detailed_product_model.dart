@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../detailed_coffee_shop/detailed_coffee_shop_model.dart';

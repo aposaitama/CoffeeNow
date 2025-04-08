@@ -39,12 +39,12 @@ class CourierSectionWidget extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: (trackItem?.courier?.photo?.url ?? '').isNotEmpty
+                  child: (trackItem.courier?.photo?.url ?? '').isNotEmpty
                       ? SizedBox(
                           width: 62.0,
                           height: 62.0,
                           child: Image.network(
-                            'http://localhost:1337${trackItem?.courier?.photo?.url}',
+                            'http://localhost:1337${trackItem.courier?.photo?.url}',
                             width: double.infinity,
                             fit: BoxFit.scaleDown,
                           ),
@@ -62,14 +62,14 @@ class CourierSectionWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      trackItem?.courier?.fullName ?? 'Courier name',
+                      trackItem.courier?.fullName ?? 'Courier name',
                       style: AppFonts.poppinsSemiBold.copyWith(
                         fontSize: 14.0,
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     Text(
-                      'ID - ${trackItem?.courier?.id ?? '0'}',
+                      'ID - ${trackItem.courier?.id ?? '0'}',
                       style: AppFonts.poppinsMedium.copyWith(
                         fontSize: 12.0,
                         color: Theme.of(context).colorScheme.onSurface,
@@ -78,7 +78,7 @@ class CourierSectionWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: Text(
-                        '${trackItem?.courier?.jobPosition ?? 'Coffee Courier'}',
+                        trackItem.courier?.jobPosition ?? 'Coffee Courier',
                         style: AppFonts.poppinsMedium.copyWith(
                           fontSize: 9.0,
                           color: AppColors.greyTitleColor,

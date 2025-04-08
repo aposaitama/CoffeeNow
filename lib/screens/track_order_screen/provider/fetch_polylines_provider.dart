@@ -41,7 +41,7 @@ Future<Map<PolylineId, Polyline>?> fetchShopsWithDistance(
   polylineCoordinates
       .addAll(result.points.map((p) => LatLng(p.latitude, p.longitude)));
 
-  PolylineId id = PolylineId("poly");
+  PolylineId id = const PolylineId("poly");
   polylines[id] = Polyline(
     polylineId: id,
     color: AppColors.orangeColor,

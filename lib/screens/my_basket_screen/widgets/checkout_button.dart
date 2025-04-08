@@ -1,4 +1,3 @@
-import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 

@@ -56,30 +56,39 @@ class FavouriteScreen extends ConsumerWidget {
       body: Column(
         children: [
           Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.only(
-                left: 20.0,
-                right: 20.0,
-                bottom: 40.0,
-              ),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                childAspectRatio: ((width / 2) - 40) / 225,
-              ),
-              itemCount: recomendedItems.isEmpty ? 0 : recomendedItems.length,
-              itemBuilder: (context, index) {
-                final product = recomendedItems[index];
-                final productInfo = ref
-                    .watch(fetchLightModelConcreteProductProvider(product))
-                    .value;
+            child: recomendedItems.isNotEmpty
+                ? GridView.builder(
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      right: 20.0,
+                      bottom: 40.0,
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      childAspectRatio: ((width / 2) - 40) / 225,
+                    ),
+                    itemCount:
+                        recomendedItems.isEmpty ? 0 : recomendedItems.length,
+                    itemBuilder: (context, index) {
+                      final product = recomendedItems[index];
+                      final productInfo = ref
+                          .watch(
+                              fetchLightModelConcreteProductProvider(product))
+                          .value;
 
-                return productInfo == null
-                    ? const SizedBox()
-                    : FavouriteProductItemTile(shopProduct: productInfo);
-              },
-            ),
+                      return productInfo == null
+                          ? const SizedBox()
+                          : FavouriteProductItemTile(shopProduct: productInfo);
+                    },
+                  )
+                : const Center(
+                    child: Text(
+                      'No favourite items',
+                      style: AppFonts.bebasMedium,
+                    ),
+                  ),
           ),
         ],
       ),

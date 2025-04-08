@@ -36,6 +36,8 @@ class ConcreteTrackOrder extends _$ConcreteTrackOrder {
       if (state != orderItem) {
         state = orderItem;
       }
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
   }
 }

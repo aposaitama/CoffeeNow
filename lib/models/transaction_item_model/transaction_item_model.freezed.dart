@@ -26,7 +26,8 @@ mixin _$TransactionItemModel {
   String get paymentOption => throw _privateConstructorUsedError;
   String get orderTotal => throw _privateConstructorUsedError;
   String get destanationAddress => throw _privateConstructorUsedError;
-  DateTime get updatedAt => throw _privateConstructorUsedError;
+  DateTime get updatedAt =>
+      throw _privateConstructorUsedError; // ignore: non_constant_identifier_names
   List<OrderItemModel> get order_items => throw _privateConstructorUsedError;
 
   /// Serializes this TransactionItemModel to a JSON map.
@@ -227,7 +228,9 @@ class _$TransactionItemModelImpl implements _TransactionItemModel {
   final String destanationAddress;
   @override
   final DateTime updatedAt;
+// ignore: non_constant_identifier_names
   final List<OrderItemModel> _order_items;
+// ignore: non_constant_identifier_names
   @override
   List<OrderItemModel> get order_items {
     if (_order_items is EqualUnmodifiableListView) return _order_items;
@@ -322,7 +325,7 @@ abstract class _TransactionItemModel implements TransactionItemModel {
   @override
   String get destanationAddress;
   @override
-  DateTime get updatedAt;
+  DateTime get updatedAt; // ignore: non_constant_identifier_names
   @override
   List<OrderItemModel> get order_items;
 

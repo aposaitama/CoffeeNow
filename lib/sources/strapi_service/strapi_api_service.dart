@@ -4,18 +4,17 @@ import 'package:coffee_now/di/service_locator.dart';
 import 'package:coffee_now/models/active_order/active_order_model.dart';
 import 'package:coffee_now/models/advert_banner/advert_banner_model.dart';
 import 'package:coffee_now/models/brand_image/brand_image_model.dart';
+import 'package:coffee_now/models/categories/categories_model.dart';
 import 'package:coffee_now/models/coffee_shop/coffee_shop_model.dart';
 import 'package:coffee_now/models/detailed_coffee_shop/detailed_coffee_shop_model.dart';
 import 'package:coffee_now/models/detailed_product/detailed_product_model.dart';
-import 'package:coffee_now/models/categories/categories_model.dart';
-import 'package:coffee_now/models/google_maps_models/latlong_model/lat_long_model.dart';
+
 import 'package:coffee_now/models/hive_models/basket_hive_item_model/basket_hive_item_model.dart';
 import 'package:coffee_now/models/transaction_item_model/transaction_item_model.dart';
 import 'package:coffee_now/models/user/user_model.dart';
 import 'package:coffee_now/screens/checkout_page/provider/delivery_method_provider/delivery_method_provider.dart';
 import 'package:coffee_now/screens/checkout_page/provider/paymernt_method_provider/payment_method_provider.dart';
 import 'package:dio/dio.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
@@ -122,13 +121,13 @@ class ApiService {
     });
 
     try {
-      final response = await _dio.post(
+      await _dio.post(
         '/upload',
         data: formData,
       );
-
-      print(response);
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
   }
 
   Future<List<ActiveOrderModel>> getActiveOrders(
@@ -192,7 +191,6 @@ class ApiService {
         'filters[categoryName][\$eq]': category,
         'populate': 'coffee_shop_products.productImage',
       });
-      print(response.data['data'][0]['coffee_shop_products']);
 
       final List<dynamic> categoriesData = response.data['data'] ?? [];
 
@@ -213,8 +211,6 @@ class ApiService {
 
   Future<CategoriesModel?> getUserSearchHistory() async {
     try {
-      final user = await getUser();
-
       final response =
           await _dio.get('/coffee-shop-categories', queryParameters: {
         'populate': '*',
@@ -322,20 +318,6 @@ class ApiService {
     } catch (e) {
       return [];
     }
-  }
-
-  Future<void> toogleFavoutireItemStatus(
-      String documentId, bool currentStatus) async {
-    try {
-      final response = await _dio.put(
-        '/coffee-shop-products/$documentId',
-        data: {
-          "data": {
-            "isInFavourite": !currentStatus,
-          },
-        },
-      );
-    } catch (e) {}
   }
 
   Future<String?> createAddressDocument(String lat, String lng) async {
@@ -472,7 +454,7 @@ class ApiService {
           documentIds.add(id);
         }
       } catch (e) {
-        print('Помилка при створенні елемента замовлення: $e');
+        //
       }
     }
 
@@ -487,7 +469,6 @@ class ApiService {
       });
 
       final List<dynamic> data = response.data['data'] ?? [];
-      final String deliveryStatus = data[0]['deliveryStatus'];
 
       return data.map((json) => TransactionItemModel.fromJson(json)).toList();
     } catch (e) {
@@ -545,7 +526,6 @@ class ApiService {
 
       return DetailedCoffeeShopModel.fromJson(data.first);
     } catch (e) {
-      print('Error fetching coffee shop: $e');
       throw Exception('Failed to load coffee shop');
     }
   }

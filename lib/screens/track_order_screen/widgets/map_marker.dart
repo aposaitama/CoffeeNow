@@ -1,4 +1,3 @@
-import 'package:coffee_now/screens/profile_screen/settings_screen/provider/theme_provider.dart';
 import 'package:coffee_now/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,9 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 class MapMarker extends ConsumerWidget {
   final bool isDarkMode;
   final String imageUrl;
-  Color? color;
+  final Color? color;
 
-  MapMarker(
+  const MapMarker(
       {super.key,
       required this.isDarkMode,
       required this.imageUrl,

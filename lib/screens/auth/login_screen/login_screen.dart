@@ -1,10 +1,10 @@
-import 'package:coffee_now/screens/auth/login_screen/widget/choose_option_spacer.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_button.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_text_field.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_text_span.dart';
-import 'package:coffee_now/screens/auth/login_screen/widget/login_via_service.dart';
+
 import 'package:coffee_now/screens/auth/providers/auth_provider.dart';
-import 'package:coffee_now/style/colors.dart';
+
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -79,11 +79,17 @@ class LoginScreen extends ConsumerWidget {
               GestureDetector(
                 // onTap: () => context.go('/home'),
                 onTap: () async {
-                  await authNotifier.login(
+                  final loginResult = await authNotifier.login(
                     email.text,
                     password.text,
                   );
-                  context.go('/auth_gate');
+
+                  if (loginResult) {
+                    context.go('/auth_gate');
+                  } else {
+                    BotToast.showText(
+                        text: 'Login failed. Please check your credentials.');
+                  }
                 },
                 child: const CustomButton(buttonText: 'LOGIN'),
               ),

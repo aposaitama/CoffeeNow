@@ -1,9 +1,6 @@
-import 'package:bot_toast/bot_toast.dart';
-import 'package:coffee_now/screens/auth/address_setup_screen/provider/current_location/current_location_provider.dart';
 import 'package:coffee_now/screens/transactions_screen/widgets/reorder_popup_button.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // void showLocationBottomSheet(BuildContext context, WidgetRef ref,
@@ -67,7 +64,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 //     },
 //   );
 // }
-import 'dart:convert';
 import 'package:flutter/services.dart';
 
 void showLocationPicker(

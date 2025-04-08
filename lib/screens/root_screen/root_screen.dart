@@ -1,8 +1,5 @@
-import 'dart:ui';
 
 import 'package:coffee_now/screens/add_to_basket/provider/add_to_hive_basket_box_provider.dart';
-import 'package:coffee_now/screens/checkout_page/checkout_page.dart';
-import 'package:coffee_now/screens/checkout_page/widgets/delivery_method_sheet.dart';
 import 'package:coffee_now/screens/home_screen/providers/has_active_order_provider/has_active_order_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/screens/home_screen/widgets/show_tracking_sheet.dart';

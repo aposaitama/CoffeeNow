@@ -1,4 +1,3 @@
-import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +29,7 @@ class OrderAssemblyInfo extends StatelessWidget {
             ),
             child: Center(
               child: Padding(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   horizontal: 10.0,
                 ),
                 child: Text(

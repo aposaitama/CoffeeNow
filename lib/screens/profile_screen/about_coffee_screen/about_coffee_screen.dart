@@ -1,4 +1,3 @@
-import 'package:coffee_now/screens/profile_screen/settings_screen/provider/theme_provider.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 
