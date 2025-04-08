@@ -3,14 +3,18 @@ import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 
 class SearchCategoriesItemTile extends StatelessWidget {
+  final bool isSelected;
   final String categoryName;
-  const SearchCategoriesItemTile({super.key, required this.categoryName});
+  const SearchCategoriesItemTile(
+      {super.key, required this.categoryName, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onPrimaryContainer,
+        color: !isSelected
+            ? Theme.of(context).colorScheme.onPrimaryContainer
+            : AppColors.greenColor,
         borderRadius: BorderRadius.circular(
           20.0,
         ),
@@ -23,7 +27,7 @@ class SearchCategoriesItemTile extends StatelessWidget {
         child: Text(
           categoryName,
           style: AppFonts.poppinsMedium.copyWith(
-            color: AppColors.greyTitleColor,
+            color: !isSelected ? AppColors.greyTitleColor : Colors.white,
             fontSize: 14.0,
           ),
         ),

@@ -163,5 +163,145 @@ class _FetchFilteredProductsProviderElement
   @override
   String get query => (origin as FetchFilteredProductsProvider).query;
 }
+
+String _$fetchFilteredProductsWithCategoryHash() =>
+    r'2784ebbe354486e9432eea680edcf549bb394138';
+
+/// See also [fetchFilteredProductsWithCategory].
+@ProviderFor(fetchFilteredProductsWithCategory)
+const fetchFilteredProductsWithCategoryProvider =
+    FetchFilteredProductsWithCategoryFamily();
+
+/// See also [fetchFilteredProductsWithCategory].
+class FetchFilteredProductsWithCategoryFamily
+    extends Family<AsyncValue<List<CoffeeShopProducts?>>> {
+  /// See also [fetchFilteredProductsWithCategory].
+  const FetchFilteredProductsWithCategoryFamily();
+
+  /// See also [fetchFilteredProductsWithCategory].
+  FetchFilteredProductsWithCategoryProvider call(
+    String categoryName,
+  ) {
+    return FetchFilteredProductsWithCategoryProvider(
+      categoryName,
+    );
+  }
+
+  @override
+  FetchFilteredProductsWithCategoryProvider getProviderOverride(
+    covariant FetchFilteredProductsWithCategoryProvider provider,
+  ) {
+    return call(
+      provider.categoryName,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'fetchFilteredProductsWithCategoryProvider';
+}
+
+/// See also [fetchFilteredProductsWithCategory].
+class FetchFilteredProductsWithCategoryProvider
+    extends AutoDisposeFutureProvider<List<CoffeeShopProducts?>> {
+  /// See also [fetchFilteredProductsWithCategory].
+  FetchFilteredProductsWithCategoryProvider(
+    String categoryName,
+  ) : this._internal(
+          (ref) => fetchFilteredProductsWithCategory(
+            ref as FetchFilteredProductsWithCategoryRef,
+            categoryName,
+          ),
+          from: fetchFilteredProductsWithCategoryProvider,
+          name: r'fetchFilteredProductsWithCategoryProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$fetchFilteredProductsWithCategoryHash,
+          dependencies: FetchFilteredProductsWithCategoryFamily._dependencies,
+          allTransitiveDependencies: FetchFilteredProductsWithCategoryFamily
+              ._allTransitiveDependencies,
+          categoryName: categoryName,
+        );
+
+  FetchFilteredProductsWithCategoryProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.categoryName,
+  }) : super.internal();
+
+  final String categoryName;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<CoffeeShopProducts?>> Function(
+            FetchFilteredProductsWithCategoryRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: FetchFilteredProductsWithCategoryProvider._internal(
+        (ref) => create(ref as FetchFilteredProductsWithCategoryRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        categoryName: categoryName,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<CoffeeShopProducts?>> createElement() {
+    return _FetchFilteredProductsWithCategoryProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is FetchFilteredProductsWithCategoryProvider &&
+        other.categoryName == categoryName;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, categoryName.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin FetchFilteredProductsWithCategoryRef
+    on AutoDisposeFutureProviderRef<List<CoffeeShopProducts?>> {
+  /// The parameter `categoryName` of this provider.
+  String get categoryName;
+}
+
+class _FetchFilteredProductsWithCategoryProviderElement
+    extends AutoDisposeFutureProviderElement<List<CoffeeShopProducts?>>
+    with FetchFilteredProductsWithCategoryRef {
+  _FetchFilteredProductsWithCategoryProviderElement(super.provider);
+
+  @override
+  String get categoryName =>
+      (origin as FetchFilteredProductsWithCategoryProvider).categoryName;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

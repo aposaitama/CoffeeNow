@@ -12,12 +12,12 @@ import 'package:coffee_now/screens/my_basket_screen/add_address_basket_screen/ad
 import 'package:coffee_now/screens/my_basket_screen/my_basket_screen.dart';
 import 'package:coffee_now/screens/profile_screen/about_coffee_screen/about_coffee_screen.dart';
 import 'package:coffee_now/screens/profile_screen/address_info_screen/address_info_screen.dart';
+import 'package:coffee_now/screens/profile_screen/edit_account_info_screen/edit_account_info_screen.dart';
 import 'package:coffee_now/screens/profile_screen/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:coffee_now/screens/profile_screen/profile_screen.dart';
 import 'package:coffee_now/screens/profile_screen/settings_screen/settings_screen.dart';
 import 'package:coffee_now/screens/root_screen/root_screen.dart';
 import 'package:coffee_now/screens/search_screen/search_screen.dart';
-import 'package:coffee_now/screens/track_order_screen/track_order_screen.dart';
 import 'package:coffee_now/screens/track_order_screen/track_order_screen2.dart';
 import 'package:coffee_now/screens/transactions_screen/transactions_screen.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class AppRouter {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GoRouter createRouter() {
     return GoRouter(
-      initialLocation: '/address_info',
+      initialLocation: '/auth_gate',
       // initialLocation: '/auth_gate',
       // redirect: (context, state) {
       //   if (hasToken) {
@@ -57,7 +57,7 @@ class AppRouter {
                 GoRoute(
                   path: '/search',
                   builder: (context, state) {
-                    return SearchScreen();
+                    return const SearchScreen();
                   },
                 ),
               ],
@@ -100,15 +100,6 @@ class AppRouter {
           },
         ),
         GoRoute(
-          path: '/track_order/:trackOrderID',
-          builder: (context, state) {
-            final trackOrderID = state.pathParameters['trackOrderID'] ?? '';
-            return TrackOrderScreen(
-              trackOrderID: trackOrderID,
-            );
-          },
-        ),
-        GoRoute(
           path: '/track_order2/:trackOrderID',
           builder: (context, state) {
             final trackOrderID = state.pathParameters['trackOrderID'] ?? '';
@@ -137,6 +128,10 @@ class AppRouter {
         GoRoute(
           path: '/privpolicy',
           builder: (context, state) => const PrivacyPolicyScreen(),
+        ),
+        GoRoute(
+          path: '/edit_account',
+          builder: (context, state) => const EditAccountInfoScreen(),
         ),
         GoRoute(
           path: '/settings',

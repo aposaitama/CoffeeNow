@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ChooseDeliveryAddress extends StatelessWidget {
+  final void Function()? onTap;
   final String address;
   final String cityAndCountry;
   const ChooseDeliveryAddress(
-      {super.key, required this.address, required this.cityAndCountry});
+      {super.key,
+      required this.address,
+      required this.cityAndCountry,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +55,14 @@ class ChooseDeliveryAddress extends StatelessWidget {
               )
             ],
           ),
-          Transform.rotate(
-            angle: 3.14 * 1.5,
-            child: SvgPicture.asset(
-              fit: BoxFit.scaleDown,
-              'lib/assets/icons/Arrow - Down 2.svg',
+          GestureDetector(
+            onTap: onTap,
+            child: Transform.rotate(
+              angle: 3.14 * 1.5,
+              child: SvgPicture.asset(
+                fit: BoxFit.scaleDown,
+                'lib/assets/icons/Arrow - Down 2.svg',
+              ),
             ),
           )
         ],

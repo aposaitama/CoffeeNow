@@ -14,6 +14,9 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
       addresses: (json['addresses'] as List<dynamic>)
           .map((e) => UserLocation.fromJson(e as Map<String, dynamic>))
           .toList(),
+      avatar: json['avatar'] == null
+          ? null
+          : CoffeeShopImage.fromJson(json['avatar'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -22,6 +25,7 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'username': instance.username,
       'email': instance.email,
       'addresses': instance.addresses,
+      'avatar': instance.avatar,
     };
 
 _$UserLocationImpl _$$UserLocationImplFromJson(Map<String, dynamic> json) =>

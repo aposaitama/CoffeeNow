@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:coffee_now/di/service_locator.dart';
 import 'package:coffee_now/models/active_order/active_order_model.dart';
 import 'package:coffee_now/models/advert_banner/advert_banner_model.dart';
@@ -106,6 +108,29 @@ class ApiService {
     }
   }
 
+  Future<void> updateInfo(File imageFile, String userID) async {
+    final fileName = imageFile.path.split('/').last;
+
+    final formData = FormData.fromMap({
+      'files': await MultipartFile.fromFile(
+        imageFile.path,
+        filename: fileName,
+      ),
+      'ref': 'plugin::users-permissions.user',
+      'refId': userID,
+      'field': 'avatar',
+    });
+
+    try {
+      final response = await _dio.post(
+        '/upload',
+        data: formData,
+      );
+
+      print(response);
+    } catch (e) {}
+  }
+
   Future<List<ActiveOrderModel>> getActiveOrders(
     String userID,
   ) async {
@@ -154,6 +179,33 @@ class ApiService {
       final List<dynamic> data = response.data['data'] ?? [];
 
       return data.map((json) => CoffeeShopProducts.fromJson(json)).toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<List<CoffeeShopProducts>> getSearchCategoryProducts(
+      String category) async {
+    try {
+      final response =
+          await _dio.get('/coffee-shop-categories', queryParameters: {
+        'filters[categoryName][\$eq]': category,
+        'populate': 'coffee_shop_products.productImage',
+      });
+      print(response.data['data'][0]['coffee_shop_products']);
+
+      final List<dynamic> categoriesData = response.data['data'] ?? [];
+
+      List<CoffeeShopProducts> allProducts = [];
+      for (var categoryData in categoriesData) {
+        final List<dynamic> coffeeShopProducts =
+            categoryData['coffee_shop_products'] ?? [];
+        allProducts.addAll(coffeeShopProducts
+            .map((json) => CoffeeShopProducts.fromJson(json))
+            .toList());
+      }
+
+      return allProducts;
     } catch (e) {
       return [];
     }
@@ -436,8 +488,6 @@ class ApiService {
 
       final List<dynamic> data = response.data['data'] ?? [];
       final String deliveryStatus = data[0]['deliveryStatus'];
-      print(deliveryStatus);
-      print(deliveryStatus);
 
       return data.map((json) => TransactionItemModel.fromJson(json)).toList();
     } catch (e) {
@@ -505,8 +555,11 @@ class ApiService {
   ) async {
     try {
       final response = await _dio.get(
-        '/order-items',
-        queryParameters: {"filters[shopID][\$eq]": coffeeShopID},
+        '/orders',
+        queryParameters: {
+          "filters[order_items][shopID][\$eq]": coffeeShopID,
+          "populate": '*',
+        },
       );
 
       return response.data['meta']['pagination']['total'];

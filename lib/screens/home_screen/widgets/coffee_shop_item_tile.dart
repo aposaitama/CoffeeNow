@@ -128,7 +128,7 @@ class CoffeeShopItemTile extends StatelessWidget {
                                       const SeparatedDot(),
                                     ],
                                   )
-                                : SizedBox.shrink(),
+                                : const SizedBox.shrink(),
                             SvgPicture.asset(
                                 'lib/assets/icons/Time Circle.svg'),
                             const SizedBox(

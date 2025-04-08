@@ -6,6 +6,13 @@
 	<array>
 	<string>tel</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to upload profile image.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to take profile photos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need access to your microphone for voice notes.</string>
+
 	<key>NSCameraUsageDescription</key>
 	<string>Scan your card to add it automatically</string>
 	<key>NSCameraUsageDescription</key>

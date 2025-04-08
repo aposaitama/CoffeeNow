@@ -15,3 +15,14 @@ Future<List<CoffeeShopProducts?>> fetchFilteredProducts(
     throw Exception('Failed to load search history: $e');
   }
 }
+
+@riverpod
+Future<List<CoffeeShopProducts?>> fetchFilteredProductsWithCategory(
+    Ref ref, String categoryName) async {
+  final apiService = ref.read(apiServiceProvider);
+  try {
+    return await apiService.getSearchCategoryProducts(categoryName);
+  } catch (e) {
+    throw Exception('Failed to load search history: $e');
+  }
+}

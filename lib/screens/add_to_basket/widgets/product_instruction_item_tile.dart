@@ -1,8 +1,6 @@
 import 'package:coffee_now/models/detailed_product/detailed_product_model.dart';
-import 'package:coffee_now/screens/add_to_basket/add_to_basket.dart';
 import 'package:coffee_now/screens/add_to_basket/provider/select_instructions_provider.dart';
 import 'package:coffee_now/screens/add_to_basket/widgets/product_options_item_tile.dart';
-import 'package:coffee_now/style/colors.dart';
 import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

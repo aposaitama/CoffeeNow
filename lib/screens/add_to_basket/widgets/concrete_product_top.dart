@@ -1,7 +1,3 @@
-import 'package:coffee_now/models/coffee_shop/coffee_shop_model.dart';
-import 'package:coffee_now/screens/home_screen/user_provider.dart';
-import 'package:coffee_now/screens/home_screen/widgets/separated_dot.dart';
-import 'package:coffee_now/style/font.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';

@@ -16,12 +16,15 @@ import 'package:coffee_now/screens/checkout_page/provider/get_shop_info_provider
 import 'package:coffee_now/screens/checkout_page/widgets/section_separeted_text.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/separator_widget.dart';
 import 'package:coffee_now/screens/checkout_page/widgets/shop_title_builder.dart';
+import 'package:coffee_now/screens/detail_page/provider/detail_page_provider/detail_page_provider.dart';
 import 'package:coffee_now/screens/detail_page/provider/shop_basic_info_provider/shop_basic_info.dart';
+import 'package:coffee_now/screens/home_screen/providers/has_active_order_provider/has_active_order_provider.dart';
 import 'package:coffee_now/screens/home_screen/providers/location_provider/location_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/utils/address_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class CheckoutPage extends ConsumerWidget {
   const CheckoutPage({super.key});
@@ -151,6 +154,7 @@ class CheckoutPage extends ConsumerWidget {
                     title: 'Deliver to',
                   ),
                   ChooseDeliveryAddress(
+                    onTap: () => context.push('/address_info'),
                     address: fullUserDecodedAddress.address,
                     cityAndCountry:
                         '${fullUserDecodedAddress.city}, ${fullUserDecodedAddress.country}',
@@ -261,6 +265,8 @@ class CheckoutPage extends ConsumerWidget {
                           ).notifier,
                         )
                         .clearCart();
+                    ref.invalidate(fetchCoffeeShopOrderCountProvider);
+                    ref.invalidate(hasActiveOrderProvider);
                     showDialog(
                       context: context,
                       builder: (context) => BackdropPopup(
@@ -279,7 +285,7 @@ class CheckoutPage extends ConsumerWidget {
                   totalOrderPrice,
                   '',
                 ).future);
-                print(orderID);
+
                 if (orderID != null) {
                   ref
                       .read(
@@ -288,6 +294,9 @@ class CheckoutPage extends ConsumerWidget {
                         ).notifier,
                       )
                       .clearCart();
+                  ref.invalidate(fetchCoffeeShopOrderCountProvider);
+                  ref.invalidate(hasActiveOrderProvider);
+
                   showDialog(
                     context: context,
                     builder: (context) => BackdropPopup(

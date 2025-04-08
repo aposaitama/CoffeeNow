@@ -91,7 +91,7 @@ class CourierSectionWidget extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                final phoneNumber = trackItem?.courier?.phoneNum ?? '';
+                final phoneNumber = trackItem.courier?.phoneNum ?? '';
                 final Uri url = Uri(scheme: 'tel', path: phoneNumber);
                 try {
                   debugPrint('Номер для дзвінка: $phoneNumber');

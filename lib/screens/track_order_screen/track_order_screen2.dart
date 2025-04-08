@@ -1,4 +1,5 @@
 import 'package:coffee_now/models/active_order/active_order_model.dart';
+import 'package:coffee_now/models/marker_model/marker_model.dart';
 import 'package:coffee_now/screens/checkout_page/provider/get_shop_info_provider.dart';
 import 'package:coffee_now/screens/detail_page/provider/shop_basic_info_provider/shop_basic_info.dart';
 import 'package:coffee_now/screens/home_screen/providers/location_provider/location_provider.dart';
@@ -7,6 +8,7 @@ import 'package:coffee_now/screens/profile_screen/settings_screen/provider/theme
 import 'package:coffee_now/screens/track_order_screen/provider/concrete_track_order.dart';
 import 'package:coffee_now/screens/track_order_screen/widgets/courier_section_widget.dart';
 import 'package:coffee_now/screens/track_order_screen/widgets/map_marker.dart';
+import 'package:coffee_now/screens/track_order_screen/widgets/map_shop_marker.dart';
 import 'package:coffee_now/screens/track_order_screen/widgets/order_assembly_info.dart';
 import 'package:coffee_now/screens/track_order_screen/widgets/track_order_app_bar.dart';
 import 'package:coffee_now/screens/transactions_screen/widgets/order_info_widget.dart';
@@ -29,6 +31,7 @@ final userMarkerProvider =
 final courierMarkerProvider =
     FutureProvider.family<BitmapDescriptor, bool>((ref, isDarkMode) async {
   return await MapMarker(
+    color: AppColors.nudeColor,
     imageUrl: 'lib/assets/icons/Delivery_track.svg',
     isDarkMode: isDarkMode,
   ).toBitmapDescriptor();
@@ -57,7 +60,8 @@ final polylineProvider = FutureProvider.family<List<Polyline>, String>(
         .toSet();
     final groupedItemsByID =
         trackOrderItems.map((item) => item.shopID).toSet().toList();
-    if (groupedItemsByID.isNotEmpty && groupedItemsByID.length > 1) {
+    //if && && groupedItemsByID.length > 1
+    if (groupedItemsByID.isNotEmpty) {
       for (String shopID in groupedItemsByID) {
         if (!checkInShopIDs.contains(shopID)) {
           final shopLocation =
@@ -158,10 +162,11 @@ final polylineProvider = FutureProvider.family<List<Polyline>, String>(
 );
 
 final shopMarkerProvider =
-    FutureProvider.family<BitmapDescriptor, bool>((ref, isDarkMode) async {
-  return await MapMarker(
+    FutureProvider.family<BitmapDescriptor, MarkerShopModel>(
+        (ref, markerColorModel) async {
+  return await MapShopMarker(
     imageUrl: 'lib/assets/icons/Shop.svg',
-    isDarkMode: isDarkMode,
+    markerShopModel: markerColorModel,
   ).toBitmapDescriptor();
 });
 
@@ -173,7 +178,7 @@ class TrackOrderScreen2 extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final userMarkerAsync = ref.watch(userMarkerProvider(isDarkMode));
-    final shopMarkerAsync = ref.watch(shopMarkerProvider(isDarkMode));
+
     final courierMarkerAsync = ref.watch(courierMarkerProvider(isDarkMode));
     final user = ref.watch(userProvider).value;
     final userLat = user?.addresses.firstOrNull?.lat ?? '';
@@ -203,13 +208,26 @@ class TrackOrderScreen2 extends ConsumerWidget {
                     .cast<String>(),
     };
 
+    final Map<String, List<String>> shopLocationMarkers = {
+      for (String shopID in groupedItemsByID)
+        if (ref.watch(fetchLocationConcreteShopProvider(shopID)).value != null)
+          shopID: (ref.watch(fetchLocationConcreteShopProvider(shopID)).value!)
+              .cast<String>(),
+    };
+
     final firstCoffeeShopInfo = groupedItemsByID.isNotEmpty
         ? ref
-                .watch(fetchConcreteCoffeeShopProvider(groupedItemsByID[0]))
+                .watch(
+                  fetchConcreteCoffeeShopProvider(
+                    groupedItemsByID[0],
+                  ),
+                )
                 .value ??
             []
         : [];
-    String createLocationString(Map<String, List<dynamic>> locationMap) {
+    String createLocationString(
+      Map<String, List<dynamic>> locationMap,
+    ) {
       final locationStrings = trackItem?.courier != null &&
               trackItem?.courier?.lat != 0 &&
               trackItem?.courier?.lng != 0 &&
@@ -217,8 +235,13 @@ class TrackOrderScreen2 extends ConsumerWidget {
               trackItem?.deliveryStatus == DeliveryStatus.inProggress
           ? locationMap.entries.map(
               (entry) {
-                final latLngString =
-                    entry.value.map((e) => e.toString()).join(',');
+                final latLngString = entry.value
+                    .map(
+                      (e) => e.toString(),
+                    )
+                    .join(
+                      ',',
+                    );
                 return latLngString;
               },
             ).toList()
@@ -338,7 +361,12 @@ class TrackOrderScreen2 extends ConsumerWidget {
       );
     }
 
-    shopLocationMap.forEach((shopID, location) {
+    shopLocationMarkers.forEach((shopID, location) {
+      bool isCheckedIn = checkInShopIDs.contains(shopID);
+      final model =
+          MarkerShopModel(isCheckedIn: isCheckedIn, isDarkMode: isDarkMode);
+      final shopMarkerAsync = ref.watch(shopMarkerProvider(model));
+
       if (shopMarkerAsync.hasValue) {
         markers.add(
           Marker(

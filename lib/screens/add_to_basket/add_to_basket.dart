@@ -1,16 +1,13 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:coffee_now/models/basket_item/basket_item_model.dart';
-import 'package:coffee_now/models/detailed_product/detailed_product_model.dart';
 import 'package:coffee_now/screens/add_to_basket/provider/load_concrete_product_provider.dart';
 import 'package:coffee_now/screens/add_to_basket/provider/select_instructions_provider.dart';
 import 'package:coffee_now/screens/add_to_basket/widgets/concrete_product_top.dart';
-import 'package:coffee_now/screens/add_to_basket/widgets/count_widget_button.dart';
 import 'package:coffee_now/screens/add_to_basket/widgets/product_count_widget.dart';
 import 'package:coffee_now/screens/add_to_basket/widgets/product_instruction_item_tile.dart';
 import 'package:coffee_now/screens/add_to_basket/widgets/special_instructions_product_part.dart';
 import 'package:coffee_now/screens/auth/login_screen/widget/custom_button.dart';
 import 'package:coffee_now/screens/checkout_page/provider/get_shop_info_provider.dart';
-import 'package:coffee_now/screens/detail_page/provider/shop_basic_info_provider/shop_basic_info.dart';
 import 'package:coffee_now/screens/favourite_screen/provider/favourite_items_provider.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/style/colors.dart';
@@ -34,7 +31,7 @@ class AddToBasket extends ConsumerWidget {
         ref.watch(fetchShopIDProvider(coffeeShopID)).value ?? '';
     final count = ref.watch(productCount);
     final user = ref.watch(userProvider).value;
-    final basket = ref.watch(basketHiveProvider((user?.id ?? '').toString()));
+
     final selectedInstuctions = ref.watch(selectedInstructionsProvider);
     final concreteProduct =
         ref.watch(fetchConcreteProductProvider(coffeeShopID)).value;

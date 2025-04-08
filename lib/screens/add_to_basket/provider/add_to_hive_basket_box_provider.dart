@@ -1,9 +1,6 @@
 import 'package:coffee_now/models/basket_item/basket_item_model.dart';
-import 'package:coffee_now/models/detailed_product/detailed_product_model.dart';
 import 'package:coffee_now/models/hive_models/basket_hive_item_model/basket_hive_item_model.dart';
 import 'package:coffee_now/models/hive_models/basket_hive_model.dart/basket_hive_model.dart';
-import 'package:coffee_now/models/hive_models/products_instruction_hive_model/products_instruction_hive_model.dart';
-import 'package:coffee_now/screens/checkout_page/provider/grouped_basket_provider/grouped_basket_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

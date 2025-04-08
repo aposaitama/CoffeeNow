@@ -1,4 +1,3 @@
-import 'package:coffee_now/models/detailed_coffee_shop/detailed_coffee_shop_model.dart';
 import 'package:coffee_now/screens/detail_page/widgets/favourite_product_item_tile.dart';
 import 'package:coffee_now/screens/home_screen/user_provider.dart';
 import 'package:coffee_now/screens/search_screen/provider/search_filtered_product_provider.dart';
@@ -9,10 +8,10 @@ import 'package:coffee_now/screens/search_screen/widgets/search_history_header.d
 import 'package:coffee_now/screens/search_screen/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final searchTextProvider = StateProvider<String>((ref) => '');
+final selectedCategoryProvider = StateProvider<String>((ref) => '');
 
 class SearchScreen extends HookConsumerWidget {
   const SearchScreen({
@@ -69,21 +68,31 @@ class SearchScreen extends HookConsumerWidget {
     final categories = ref.watch(fetchCategoriesProvider).value;
     final categoriesList = categories?.categoryName ?? [];
     final searchHistory = ref.watch(searchHistoryProvider(currentUserID));
+    final selectedCategory = ref.watch(selectedCategoryProvider);
 
     final searchText = ref.watch(searchTextProvider);
     final searchController = useTextEditingController(text: searchText);
-    final filteredProducts = searchText.isNotEmpty
-        ? ref.watch(fetchFilteredProductsProvider(searchText)).value ?? []
-        : [];
+    final filteredProducts = selectedCategory.isNotEmpty
+        ? ref
+                .watch(
+                    fetchFilteredProductsWithCategoryProvider(selectedCategory))
+                .value ??
+            []
+        : searchText.isNotEmpty
+            ? ref.watch(fetchFilteredProductsProvider(searchText)).value ?? []
+            : [];
 
     bool hasSearchText = searchText.isNotEmpty;
-    useEffect(() {
-      searchController.value = TextEditingValue(
-        text: searchText,
-        selection: TextSelection.collapsed(offset: searchText.length),
-      );
-      return null;
-    }, [searchText]);
+    useEffect(
+      () {
+        searchController.value = TextEditingValue(
+          text: searchText,
+          selection: TextSelection.collapsed(offset: searchText.length),
+        );
+        return null;
+      },
+      [searchText],
+    );
 
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -96,22 +105,26 @@ class SearchScreen extends HookConsumerWidget {
           children: [
             SafeArea(
               bottom: false,
-              child: SearchTextField(
-                searchFieldController: searchController,
-                onEditingComplete: () => _addCategory(
-                  ref,
-                  searchText,
-                  currentUserID,
-                ),
-                onPrefixPressed: () => _addCategory(
-                  ref,
-                  searchText,
-                  currentUserID,
-                ),
-                onChanged: (text) {
-                  ref.read(searchTextProvider.notifier).state = text;
-                },
-              ),
+              child: selectedCategory.isEmpty
+                  ? SearchTextField(
+                      searchFieldController: searchController,
+                      onEditingComplete: () => _addCategory(
+                        ref,
+                        searchText,
+                        currentUserID,
+                      ),
+                      onPrefixPressed: () => _addCategory(
+                        ref,
+                        searchText,
+                        currentUserID,
+                      ),
+                      onChanged: (text) {
+                        ref.read(searchTextProvider.notifier).state = text;
+                      },
+                    )
+                  : SizedBox(
+                      height: 48,
+                    ),
             ),
             const SizedBox(
               height: 22.0,
@@ -125,8 +138,21 @@ class SearchScreen extends HookConsumerWidget {
                     runSpacing: 20.0,
                     alignment: WrapAlignment.start,
                     children: categoriesList.map((category) {
-                      return SearchCategoriesItemTile(
-                        categoryName: category,
+                      final bool isSelected = selectedCategory == category;
+                      return GestureDetector(
+                        onTap: () {
+                          selectedCategory == category
+                              ? ref
+                                  .read(selectedCategoryProvider.notifier)
+                                  .state = ''
+                              : ref
+                                  .read(selectedCategoryProvider.notifier)
+                                  .state = category;
+                        },
+                        child: SearchCategoriesItemTile(
+                          isSelected: isSelected,
+                          categoryName: category,
+                        ),
                       );
                     }).toList(),
                   ),
@@ -134,7 +160,9 @@ class SearchScreen extends HookConsumerWidget {
             const SizedBox(
               height: 18.0,
             ),
-            if (searchHistory.isNotEmpty && !hasSearchText)
+            if (selectedCategory.isEmpty &&
+                !hasSearchText &&
+                searchHistory.isNotEmpty)
               Column(
                 children: [
                   SearchHistoryHeader(

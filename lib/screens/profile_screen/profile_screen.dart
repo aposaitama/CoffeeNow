@@ -15,6 +15,7 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final authNotifier = ref.watch(authNotifierProvider.notifier);
     final user = ref.watch(userProvider).value;
+    final userAvatar = user?.avatar?.url ?? '';
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(
@@ -23,15 +24,21 @@ class ProfileScreen extends ConsumerWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SafeArea(
+              SafeArea(
                 bottom: false,
                 child: CircleAvatar(
                   radius: 40.0,
                   backgroundColor: AppColors.nudeColor,
-                  child: CircleAvatar(
-                    radius: 35.0,
-                    backgroundImage: AssetImage(
-                      'lib/assets/icons/profile_image.png',
+                  child: Transform.rotate(
+                    angle: 3.1416,
+                    child: CircleAvatar(
+                      radius: 35.0,
+                      backgroundImage: userAvatar.isEmpty
+                          ? const AssetImage(
+                              'lib/assets/icons/profile_image.png',
+                            )
+                          : NetworkImage('http://localhost:1337$userAvatar')
+                              as ImageProvider,
                     ),
                   ),
                 ),
@@ -63,6 +70,7 @@ class ProfileScreen extends ConsumerWidget {
               //   ),
               // ),
               ProfilePageListItemTile(
+                onTap: () => context.push('/edit_account'),
                 pageTitle: 'Edit Account info',
                 imgUrl: 'lib/assets/icons/Edit.svg',
               ),

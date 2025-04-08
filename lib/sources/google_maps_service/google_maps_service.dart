@@ -88,10 +88,8 @@ class GoogleMapsService {
       final List<dynamic> legs = response.data['routes'][0]['legs'];
 
       double totalDistance =
-          legs.fold(0, (sum, leg) => sum + leg['distance']['value'] as double);
-      double totalDeliveryTime =
-          legs.fold(0, (sum, leg) => sum + leg['duration']['value']);
-      print(totalDeliveryTime);
+          legs.fold(0, (sum, leg) => sum + leg['distance']['value']);
+
       return (totalDistance / 1000).toString();
     } catch (e) {
       return '';

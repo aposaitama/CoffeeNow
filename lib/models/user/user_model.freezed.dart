@@ -24,6 +24,7 @@ mixin _$UserModel {
   String get username => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   List<UserLocation> get addresses => throw _privateConstructorUsedError;
+  CoffeeShopImage? get avatar => throw _privateConstructorUsedError;
 
   /// Serializes this UserModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +42,13 @@ abstract class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
-      {int id, String username, String email, List<UserLocation> addresses});
+      {int id,
+      String username,
+      String email,
+      List<UserLocation> addresses,
+      CoffeeShopImage? avatar});
+
+  $CoffeeShopImageCopyWith<$Res>? get avatar;
 }
 
 /// @nodoc
@@ -63,6 +70,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? username = null,
     Object? email = null,
     Object? addresses = null,
+    Object? avatar = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -81,7 +89,25 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.addresses
           : addresses // ignore: cast_nullable_to_non_nullable
               as List<UserLocation>,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as CoffeeShopImage?,
     ) as $Val);
+  }
+
+  /// Create a copy of UserModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CoffeeShopImageCopyWith<$Res>? get avatar {
+    if (_value.avatar == null) {
+      return null;
+    }
+
+    return $CoffeeShopImageCopyWith<$Res>(_value.avatar!, (value) {
+      return _then(_value.copyWith(avatar: value) as $Val);
+    });
   }
 }
 
@@ -94,7 +120,14 @@ abstract class _$$UserModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id, String username, String email, List<UserLocation> addresses});
+      {int id,
+      String username,
+      String email,
+      List<UserLocation> addresses,
+      CoffeeShopImage? avatar});
+
+  @override
+  $CoffeeShopImageCopyWith<$Res>? get avatar;
 }
 
 /// @nodoc
@@ -114,6 +147,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? username = null,
     Object? email = null,
     Object? addresses = null,
+    Object? avatar = freezed,
   }) {
     return _then(_$UserModelImpl(
       id: null == id
@@ -132,6 +166,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value._addresses
           : addresses // ignore: cast_nullable_to_non_nullable
               as List<UserLocation>,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as CoffeeShopImage?,
     ));
   }
 }
@@ -143,7 +181,8 @@ class _$UserModelImpl implements _UserModel {
       {required this.id,
       required this.username,
       required this.email,
-      required final List<UserLocation> addresses})
+      required final List<UserLocation> addresses,
+      required this.avatar})
       : _addresses = addresses;
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -164,8 +203,11 @@ class _$UserModelImpl implements _UserModel {
   }
 
   @override
+  final CoffeeShopImage? avatar;
+
+  @override
   String toString() {
-    return 'UserModel(id: $id, username: $username, email: $email, addresses: $addresses)';
+    return 'UserModel(id: $id, username: $username, email: $email, addresses: $addresses, avatar: $avatar)';
   }
 
   @override
@@ -178,13 +220,14 @@ class _$UserModelImpl implements _UserModel {
                 other.username == username) &&
             (identical(other.email, email) || other.email == email) &&
             const DeepCollectionEquality()
-                .equals(other._addresses, _addresses));
+                .equals(other._addresses, _addresses) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, username, email,
-      const DeepCollectionEquality().hash(_addresses));
+      const DeepCollectionEquality().hash(_addresses), avatar);
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -207,7 +250,8 @@ abstract class _UserModel implements UserModel {
       {required final int id,
       required final String username,
       required final String email,
-      required final List<UserLocation> addresses}) = _$UserModelImpl;
+      required final List<UserLocation> addresses,
+      required final CoffeeShopImage? avatar}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -220,6 +264,8 @@ abstract class _UserModel implements UserModel {
   String get email;
   @override
   List<UserLocation> get addresses;
+  @override
+  CoffeeShopImage? get avatar;
 
   /// Create a copy of UserModel
   /// with the given fields replaced by the non-null parameter values.
