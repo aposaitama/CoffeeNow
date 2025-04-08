@@ -30,7 +30,7 @@ class ProfileScreen extends ConsumerWidget {
                   radius: 40.0,
                   backgroundColor: AppColors.nudeColor,
                   child: Transform.rotate(
-                    angle: 3.1416,
+                    angle: userAvatar.isEmpty ? 0 : 3.1416,
                     child: CircleAvatar(
                       radius: 35.0,
                       backgroundImage: userAvatar.isEmpty

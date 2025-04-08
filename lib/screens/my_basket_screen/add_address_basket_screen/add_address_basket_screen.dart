@@ -24,11 +24,10 @@ class AddAddressBasketScreen extends ConsumerWidget {
     final user = ref.watch(userProvider).value;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final TextEditingController addressLine1Controller =
-        TextEditingController(text: 'Narbutivska 156');
+        TextEditingController();
     final TextEditingController addressLine2Controller =
         TextEditingController();
-    final TextEditingController zipCodeController =
-        TextEditingController(text: '18000');
+    final TextEditingController zipCodeController = TextEditingController();
     final TextEditingController cityController = TextEditingController();
 
     Future<void> fetchAndShowLocation() async {

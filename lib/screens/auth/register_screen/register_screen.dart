@@ -121,9 +121,11 @@ class RegisterScreen extends ConsumerWidget {
                               if (context.mounted) context.go('/address_setup');
                             } catch (e) {
                               BotToast.showText(
-                                  text: e
-                                      .toString()
-                                      .replaceAll('Exception: ', ''));
+                                text: e.toString().replaceAll(
+                                      'Exception: ',
+                                      '',
+                                    ),
+                              );
                             }
                           }
 
