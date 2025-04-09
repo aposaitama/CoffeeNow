@@ -18,6 +18,7 @@ import 'package:coffee_now/screens/profile_screen/profile_screen.dart';
 import 'package:coffee_now/screens/profile_screen/settings_screen/settings_screen.dart';
 import 'package:coffee_now/screens/root_screen/root_screen.dart';
 import 'package:coffee_now/screens/search_screen/search_screen.dart';
+import 'package:coffee_now/screens/splash_screen/splash_screen.dart';
 import 'package:coffee_now/screens/track_order_screen/track_order_screen2.dart';
 import 'package:coffee_now/screens/transactions_screen/transactions_screen.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class AppRouter {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   GoRouter createRouter() {
     return GoRouter(
-      initialLocation: '/auth_gate',
+      initialLocation: '/splash_screen',
       // initialLocation: '/auth_gate',
       // redirect: (context, state) {
       //   if (hasToken) {
@@ -160,6 +161,10 @@ class AppRouter {
         GoRoute(
           path: '/address_setup',
           builder: (context, state) => const AddressSetupScreen(),
+        ),
+        GoRoute(
+          path: '/splash_screen',
+          builder: (context, state) => const SplashScreen(),
         ),
         GoRoute(
           path: '/auth_gate',
